@@ -1,0 +1,95 @@
+id = "spicy-image-edit-1"
+label = "Spicy Image Edit 1"
+category = "IMG"
+platform = "spicyapi"
+endpoint = "spicy-image-edit-1"
+description = "Prompt-driven editing of one to three images your account generated (outfit, pose or scene changes), with optional inpainting via `mask_url`. Sizes 1024*1024 to 2048*1152; one to six outputs per call."
+
+[pricing]
+base_cost = 0.09
+currency = "USD"
+
+[general]
+kind = "image-edit"
+prompt = "required"
+image_url_param = "image_urls"
+single_url_param = "image_url"
+slots = ["mask_url"]
+
+[params.character]
+label = "Character"
+type = "text"
+optional = true
+hidden = true
+description = "A saved character id (`chr_...`): its reference sheet goes in as Image 1 and your `image_urls` follow as Image 2 and 3."
+
+[params.dry_run]
+label = "Dry Run"
+type = "boolean"
+default = false
+optional = true
+hidden = true
+description = "Validate and screen the request without generating or charging."
+
+[params.enhance_prompt]
+label = "Enhance Prompt"
+type = "boolean"
+default = false
+optional = true
+description = "Let the model expand the prompt with lighting, camera and detail cues before generating."
+
+[params.n]
+label = "Images per Call"
+type = "integer"
+default = 1
+min = 1
+max = 6
+optional = true
+description = "How many variations to return. Billed per image."
+
+[params.negative_prompt]
+label = "Negative Prompt"
+type = "text"
+optional = true
+description = "What to avoid."
+
+[params.seed]
+label = "Seed"
+type = "integer"
+optional = true
+hidden = true
+description = "Reproducibility seed. Random when omitted."
+
+[params.size]
+label = "Size"
+type = "select"
+default = "1024*1024"
+options = [
+  { value = "1024*1024", label = "1024*1024 · Square" },
+  { value = "832*1216",  label = "832*1216 · Portrait" },
+  { value = "1216*832",  label = "1216*832 · Landscape" },
+  { value = "1280*1280", label = "1280*1280 · Square · 1.25K" },
+  { value = "1440*1440", label = "1440*1440 · Square · 1.4K" },
+  { value = "1024*1536", label = "1024*1536 · Portrait" },
+  { value = "1536*1024", label = "1536*1024 · Landscape" },
+  { value = "1080*1920", label = "1080*1920 · Vertical · 9:16" },
+  { value = "1920*1080", label = "1920*1080 · Landscape · 16:9" },
+  { value = "1152*2048", label = "1152*2048 · Tall Portrait" },
+  { value = "2048*1152", label = "2048*1152 · Wide Landscape" },
+]
+description = "Output `width*height`, one of the model's documented sizes. When omitted the model chooses the output size."
+
+[params.user]
+label = "End User"
+type = "text"
+optional = true
+hidden = true
+description = "Your own opaque id for the end user making this request (up to 128 characters)."
+
+[params.views]
+label = "Character Views"
+type = "text"
+list = true
+optional = true
+hidden = true
+description = "With `character`: the body view ids to send (`cv_...`), up to the free image slots (three images in all; the sheet counts as one)."

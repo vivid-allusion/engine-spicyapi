@@ -1,0 +1,2 @@
+# No third-party runtime dependencies — the Spicy API is plain REST and the
+# Engine talks to it with urllib from the standard library.

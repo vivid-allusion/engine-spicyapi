@@ -1,0 +1,17 @@
+# Spicy Upscale 1 — 2x · one output
+platform: spicyapi
+endpoint: spicy-upscale-1
+media_type: image
+image_url_param: image_url
+parameters:
+  scale: 2
+  n: 1
+  # Advanced parameters (uncomment to use)
+  #seed: -1
+pricing:
+  base_cost: 0.02
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

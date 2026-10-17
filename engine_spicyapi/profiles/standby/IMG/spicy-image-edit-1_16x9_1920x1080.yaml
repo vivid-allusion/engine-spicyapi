@@ -1,0 +1,19 @@
+# Spicy Image Edit 1 — 16:9 · 1920*1080
+platform: spicyapi
+endpoint: spicy-image-edit-1
+media_type: image
+image_url_param: image_urls
+single_url_param: image_url
+slots: ["mask_url"]
+parameters:
+  size: "1920*1080"
+  n: 1
+  # Advanced parameters (uncomment to use)
+  #seed: -1
+pricing:
+  base_cost: 0.09
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

@@ -1,0 +1,28 @@
+# Spicy Motion 3 Fast — 16:9 · 720P · 5s
+platform: spicyapi
+endpoint: spicy-motion-3-fast
+media_type: video
+image_url_param: image_url
+duration_type: seconds
+duration_param_name: duration
+slots: ["last_frame_url", "reference_image_urls", "video_url", "audio_urls"]
+parameters:
+  resolution: "720P"
+  aspect_ratio: "16:9"
+  duration: 5
+  audio: true
+  # Advanced parameters (uncomment to use)
+  #action: "pov-missionary"
+  #character: "chr_..."
+  #style: "photorealistic"
+  #negative_prompt: ""
+  #enhance_prompt: false
+  #seed: -1
+  #fps: 30
+pricing:
+  cost_per_second: 0.28
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

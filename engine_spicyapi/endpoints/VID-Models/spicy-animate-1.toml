@@ -1,0 +1,53 @@
+id = "spicy-animate-1"
+label = "Spicy Animate 1"
+category = "VID"
+platform = "spicyapi"
+endpoint = "spicy-animate-1"
+description = "Motion transfer: the person in your image performs the moves and expressions of a motion clip, such as a dance. Use a clip from GET /v1/videos/motions or one you generated, 2 to 30 seconds, standard or pro quality."
+
+[pricing]
+cost_per_second = 0.24
+currency = "USD"
+note = "Billed per output second; the output is as long as the motion clip."
+
+[pricing.by_quality]
+"standard" = 0.24
+"pro" = 0.36
+
+[general]
+kind = "video-edit"
+prompt = "none"
+image_url_param = "image_url"
+slots = ["video_url"]
+
+[params.dry_run]
+label = "Dry Run"
+type = "boolean"
+default = false
+hidden = true
+description = "Validate and screen the request without generating or charging."
+
+[params.motion]
+label = "Motion"
+type = "text"
+optional = true
+default = ""
+note = "motion id from GET /v1/videos/motions"
+description = "The moves and expressions to transfer, instead of video_url."
+
+[params.quality]
+label = "Quality"
+type = "select"
+default = "standard"
+options = [
+  { value = "standard", label = "Standard" },
+  { value = "pro", label = "Pro · Priced higher" },
+]
+
+[params.user]
+label = "End User Id"
+type = "text"
+optional = true
+default = ""
+hidden = true
+description = "Your own opaque id for the end user making this request."
