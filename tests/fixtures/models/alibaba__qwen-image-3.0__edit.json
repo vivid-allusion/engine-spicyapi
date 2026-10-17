@@ -1,0 +1,159 @@
+{
+ "code": 200,
+ "data": {
+  "callable": true,
+  "displayName": "Qwen Image 3.0 \u00b7 Image Editing",
+  "inputSchema": {
+   "additionalProperties": false,
+   "properties": {
+    "aspect_ratio": {
+     "default": "1:1",
+     "description": "Output aspect ratio.",
+     "enum": [
+      "1:1",
+      "16:9",
+      "9:16",
+      "4:3",
+      "3:4",
+      "3:2",
+      "2:3",
+      "21:9"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 80,
+      "widget": "select"
+     }
+    },
+    "enable_prompt_expansion": {
+     "default": true,
+     "description": "Let the service rewrite and expand the prompt before generation.",
+     "type": "boolean",
+     "x-ui": {
+      "order": 31,
+      "widget": "switch"
+     }
+    },
+    "image_urls": {
+     "description": "Reference images in the order used by the editing instruction.",
+     "items": {
+      "contentMediaType": [
+       "image/jpeg",
+       "image/png",
+       "image/webp",
+       "image/gif"
+      ],
+      "format": "uri",
+      "type": "string"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array",
+     "x-ui": {
+      "affects_price": true,
+      "max_size_mb": 10,
+      "order": 90,
+      "widget": "multi-upload"
+     }
+    },
+    "negative_prompt": {
+     "description": "Describe elements to exclude from the image.",
+     "maxLength": 2000,
+     "type": "string",
+     "x-ui": {
+      "order": 30,
+      "widget": "textarea"
+     }
+    },
+    "num_outputs": {
+     "default": 1,
+     "description": "Number of output images.",
+     "maximum": 1,
+     "minimum": 1,
+     "type": "integer",
+     "x-ui": {
+      "affects_price": true,
+      "order": 60,
+      "widget": "number"
+     }
+    },
+    "prompt": {
+     "description": "Describe the subject, composition, lighting, and any text to render.",
+     "maxLength": 5000,
+     "minLength": 1,
+     "type": "string",
+     "x-ui": {
+      "order": 100,
+      "reference_tokens": {
+       "image_urls": "Image {index}"
+      },
+      "widget": "textarea"
+     }
+    },
+    "resolution": {
+     "default": "2k",
+     "description": "Output image resolution tier.",
+     "enum": [
+      "1k",
+      "2k"
+     ],
+     "type": "string",
+     "x-ui": {
+      "affects_price": true,
+      "order": 70,
+      "widget": "radio"
+     }
+    },
+    "seed": {
+     "description": "Random seed for controlled comparisons.",
+     "maximum": 2147483647,
+     "minimum": 0,
+     "type": "integer",
+     "x-ui": {
+      "order": 10,
+      "widget": "number"
+     }
+    }
+   },
+   "required": [
+    "prompt",
+    "image_urls"
+   ],
+   "type": "object",
+   "x-pricing": {
+    "billingMode": "formula",
+    "variantFields": [
+     "resolution"
+    ]
+   }
+  },
+  "modality": "image",
+  "model": "alibaba/qwen-image-3.0/edit",
+  "pageSlug": "qwen-image-3-0-image-to-image",
+  "price": {
+   "amount": "0.03",
+   "tiers": 2,
+   "unit": "per_image",
+   "variant": "1k",
+   "variants": [
+    {
+     "amount": "0.03",
+     "unit": "per_image",
+     "variant": "1k"
+    },
+    {
+     "amount": "0.03",
+     "unit": "per_image",
+     "variant": "2k"
+    }
+   ]
+  },
+  "provider": "Alibaba",
+  "status": "live",
+  "tasks": [
+   "image-to-image"
+  ]
+ },
+ "msg": "success",
+ "request_id": "req_fixture"
+}

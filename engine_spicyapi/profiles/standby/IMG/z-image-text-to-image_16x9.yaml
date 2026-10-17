@@ -1,0 +1,15 @@
+# Z-Image · Text to Image — 16:9
+platform: spicyapi
+endpoint: alibaba/z-image-turbo/text-to-image
+media_type: image
+parameters:
+  aspect_ratio: "16:9"
+  output_format: "png"
+  enable_prompt_expansion: false
+pricing:
+  base_cost: 0.01
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

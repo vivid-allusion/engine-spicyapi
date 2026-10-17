@@ -1,0 +1,20 @@
+# Wan 3.0 · Video Extend — video extend
+platform: spicyapi
+endpoint: alibaba/wan-3.0/video-extend
+media_type: video
+image_url_param: video_url
+slots: ["last_image_url"]
+duration_param_name: duration_seconds
+parameters:
+  duration_seconds: 5
+  enable_prompt_expansion: false
+  enable_thinking: false
+  generate_audio: true
+  resolution: "720p"
+pricing:
+  cost_per_second: 0.045
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

@@ -1,13 +1,14 @@
 [project]
 name = "engine-spicyapi"
 version = "0.1.0"
-description = "Engine wrapper for the Spicy API (spicyapi.com). Uniform interface that studiolot Generators call instead of talking to the provider directly."
+description = "Engine wrapper for SpicyAPI (spicyapi.ai). Uniform interface that studiolot Generators call instead of talking to the provider directly."
 requires-python = ">=3.10"
 dependencies = []
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0",
+    "PyYAML>=6.0",
 ]
 
 [build-system]

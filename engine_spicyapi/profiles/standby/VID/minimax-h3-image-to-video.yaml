@@ -1,0 +1,18 @@
+# MiniMax H3 · Image to Video — image to video
+platform: spicyapi
+endpoint: minimax/h3/image-to-video
+media_type: video
+image_url_param: image_url
+slots: ["last_image_url"]
+duration_param_name: duration_seconds
+parameters:
+  duration_seconds: 5
+  enable_prompt_expansion: false
+  resolution: "768p"
+pricing:
+  cost_per_second: 0.037
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

@@ -1,11 +1,20 @@
 """The endpoint TOML catalog, read by the Engine at run time.
 
-Gold (engine-replicate) keeps its catalog for the TUI wizard and hardcodes
-the few provider quirks the Engine needs. The Spicy API has no per-model
-endpoint: every model id is posted to one of four paths, and which path,
-which primary media key and whether a prompt is accepted differ per model.
-So the Engine reads its own shipped TOMLs — one source of truth for both the
-wizard and the payload builder, so adding a model adds no code.
+Gold (engine-replicate) keeps its catalog for the TUI wizard and hardcodes the
+few provider quirks the Engine needs. SpicyAPI (spicyapi.ai) is different
+again: it is a **model aggregator** with one generic asynchronous task API —
+``POST /jobs/createTask`` with ``{model, input}`` — so every model id is posted
+to the same path, but *which* fields ``input`` may carry, which of them are
+media, and whether a prompt is accepted are all per model.
+
+Those facts live in the shipped TOMLs, one file per model, so adding a model is
+a data change and never a code change. The Engine reads its own catalog at run
+time; the same files are the wizard's model list.
+
+The catalog is generated from — and gated against — the provider's **public**
+per-model endpoint
+``https://api.spicyapi.ai/console/v1/catalog/models/<model>?locale=en``, which
+returns the model's live JSON Schema. See ``scripts/check_schema_sync.py``.
 
 Stdlib only. A missing or broken TOML is skipped, never raised: the Engine
 falls back to an inferred spec so a hand-written profile still runs.
@@ -33,21 +42,11 @@ CATEGORY_DIRS = {
     "VISION": "Vision-Models",
 }
 
-#: Media keys the Spicy API declares as arrays. Used only when a TOML does
-#: not spell the shape out; the catalog always wins.
-ARRAY_MEDIA_KEYS = frozenset(
-    {
-        "image_urls",
-        "reference_image_urls",
-        "reference_images",
-        "reference_videos",
-        "reference_audios",
-        "audio_urls",
-    }
-)
-
 #: Profile keys that are generator plumbing, never provider inputs.
 NON_PAYLOAD_KEYS = frozenset({"prompt_prefix", "prompt_suffix", "kind", "api_path"})
+
+#: The provider's prompt field, on every model that takes one.
+PROMPT_KEY = "prompt"
 
 
 @dataclass
@@ -60,12 +59,11 @@ class EndpointSpec:
     kind: str = "video"
     label: str = ""
     image_url_param: str = ""
-    single_url_param: str = ""
     slots: tuple[str, ...] = ()
     required_slots: tuple[str, ...] = ()
-    duration_param_name: str = "duration"
-    duration_type: str = ""
-    prompt_mode: str = ""
+    media_lists: tuple[str, ...] = ()
+    duration_param_name: str = "duration_seconds"
+    prompt_mode: str = "required"
     known: bool = True
     params: dict = field(default_factory=dict)
 
@@ -78,16 +76,8 @@ class EndpointSpec:
         return self.prompt_mode == "none"
 
     def array_media(self, key: str) -> bool:
-        """True when the endpoint declares this media key as an array.
-
-        Name-based on purpose: the Spicy API spells every array media key
-        with a trailing ``s`` (``image_urls``, ``reference_image_urls``,
-        ``audio_urls``), and single-URL keys (``image_url``,
-        ``last_frame_url``, ``video_url``, ``audio_url``, ``mask_url``) never
-        collide with that. ``[general] slots`` lists the *declared* media
-        keys — array and single alike — so it is not a shape signal.
-        """
-        return key.endswith("_urls") or key in ARRAY_MEDIA_KEYS
+        """True when the endpoint declares this media key as an array."""
+        return key in self.media_lists
 
     def param_type(self, key: str) -> str:
         param = self.params.get(key)
@@ -96,48 +86,46 @@ class EndpointSpec:
         return ""
 
     def is_list_param(self, key: str) -> bool:
+        """True when a *scalar* param is declared as a comma-separated list."""
         param = self.params.get(key)
         return bool(isinstance(param, dict) and param.get("list"))
+
+    def declares(self, key: str) -> bool:
+        """True when the TOML declares this key anywhere the Engine reads.
+
+        Params come from ``[params.*]``, the prompt from ``[general] prompt``,
+        and media from ``[general] image_url_param`` / ``slots``.
+        """
+        return (
+            key in self.params
+            or key == PROMPT_KEY
+            or key == self.image_url_param
+            or key in self.slots
+        )
 
 
 def infer_kind(model: str) -> str:
     """Best-effort kind for a model id the catalog does not carry."""
     mid = (model or "").lower()
-    if mid.startswith("spicy-image") or mid.startswith("spicy-upscale"):
-        return "image-edit" if ("edit" in mid or mid.startswith("spicy-upscale")) else "image"
-    if mid.startswith(
-        (
-            "spicy-motion",
-            "spicy-cinema",
-            "spicy-video",
-            "spicy-character",
-            "spicy-animate",
-        )
-    ):
-        return "video-edit" if ("edit" in mid or mid.startswith("spicy-animate")) else "video"
+    if any(token in mid for token in ("image", "upscale", "background", "erase")):
+        return "image"
     return "video"
 
 
-def infer_prompt_mode(kind: str, model: str) -> str:
-    mid = (model or "").lower()
-    if any(token in mid for token in ("action", "reference", "upscale", "animate")):
-        return "none"
-    if kind == "video":
-        return "optional"
-    return "required"
-
-
 def fallback_spec(model: str, category: str = "") -> EndpointSpec:
-    """A spec for a model the shipped catalog does not know."""
-    kind = infer_kind(model)
+    """A spec for a model the shipped catalog does not know.
+
+    Unknown models keep the profile's word: nothing is dropped and no key is
+    guessed, so a hand-written profile that knows the schema still runs.
+    """
     return EndpointSpec(
         id=model,
         model=model,
         category=category,
-        kind=kind,
+        kind=infer_kind(model),
         label=model,
         image_url_param="image_url",
-        prompt_mode=infer_prompt_mode(kind, model),
+        prompt_mode="optional",
         known=False,
     )
 
@@ -189,20 +177,18 @@ def _read_spec(path: Path, category: str) -> EndpointSpec | None:
         return None
     general = data.get("general") if isinstance(data.get("general"), dict) else {}
     model = str(data.get("endpoint") or data["id"])
-    kind = str(general.get("kind") or infer_kind(model))
     params = data.get("params") if isinstance(data.get("params"), dict) else {}
     return EndpointSpec(
         id=str(data["id"]),
         model=model,
         category=str(data.get("category") or category),
-        kind=kind,
+        kind=str(general.get("kind") or infer_kind(model)),
         label=str(data.get("label") or data["id"]),
         image_url_param=str(general.get("image_url_param") or ""),
-        single_url_param=str(general.get("single_url_param") or ""),
         slots=tuple(str(s) for s in general.get("slots") or ()),
         required_slots=tuple(str(s) for s in general.get("required_slots") or ()),
-        duration_param_name=str(general.get("duration_param_name") or "duration"),
-        duration_type=str(general.get("duration_type") or ""),
-        prompt_mode=str(general.get("prompt") or infer_prompt_mode(kind, model)),
+        media_lists=tuple(str(s) for s in general.get("media_lists") or ()),
+        duration_param_name=str(general.get("duration_param_name") or "duration_seconds"),
+        prompt_mode=str(general.get("prompt") or "required"),
         params=params,
     )

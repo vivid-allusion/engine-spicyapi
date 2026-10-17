@@ -1,0 +1,16 @@
+# Seedream 5.0 Pro · Text to Image — 9:16
+platform: spicyapi
+endpoint: bytedance/seedream-5.0-pro/text-to-image
+media_type: image
+parameters:
+  resolution: "2k"
+  aspect_ratio: "9:16"
+  output_format: "jpeg"
+  enable_thinking: true
+pricing:
+  base_cost: 0.036
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

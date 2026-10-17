@@ -1,0 +1,120 @@
+id = "seedance-2-5-image-to-video"
+label = "Seedance 2.5 · Image To Video"
+category = "VID"
+platform = "spicyapi"
+endpoint = "bytedance/seedance-2.5/image-to-video"
+description = "ByteDance's Seedance 2.5 image-to-video starts the clip on a still you supply and animates it, with sound in the same pass. Clips run 4 to 30 seconds at 480p, 720p or 1080p, and an optional closing still makes the shot arrive on a set frame."
+
+[pricing]
+cost_per_second = 0.1234
+currency = "USD"
+note = "$0.1234/second; 6 tiers"
+
+[general]
+kind = "video"
+prompt = "optional"
+image_url_param = "image_url"
+slots = ["last_image_url"]
+duration_param_name = "duration_seconds"
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+default = "adaptive"
+options = [
+  { value = "adaptive", label = "adaptive" },
+]
+note = "Only `adaptive` is accepted here: Seedance 2.5 always frames an image-to-video clip on the geometry of the opening frame, and a fixed shape would make the task fail. If the delivery format is fixed, crop or pad the still to it before you send it. No effect on billing."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "720p"
+options = [
+  { value = "480p", label = "480p" },
+  { value = "720p", label = "720p" },
+  { value = "1080p", label = "1080p" },
+]
+affects_price = true
+note = "480p, 720p or 1080p, default 720p, and it feeds the billed quantity directly. Note that the output tier is independent of the source still: a soft low-resolution frame rendered at 1080p is just enlarged softness. The tier you pick is the render tier, with no upscaling or enhancement layered on top."
+
+[params.duration_seconds]
+label = "Duration Seconds"
+type = "integer"
+default = 5
+options = [
+  { value = "4", label = "4" },
+  { value = "5", label = "5" },
+  { value = "6", label = "6" },
+  { value = "7", label = "7" },
+  { value = "8", label = "8" },
+  { value = "9", label = "9" },
+  { value = "10", label = "10" },
+  { value = "11", label = "11" },
+  { value = "12", label = "12" },
+  { value = "13", label = "13" },
+  { value = "14", label = "14" },
+  { value = "15", label = "15" },
+  { value = "16", label = "16" },
+  { value = "17", label = "17" },
+  { value = "18", label = "18" },
+  { value = "19", label = "19" },
+  { value = "20", label = "20" },
+  { value = "21", label = "21" },
+  { value = "22", label = "22" },
+  { value = "23", label = "23" },
+  { value = "24", label = "24" },
+  { value = "25", label = "25" },
+  { value = "26", label = "26" },
+  { value = "27", label = "27" },
+  { value = "28", label = "28" },
+  { value = "29", label = "29" },
+  { value = "30", label = "30" },
+]
+affects_price = true
+note = "4 to 30 seconds, default 5. The longer a frame-driven shot runs, the more it drifts — anatomy and set dressing deform gradually. Confirm the direction of the motion at 5 seconds, then extend. For genuinely long sequences, several shorter takes cut together usually hold better than one 30-second take. Length scales the billed quantity linearly."
+
+[params.generate_audio]
+label = "Generate Audio"
+type = "boolean"
+default = true
+affects_price = true
+note = "On by default. Produces a native soundtrack synchronized to the picture — room tone, movement effects, voice. Turn it off for product pieces that will be scored in post; leave it on when footsteps and ambience are part of the point."
+
+[params.output_format]
+label = "Output Format"
+type = "select"
+default = "mp4"
+options = [
+  { value = "mp4", label = "mp4" },
+  { value = "mov", label = "mov" },
+]
+hidden = true
+note = "The container of the returned video: mp4 (the default) or mov. Both carry the same picture; mov keeps the soundtrack as uncompressed PCM, so the file is a little larger and drops straight into editing software that prefers QuickTime. Does not change the price."
+
+[params.enable_web_search]
+label = "Enable Web Search"
+type = "boolean"
+default = false
+hidden = true
+note = "Off by default. Switched on, the model may search the web for information related to your prompt before it renders. It does not change the price."
+
+[params.seed]
+label = "Seed"
+type = "integer"
+min = 0
+max = 2147483647
+note = "Integer seed; omit it and each run draws its own. Fix it with everything else held constant to judge what a prompt edit actually changed. It is a comparison tool, not a promise of frame-identical repeats."
+
+[params.return_last_frame]
+label = "Return Last Frame"
+type = "boolean"
+default = false
+note = "Also returns the clip’s final frame as a separate image next to the video. Send it to image-to-video as the next opening frame to chain shots without exporting a still yourself. Off by default; no effect on price."
+
+[params.watermark]
+label = "Watermark"
+type = "boolean"
+default = false
+hidden = true
+note = "Asks the model to watermark the video as AI-generated, as described in the model’s own documentation. Off by default; switch it on when the place you publish requires AI-made footage to be labelled. No effect on price."

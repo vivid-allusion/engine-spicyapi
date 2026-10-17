@@ -1,0 +1,23 @@
+# Seedance 2.5 · Image to Video — adaptive
+platform: spicyapi
+endpoint: bytedance/seedance-2.5/image-to-video
+media_type: video
+image_url_param: image_url
+slots: ["last_image_url"]
+duration_param_name: duration_seconds
+parameters:
+  aspect_ratio: "adaptive"
+  duration_seconds: 5
+  enable_web_search: false
+  generate_audio: true
+  output_format: "mp4"
+  resolution: "720p"
+  return_last_frame: false
+  watermark: false
+pricing:
+  cost_per_second: 0.1234
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

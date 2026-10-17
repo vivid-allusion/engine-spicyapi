@@ -1,0 +1,23 @@
+# GPT Image 2.5 Sunburst · Image Editing — 16:9
+platform: spicyapi
+endpoint: openai/gpt-image-2.5-sunburst/edit
+media_type: image
+image_url_param: image_urls
+slots: ["mask_url"]
+media_lists: ["image_urls"]
+parameters:
+  aspect_ratio: "16:9"
+  background: "auto"
+  input_fidelity: "low"
+  num_outputs: 1
+  official_fallback: true
+  output_format: "png"
+  quality: "high"
+  resolution: "1k"
+pricing:
+  base_cost: 0.001816
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

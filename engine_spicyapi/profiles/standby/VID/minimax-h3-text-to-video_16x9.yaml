@@ -1,0 +1,17 @@
+# MiniMax H3 · Text to Video — 16:9
+platform: spicyapi
+endpoint: minimax/h3/text-to-video
+media_type: video
+duration_param_name: duration_seconds
+parameters:
+  resolution: "768p"
+  aspect_ratio: "16:9"
+  duration_seconds: 5
+  enable_prompt_expansion: false
+pricing:
+  cost_per_second: 0.037
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

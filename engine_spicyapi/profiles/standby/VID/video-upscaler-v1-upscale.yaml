@@ -1,0 +1,14 @@
+# Video Upscaler · Upscale — upscale
+platform: spicyapi
+endpoint: spicyapi/video-upscaler-v1/upscale
+media_type: video
+image_url_param: video_url
+parameters:
+  resolution: "1080p"
+pricing:
+  cost_per_second: 0.006
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

@@ -1,0 +1,79 @@
+id = "nano-banana-2-1-text-to-image"
+label = "Nano Banana 2.1 · Text To Image"
+category = "IMG"
+platform = "spicyapi"
+endpoint = "google/nano-banana-2.1/text-to-image"
+description = "Nano Banana 2.1 text to image is Google's newest Nano Banana model. It renders at 1k, 2k or 4k in fourteen shapes up to 8:1, spells quoted text correctly and can search the web or reference pictures before drawing."
+
+[pricing]
+base_cost = 0.0217
+currency = "USD"
+note = "$0.0217/image; from 1k; 3 tiers"
+
+[general]
+kind = "image"
+prompt = "required"
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+default = "16:9"
+options = [
+  { value = "1:1", label = "1:1" },
+  { value = "3:2", label = "3:2" },
+  { value = "2:3", label = "2:3" },
+  { value = "3:4", label = "3:4" },
+  { value = "4:3", label = "4:3" },
+  { value = "4:5", label = "4:5" },
+  { value = "5:4", label = "5:4" },
+  { value = "9:16", label = "9:16" },
+  { value = "16:9", label = "16:9" },
+  { value = "21:9", label = "21:9" },
+  { value = "1:4", label = "1:4" },
+  { value = "4:1", label = "4:1" },
+  { value = "1:8", label = "1:8" },
+  { value = "8:1", label = "8:1" },
+]
+note = "One of fourteen shapes, 16:9 by default; the shape does not change the price. The extreme shapes 4:1, 1:4, 8:1 and 1:8 sometimes come back as several shots stitched together, depending on what is in them: for 4:1 and 8:1 keep people small and near the centre or show a landscape, and give 1:4 and 1:8 a subject that is tall itself. Check the result before you use it."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "1k"
+options = [
+  { value = "1k", label = "1k" },
+  { value = "2k", label = "2k" },
+  { value = "4k", label = "4k" },
+]
+affects_price = true
+note = "1k (default), 2k or 4k. A square frame is 1024, 2048 or 4096 pixels across; each tier has its own price."
+
+[params.enable_web_search]
+label = "Enable Web Search"
+type = "boolean"
+default = false
+affects_price = true
+note = "Off by default. When on, the model looks up current facts such as dates, weather or events before drawing. Adds a search charge to the request, shown in the quote. In that case the request runs on the official route at the official price, so keep Official fallback on."
+
+[params.enable_image_search]
+label = "Enable Image Search"
+type = "boolean"
+default = false
+affects_price = true
+note = "Off by default. When on, the model looks up reference pictures on the web before drawing, useful for real places and products. Adds a search charge to the request, shown in the quote. In that case the request runs on the official route at the official price, so keep Official fallback on."
+
+[params.output_format]
+label = "Output Format"
+type = "select"
+default = "png"
+options = [
+  { value = "png", label = "png" },
+  { value = "jpeg", label = "jpeg" },
+]
+note = "png (default) or jpeg. JPEG files are several times smaller; the price is the same."
+
+[params.official_fallback]
+label = "Official Fallback"
+type = "boolean"
+default = true
+note = "On by default. Each request runs on the economy route first. If that route cannot complete it, for example because it refuses a suggestive prompt, the request runs again on the official route and is billed at the official price instead of the economy price. Turn it off to pay only the economy price; the request may then be refused or fail, and web search and image search are not available."

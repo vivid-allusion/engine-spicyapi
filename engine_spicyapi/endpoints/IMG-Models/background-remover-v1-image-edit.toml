@@ -1,0 +1,16 @@
+id = "background-remover-v1-image-edit"
+label = "Background Remover · Image Edit"
+category = "IMG"
+platform = "spicyapi"
+endpoint = "spicyapi/background-remover-v1/edit"
+description = "Background Remover cuts the main subject out of one photo and returns it on a transparent PNG at the original width and height. Send a JPEG, PNG or WebP; the subject is picked automatically, so crop first if several compete."
+
+[pricing]
+base_cost = 0.0048
+currency = "USD"
+note = "$0.0048/image"
+
+[general]
+kind = "image"
+prompt = "none"
+image_url_param = "image_url"

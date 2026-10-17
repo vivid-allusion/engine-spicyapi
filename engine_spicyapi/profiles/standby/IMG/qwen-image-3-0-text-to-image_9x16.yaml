@@ -1,0 +1,17 @@
+# Qwen Image 3.0 · Text to Image — 9:16
+platform: spicyapi
+endpoint: alibaba/qwen-image-3.0/text-to-image
+media_type: image
+parameters:
+  resolution: "2k"
+  num_outputs: 1
+  aspect_ratio: "9:16"
+  enable_prompt_expansion: true
+  prompt_optimization_mode: "direct"
+pricing:
+  base_cost: 0.03
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

@@ -1,0 +1,46 @@
+id = "minimax-h3-image-to-video"
+label = "MiniMax H3 · Image To Video"
+category = "VID"
+platform = "spicyapi"
+endpoint = "minimax/h3/image-to-video"
+description = "MiniMax H3 image-to-video starts from your opening frame, with an optional closing frame and a prompt that directs the motion between them. Clips run 4 to 15 seconds with generated audio at 768p or 2k."
+
+[pricing]
+cost_per_second = 0.037
+currency = "USD"
+note = "$0.037/second; from 768p; 2 tiers"
+
+[general]
+kind = "video"
+prompt = "required"
+image_url_param = "image_url"
+slots = ["last_image_url"]
+duration_param_name = "duration_seconds"
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "768p"
+options = [
+  { value = "768p", label = "768p" },
+  { value = "2k", label = "2k" },
+]
+affects_price = true
+note = "768p or 2k, both native. Draft at 768p, deliver at 2k. 2k needs at least 5 seconds."
+
+[params.duration_seconds]
+label = "Duration Seconds"
+type = "integer"
+default = 5
+min = 4
+max = 15
+affects_price = true
+note = "Whole seconds, 4 to 15. Four seconds is only available at 768p. Longer clips drift further from a supplied closing frame."
+
+[params.enable_prompt_expansion]
+label = "Enable Prompt Expansion"
+type = "boolean"
+default = false
+options = [
+  { value = "false", label = "false" },
+]

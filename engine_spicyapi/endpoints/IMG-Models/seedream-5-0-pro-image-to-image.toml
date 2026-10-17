@@ -1,0 +1,78 @@
+id = "seedream-5-0-pro-image-to-image"
+label = "Seedream 5.0 Pro · Image To Image"
+category = "IMG"
+platform = "spicyapi"
+endpoint = "bytedance/seedream-5.0-pro/edit"
+description = "Seedream 5.0 Pro image editing takes one to ten reference images plus an instruction and returns one image. Revise a single photo or assemble subject, wardrobe and set into one frame, in fifteen aspect ratios at 1K or 2K. Uncensored."
+
+[pricing]
+base_cost = 0.036
+currency = "USD"
+note = "$0.036/image; from 1k; 2 tiers"
+
+[general]
+kind = "image"
+prompt = "required"
+image_url_param = "image_urls"
+media_lists = ["image_urls"]
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+default = "auto"
+options = [
+  { value = "auto", label = "auto" },
+  { value = "1:1", label = "1:1" },
+  { value = "4:3", label = "4:3" },
+  { value = "3:4", label = "3:4" },
+  { value = "16:9", label = "16:9" },
+  { value = "9:16", label = "9:16" },
+  { value = "3:2", label = "3:2" },
+  { value = "2:3", label = "2:3" },
+  { value = "4:5", label = "4:5" },
+  { value = "5:4", label = "5:4" },
+  { value = "21:9", label = "21:9" },
+  { value = "9:21", label = "9:21" },
+  { value = "2:1", label = "2:1" },
+  { value = "1:2", label = "1:2" },
+  { value = "3:1", label = "3:1" },
+  { value = "1:3", label = "1:3" },
+]
+note = "auto by default: the output takes the supported ratio closest to the first reference image, so a portrait source stays a portrait. Name one of the fifteen fixed ratios, from 1:3 to 3:1, when the placement dictates the shape."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "2k"
+options = [
+  { value = "1k", label = "1k" },
+  { value = "2k", label = "2k" },
+]
+affects_price = true
+note = "1k or 2k; 2k by default. The tier sets both the pixel count and the price band, so it is not just a sharpness knob."
+
+[params.output_format]
+label = "Output Format"
+type = "select"
+default = "jpeg"
+options = [
+  { value = "jpeg", label = "jpeg" },
+  { value = "png", label = "png" },
+]
+note = "jpeg by default, or png. png is lossless and the safer handoff into further retouching; it changes only the delivered file, not the image that was generated."
+
+[params.background]
+label = "Background"
+type = "select"
+default = "opaque"
+options = [
+  { value = "opaque", label = "opaque" },
+  { value = "transparent", label = "transparent" },
+]
+note = "`opaque` (default) returns a normal image; `transparent` returns a PNG with a real alpha channel, ready for compositing. Transparent works only with `output_format` `png` and exactly one input image that is itself a PNG with an alpha channel; other combinations are refused. No effect on price."
+
+[params.enable_thinking]
+label = "Enable Thinking"
+type = "boolean"
+default = true
+note = "On by default: the model runs a thinking pass that refines your instruction before editing. On edits, switching it off saves little time. No effect on price."

@@ -1,0 +1,122 @@
+id = "gpt-image-2-5-sunburst-image-to-image"
+label = "GPT Image 2.5 Sunburst · Image To Image"
+category = "IMG"
+platform = "spicyapi"
+endpoint = "openai/gpt-image-2.5-sunburst/edit"
+description = "OpenAI's GPT Image 2.5 Sunburst image editing takes 1 to 16 source images and a text description of the change. An optional PNG mask limits the repaint to one area, and backgrounds can be transparent; output is 1K to 4K."
+
+[pricing]
+base_cost = 0.001816
+currency = "USD"
+note = "$0.001816/image; 225 tiers"
+
+[general]
+kind = "image"
+prompt = "required"
+image_url_param = "image_urls"
+slots = ["mask_url"]
+media_lists = ["image_urls"]
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+default = "1:1"
+options = [
+  { value = "1:1", label = "1:1" },
+  { value = "1:2", label = "1:2" },
+  { value = "1:3", label = "1:3" },
+  { value = "2:1", label = "2:1" },
+  { value = "2:3", label = "2:3" },
+  { value = "3:1", label = "3:1" },
+  { value = "3:2", label = "3:2" },
+  { value = "3:4", label = "3:4" },
+  { value = "4:3", label = "4:3" },
+  { value = "4:5", label = "4:5" },
+  { value = "5:4", label = "5:4" },
+  { value = "9:16", label = "9:16" },
+  { value = "9:21", label = "9:21" },
+  { value = "16:9", label = "16:9" },
+  { value = "21:9", label = "21:9" },
+]
+affects_price = true
+note = "Fifteen shapes from 1:3 to 3:1, 1:1 by default. The result takes the shape you pick, not the shape of the source, and the shape changes the price."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "1k"
+options = [
+  { value = "1k", label = "1k" },
+  { value = "2k", label = "2k" },
+  { value = "4k", label = "4k" },
+]
+affects_price = true
+note = "1k (default), 2k or 4k. A square frame is 1024, 2048 or 2880 pixels across; a larger tier costs more per image. On the economy route a 1k image can come out somewhat larger."
+
+[params.quality]
+label = "Quality"
+type = "select"
+default = "high"
+options = [
+  { value = "low", label = "low" },
+  { value = "medium", label = "medium" },
+  { value = "high", label = "high" },
+  { value = "xhigh", label = "xhigh" },
+  { value = "max", label = "max" },
+]
+affects_price = true
+note = "low, medium, high (default), xhigh or max. Each step adds detail, time and cost; keep xhigh and max for finals."
+
+[params.num_outputs]
+label = "Num Outputs"
+type = "integer"
+default = 1
+min = 1
+max = 10
+affects_price = true
+note = "1 to 10 images from one request, 1 by default. Every image is billed separately."
+
+[params.input_fidelity]
+label = "Input Fidelity"
+type = "select"
+default = "low"
+options = [
+  { value = "low", label = "low" },
+  { value = "high", label = "high" },
+]
+note = "low (default) or high. High keeps faces, fabric and printed details from the sources more closely. It does not change the price."
+
+[params.background]
+label = "Background"
+type = "select"
+default = "auto"
+options = [
+  { value = "auto", label = "auto" },
+  { value = "transparent", label = "transparent" },
+  { value = "opaque", label = "opaque" },
+]
+note = "auto (default), transparent or opaque. Transparent needs png or webp output and returns a real alpha channel."
+
+[params.output_format]
+label = "Output Format"
+type = "select"
+default = "png"
+options = [
+  { value = "png", label = "png" },
+  { value = "jpeg", label = "jpeg" },
+  { value = "webp", label = "webp" },
+]
+note = "png (default), jpeg or webp. Does not change the price."
+
+[params.output_quality]
+label = "Output Quality"
+type = "integer"
+min = 0
+max = 100
+note = "Compression quality for jpeg and webp, 0 to 100: higher keeps more detail and makes larger files. Not used for png, and it does not change the price."
+
+[params.official_fallback]
+label = "Official Fallback"
+type = "boolean"
+default = true
+note = "On by default. A request for a single high-quality 1k PNG edit in 1:1, 3:2, 2:3, 4:3, 3:4, 16:9 or 9:16, with no mask, input fidelity low and background auto, runs on the economy route first; if that route cannot complete it, for example because it refuses the prompt, the request runs again on the official route and is billed at the official price instead of the economy price. Every other request runs on the official route from the start. Turn it off to pay only the economy price: requests the economy route cannot serve are then rejected, and one it takes may still be refused or fail."

@@ -1,0 +1,71 @@
+id = "qwen-image-3-0-image-to-image"
+label = "Qwen Image 3.0 · Image To Image"
+category = "IMG"
+platform = "spicyapi"
+endpoint = "alibaba/qwen-image-3.0/edit"
+description = "Qwen Image 3.0 image editing edits or merges one to three reference images from a prompt, including retyping text already in the frame. It returns one image at 1k or 2k in eight aspect ratios."
+
+[pricing]
+base_cost = 0.03
+currency = "USD"
+note = "$0.03/image; from 1k; 2 tiers"
+
+[general]
+kind = "image"
+prompt = "required"
+image_url_param = "image_urls"
+media_lists = ["image_urls"]
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+default = "1:1"
+options = [
+  { value = "1:1", label = "1:1" },
+  { value = "16:9", label = "16:9" },
+  { value = "9:16", label = "9:16" },
+  { value = "4:3", label = "4:3" },
+  { value = "3:4", label = "3:4" },
+  { value = "3:2", label = "3:2" },
+  { value = "2:3", label = "2:3" },
+  { value = "21:9", label = "21:9" },
+]
+note = "Applies to the result, not to the sources. A reference that is not the ratio you set comes back reshaped, so match it deliberately when you want the original framing kept."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "2k"
+options = [
+  { value = "1k", label = "1k" },
+  { value = "2k", label = "2k" },
+]
+affects_price = true
+note = "1k or 2k, default 2k. It is the tier choice that changes the price; each reference image in image_urls also adds to the quote. It sets the delivered tier and cannot recover detail the source never had."
+
+[params.num_outputs]
+label = "Num Outputs"
+type = "integer"
+default = 1
+min = 1
+max = 1
+affects_price = true
+note = "Fixed at 1: one edited image per request. To tell an ambiguous instruction from an unlucky draw, send the same edit two or three times in parallel without a seed."
+
+[params.enable_prompt_expansion]
+label = "Enable Prompt Expansion"
+type = "boolean"
+default = true
+note = "On by default on this family. It fills out thin briefs and rewrites detailed ones, so turn it off once your prompt is a precise shot description."
+
+[params.negative_prompt]
+label = "Negative Prompt"
+type = "text"
+note = "Up to 2,000 characters of exclusions. On edits it is most useful against artefacts the source invites — seams at a garment edge, duplicated jewellery, leftover lettering."
+
+[params.seed]
+label = "Seed"
+type = "integer"
+min = 0
+max = 2147483647
+note = "Omit it while exploring. Fix it to compare two wordings of the same instruction against an identical draw."

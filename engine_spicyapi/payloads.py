@@ -1,27 +1,31 @@
-"""Request-payload construction — pure functions, no I/O.
+"""Request-input construction — pure functions, no I/O.
 
 Split out of ``engine.py`` so the mapping from (profile, endpoint TOML,
-Markdown input) to a Spicy API request body is unit-testable on its own.
-Mirrors gold's ``_build_replicate_input`` with the Spicy API's extra shapes:
+Markdown input) to a SpicyAPI ``input`` object is unit-testable on its own.
 
-* four request bodies (image generation / image edit / video / video edit)
-  selected by the catalog's ``kind``;
-* ``fps`` means *frame-interpolate the finished clip* (30 or 60) — the
-  generator's internal ``fps`` (typically 24) is not a provider value and is
-  dropped with a warning rather than sent;
-* dependent parameters are pruned (:mod:`engine_spicyapi.catalog` documents
-  which), so a profile carrying ``enhance_mode`` without
-  ``enhance_prompt: true`` is not a hard 400.
+SpicyAPI's request body is always the same shape::
+
+    {"model": "<model id>", "input": {<model-specific fields>}}
+
+so this module only has to decide what goes into ``input``:
+
+* the profile's ``parameters``, coerced to the types the TOML declares;
+* the prompt, composed from ``prompt_prefix`` + the Markdown line 1 + ``prompt_suffix``;
+* media, routed to the model's primary media key and its named slots;
+* the Markdown file's duration, when the model has such an input.
+
+A model that does not declare a field rejects the whole request with ``400``,
+so an undeclared profile parameter is dropped **with a visible warning** rather
+than sent: the provider's message is per field and easy to miss in a batch.
 """
 
 from __future__ import annotations
 
 from typing import Any
 
-from .catalog import NON_PAYLOAD_KEYS, EndpointSpec
+from .catalog import NON_PAYLOAD_KEYS, PROMPT_KEY, EndpointSpec
 from .datatypes import EngineError, InputFile
 
-FPS_VALUES = (30, 60)
 _TRUE = {"true", "yes", "1", "on"}
 _FALSE = {"false", "no", "0", "off"}
 
@@ -45,40 +49,36 @@ def primary_key(profile: dict, spec: EndpointSpec) -> str:
     return "image_url"
 
 
-def build_payload(
+def build_input(
     profile: dict,
     spec: EndpointSpec,
     params: dict,
     prompt: str,
     item: InputFile,
 ) -> tuple[dict, list[str]]:
-    """Build the request body for one Markdown file.
+    """Build the ``input`` object for one Markdown file.
 
-    Returns the payload and any advisory warnings (never raises for a value
-    the provider will reject — the API's message is more precise than ours).
+    Returns the input and any advisory warnings (never raises for a value the
+    provider will reject — the API's message is more precise than ours).
     """
     warnings: list[str] = []
     payload: dict[str, Any] = {}
 
     for key, value in params.items():
-        if key in NON_PAYLOAD_KEYS:
+        if key in NON_PAYLOAD_KEYS or key == PROMPT_KEY:
             continue
         if is_unset(value):
             continue
-        if key == "fps":
-            fps = _fps_value(value)
-            if fps is None:
-                warnings.append(f"fps {value!r} is not a Spicy API value (30 or 60) — dropped")
-                continue
-            payload["fps"] = fps
+        if spec.known and not spec.declares(key):
+            warnings.append(
+                f"{spec.model} does not declare '{key}' — dropped "
+                f"(it would be rejected with HTTP 400)"
+            )
             continue
         payload[key] = encode_param(key, value, spec)
 
-    _prune_dependent(payload)
-
-    payload["model"] = spec.model
     if prompt and not spec.prompt_never:
-        payload["prompt"] = prompt
+        payload[PROMPT_KEY] = prompt
 
     _add_media(payload, profile, spec, item)
     _add_duration(payload, profile, spec, item, warnings)
@@ -89,8 +89,8 @@ def is_unset(value: Any) -> bool:
     """True for a value that means "not set" rather than a real input.
 
     Profiles ship every declared param, so optional ones arrive as ``""``
-    (or ``None``/empty list). Sending those is a 400 — ``action: ""`` is not
-    the same request as omitting ``action``.
+    (or ``None``/empty list). Sending those is a 400 — ``negative_prompt: ""``
+    is not the same request as omitting it.
     """
     if value is None:
         return True
@@ -118,29 +118,31 @@ def encode_param(key: str, value: Any, spec: EndpointSpec) -> Any:
     return value
 
 
-def _add_media(
-    payload: dict, profile: dict, spec: EndpointSpec, item: InputFile
-) -> None:
+def _add_media(payload: dict, profile: dict, spec: EndpointSpec, item: InputFile) -> None:
     key = primary_key(profile, spec)
     declared = str(profile.get("image_url_param") or spec.image_url_param or "")
     if item.reference_urls:
         if spec.known and not declared:
-            # A catalog model with no primary media key takes no image input at
-            # all (text-to-video, text-to-image). Routing the URL to a guessed
+            # A catalog model with no primary media key takes no media input at
+            # all (text-to-image, text-to-video). Routing the URL to a guessed
             # key would send an input the model rejects, and dropping it would
             # silently discard the user's media — so refuse, loudly.
             raise EngineError(
-                f"{spec.model} takes no image input, but {item.path.name} carries "
+                f"{spec.model} takes no media input, but {item.path.name} carries "
                 f"{len(item.reference_urls)} URL(s) — use a model that edits, "
                 f"animates or continues them, or move them to that model's profile."
             )
-        target = key
-        if spec.single_url_param and len(item.reference_urls) == 1:
-            target = spec.single_url_param
-        payload[target] = shape_media(target, item.reference_urls, spec)
+        payload[key] = shape_media(key, item.reference_urls, spec)
+
     for slot, urls in (item.references or {}).items():
-        if urls or slot in spec.required_slots:
+        if urls:
             payload[slot] = shape_media(slot, urls, spec)
+    for slot in spec.required_slots:
+        if not payload.get(slot):
+            raise EngineError(
+                f"{spec.model} requires the '{slot}' input, but {item.path.name} "
+                f"does not provide it"
+            )
 
 
 def _add_duration(
@@ -149,15 +151,15 @@ def _add_duration(
     """Apply the Markdown file's duration, when the model has such an input.
 
     Generators always hand the Engine a duration (Markdown `duration:`, else
-    the profile default), so an edit model that takes its length from the
-    input clip would otherwise be sent an undeclared key and 400. Unknown
-    models keep the old behavior: the profile knows best.
+    the profile default), so a model that takes its length from the input clip
+    would otherwise be sent an undeclared key and 400. Unknown models keep the
+    old behavior: the profile knows best.
     """
     duration = item.metadata.get("duration")
     if duration is None:
         return
-    key = str(profile.get("duration_param_name") or spec.duration_param_name or "duration")
-    if spec.known and key not in spec.params:
+    key = str(profile.get("duration_param_name") or spec.duration_param_name or "duration_seconds")
+    if spec.known and not spec.declares(key):
         warnings.append(
             f"{spec.model} takes no '{key}' input — the output keeps the source length"
         )
@@ -182,21 +184,6 @@ def shape_media(key: str, urls: list[str], spec: EndpointSpec) -> str | list[str
             f"provided — fix the markdown: {urls}"
         )
     return urls[0]
-
-
-def _prune_dependent(payload: dict) -> None:
-    if not payload.get("enhance_prompt"):
-        payload.pop("enhance_mode", None)
-    if not payload.get("character"):
-        payload.pop("views", None)
-
-
-def _fps_value(value: Any) -> int | None:
-    try:
-        fps = int(value)
-    except (TypeError, ValueError):
-        return None
-    return fps if fps in FPS_VALUES else None
 
 
 def _to_int(value: Any) -> Any:

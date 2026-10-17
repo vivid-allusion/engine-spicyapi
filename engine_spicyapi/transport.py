@@ -1,12 +1,13 @@
-"""HTTP transport for the Spicy API — stdlib only.
+"""HTTP transport for SpicyAPI (spicyapi.ai) — stdlib only.
 
 One JSON client and one downloader. Every wire call the Engine makes goes
-through here, so retry hints (``Retry-After``), provider error bodies and
-error classification live in exactly one place.
+through here, so retry hints (``Retry-After``), the provider's error envelope
+and error classification live in exactly one place.
 
-The Spicy API is plain REST (OpenAI-compatible where it needs to be), so the
-Engine carries no third-party SDK dependency: ``urllib.request`` is enough
-for JSON in / JSON out and for pulling CDN outputs down.
+SpicyAPI is plain REST, so the Engine carries no third-party SDK dependency:
+``urllib.request`` is enough for JSON in / JSON out and for pulling result
+files down. Result URLs are short-lived signed grants — they are fetched
+**without** the API key, exactly as the provider requires.
 """
 
 from __future__ import annotations
@@ -16,8 +17,10 @@ import random
 import time
 import urllib.error
 import urllib.request
+from collections.abc import Callable
+from urllib.parse import urlencode
 
-DEFAULT_BASE_URL = "https://api.spicyapi.com"
+DEFAULT_BASE_URL = "https://api.spicyapi.ai/api/v1"
 DEFAULT_TIMEOUT = 600.0
 DOWNLOAD_TIMEOUT = 300.0
 RETRY_AFTER_CAP = 300.0
@@ -25,15 +28,42 @@ USER_AGENT = "engine-spicyapi/0.1 (+https://github.com/vivid-allusion/engine-spi
 
 _MAX_ERROR_CHARS = 600
 
+#: Business codes that mean "every remaining Markdown file will fail the same
+#: way": the key is bad, the balance is short, a spend cap is reached, or the
+#: key/account/region is not allowed to run models at all.
+FATAL_CODES = frozenset(
+    {
+        401,
+        40201,
+        40202,
+        403,
+        40301,
+        40302,
+        40303,
+        40310,
+    }
+)
+
+#: Business codes where waiting and trying again is the documented advice.
+#: 50302 is deliberately absent: the provider says a retry of that failure must
+#: use a *new* ``Idempotency-Key``, so the transport cannot safely retry it —
+#: it surfaces per file and the user re-runs.
+RETRYABLE_CODES = frozenset({429, 500, 503, 50301})
+
+#: Codes that mean the request itself was wrong. Per file, never the batch.
+_REQUEST_CODES = frozenset({400, 40003, 40004, 404, 409, 40901, 413})
+
 
 class ProviderError(RuntimeError):
-    """A non-2xx (or unreadable) response from the Spicy API.
+    """A failed SpicyAPI call.
 
     Attributes:
         status: HTTP status code, or 0 when the request never completed
             (connection error, timeout, bad JSON).
-        payload: the decoded error body when there was one.
+        payload: the decoded error envelope when there was one.
         retry_after: the ``Retry-After`` header in seconds, when sent.
+        code: the provider's business code (``payload["code"]``) when present.
+        request_id: the provider's correlation id, for support requests.
     """
 
     def __init__(
@@ -49,110 +79,78 @@ class ProviderError(RuntimeError):
         self.retry_after = retry_after
 
     @property
-    def code(self) -> str:
-        """Provider error code / type, when the body carries one."""
-        error = self.payload.get("error")
-        if isinstance(error, dict):
-            for key in ("code", "type"):
-                if error.get(key):
-                    return str(error[key])
-            return ""
-        if isinstance(error, str):
-            return error
+    def code(self) -> int | None:
+        """Provider business code, when the body carries one."""
         code = self.payload.get("code")
-        return str(code) if code else ""
+        try:
+            return int(code)
+        except (TypeError, ValueError):
+            return None
+
+    @property
+    def request_id(self) -> str:
+        return str(self.payload.get("request_id") or "")
 
 
 def error_message(payload: dict) -> str:
-    """Human message out of the API's error envelope.
+    """Human message out of SpicyAPI's envelope.
 
-    ``{"error": {"message": ..., "type": ...}}`` on ``/v1/*``,
-    ``{"error": "unauthorized", "message": "..."}`` on the tool surface.
+    Every JSON response uses ``{code, msg, data, request_id}``; the message is
+    ``msg``. The OpenAI/Anthropic/Gemini compatibility layers are the documented
+    exception and carry their own shapes, so those are read too.
     """
+    if payload.get("msg"):
+        return str(payload["msg"])
     error = payload.get("error")
     if isinstance(error, dict):
         for key in ("message", "detail", "code"):
             if error.get(key):
                 return str(error[key])
     if isinstance(error, str) and error:
-        if payload.get("message"):
-            return f"{error}: {payload['message']}"
         return error
     if payload.get("message"):
         return str(payload["message"])
     return ""
 
 
-def _is_fatal(exc: Exception) -> bool:
-    """Billing / auth / balance failures: re-running will not help."""
-    status = getattr(exc, "status", None)
-    if status in (401, 402, 403):
-        return True
-    text = str(exc).lower()
-    return any(
-        token in text
-        for token in (
-            "insufficient balance",
-            "insufficient_balance",
-            "insufficient",
-            "billing",
-            "balance",
-            "unauthorized",
-            "invalid api key",
-            "reference_terms_required",
-            "end_user_suspended",
-            "forbidden",
-        )
-    )
-
-
-def is_high_demand(exc: Exception) -> bool:
-    """503 'model at capacity' / upstream-unavailable spikes."""
-    status = getattr(exc, "status", None)
-    if status == 503:
-        return True
-    text = str(exc).lower()
-    return any(
-        token in text
-        for token in (
-            "high demand",
-            "currently unavailable",
-            "service unavailable",
-            "upstream",
-            "503",
-        )
-    )
-
-
 def classify_error(exc: Exception) -> str:
     """Classify a provider exception.
 
-    Returns one of ``"retryable"`` (rate limit, capacity — retrying helps),
-    ``"fatal"`` (billing, auth, balance — the whole batch will fail) or
-    ``"other"`` (bad parameters, moderation declines — per-file only, the
-    next Markdown file may well succeed).
+    Returns ``"retryable"`` (rate limit, capacity — retrying helps),
+    ``"fatal"`` (auth, balance, spend cap, region — the whole batch will fail)
+    or ``"other"`` (bad parameters, a model that cannot serve the request, a
+    declined generation — per file only, the next Markdown file may well
+    succeed).
     """
-    status = getattr(exc, "status", None)
-    if _is_fatal(exc):
+    code = getattr(exc, "code", None)
+    if code in FATAL_CODES:
         return "fatal"
-    if status == 429 or is_high_demand(exc):
+    if code in RETRYABLE_CODES:
         return "retryable"
-    text = str(exc).lower()
-    if any(token in text for token in ("rate limit", "ratelimit", "throttl", "too many")):
+    if code in _REQUEST_CODES:
+        return "other"
+    status = getattr(exc, "status", None)
+    if status in FATAL_CODES:
+        return "fatal"
+    if status in RETRYABLE_CODES:
         return "retryable"
     if status and 500 <= status < 600:
         return "retryable"
     return "other"
 
 
-def is_moderation_decline(exc: Exception) -> bool:
-    """A 422: the prompt was blocked by the screen. Nothing was charged."""
-    return getattr(exc, "status", None) == 422
-
-
 def is_batch_fatal(exc: Exception) -> bool:
     """True when every remaining Markdown file would fail the same way."""
     return classify_error(exc) == "fatal"
+
+
+def is_retryable(exc: Exception) -> bool:
+    return classify_error(exc) == "retryable"
+
+
+def is_content_rejected(exc: Exception) -> bool:
+    """A task the model's own policy declined (``errorCode`` content_rejected)."""
+    return "content_rejected" in str(exc).lower()
 
 
 def backoff(
@@ -161,7 +159,7 @@ def backoff(
     """Seconds to wait before retry ``attempt`` (0-based).
 
     The provider's ``Retry-After`` wins when it sends one; otherwise this is
-    exponential, stretched 4x for capacity outages, which resolve far slower
+    exponential, stretched 8x for capacity outages, which resolve far slower
     than a plain rate-limit burst.
     """
     retry_after = getattr(exc, "retry_after", None)
@@ -178,22 +176,24 @@ def request_with_retry(
     *,
     retries: int,
     base_delay: float,
+    headers: dict[str, str] | None = None,
+    params: dict[str, str] | None = None,
     on_retry: "Callable[[int, int, float, bool], None] | None" = None,
 ) -> dict:
     """One request, retried while the failure is transient.
 
-    Non-retryable failures (billing, auth, bad parameters, moderation
-    declines) are raised to the caller on the first attempt.
+    Non-retryable failures (auth, balance, bad parameters, declined
+    generations) are raised to the caller on the first attempt.
     """
     last_exc: Exception | None = None
     for attempt in range(retries + 1):
         try:
-            return client.request_json(method, path, payload)
+            return client.request_json(method, path, payload, headers=headers, params=params)
         except Exception as exc:  # noqa: BLE001 - re-raised below
-            if classify_error(exc) != "retryable" or attempt >= retries:
+            if not is_retryable(exc) or attempt >= retries:
                 raise
             last_exc = exc
-            long_backoff = is_high_demand(exc)
+            long_backoff = getattr(exc, "status", None) == 503 or getattr(exc, "code", None) == 503
             sleep = backoff(base_delay, attempt, long_backoff=long_backoff, exc=exc)
             if on_retry:
                 on_retry(attempt + 1, retries, sleep, long_backoff)
@@ -202,7 +202,7 @@ def request_with_retry(
 
 
 class Client:
-    """Minimal JSON client for the Spicy API."""
+    """Minimal JSON client for SpicyAPI."""
 
     def __init__(
         self,
@@ -219,12 +219,25 @@ class Client:
             "User-Agent": USER_AGENT,
         }
 
-    def request_json(self, method: str, path: str, payload: dict | None = None) -> dict:
+    def request_json(
+        self,
+        method: str,
+        path: str,
+        payload: dict | None = None,
+        *,
+        headers: dict[str, str] | None = None,
+        params: dict[str, str] | None = None,
+    ) -> dict:
         """One authenticated JSON request. Raises ``ProviderError``."""
         url = f"{self.base_url}/{path.lstrip('/')}"
+        if params:
+            url = f"{url}?{urlencode(params)}"
         data = json.dumps(payload).encode("utf-8") if payload is not None else None
         request = urllib.request.Request(
-            url, data=data, headers=self._headers, method=method.upper()
+            url,
+            data=data,
+            headers={**self._headers, **(headers or {})},
+            method=method.upper(),
         )
         try:
             with urllib.request.urlopen(request, timeout=self.timeout) as response:
@@ -242,7 +255,11 @@ class Client:
         return decoded if isinstance(decoded, dict) else {"data": decoded}
 
     def download(self, url: str) -> bytes:
-        """Fetch a generated artifact (CDN URL) into memory."""
+        """Fetch a result file (signed URL) into memory.
+
+        Never sends the API key: result URLs are bearer access grants of their
+        own and the provider rejects a request that attaches one.
+        """
         request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
         try:
             with urllib.request.urlopen(request, timeout=DOWNLOAD_TIMEOUT) as response:
@@ -260,6 +277,9 @@ class Client:
         except ValueError:
             payload = {}
         message = error_message(payload) or raw.strip()[:_MAX_ERROR_CHARS] or exc.reason
+        request_id = str(payload.get("request_id") or "")
+        if request_id:
+            message = f"{message} (request_id {request_id})"
         retry_after = None
         header = exc.headers.get("Retry-After") if exc.headers else None
         if header:

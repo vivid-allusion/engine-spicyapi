@@ -1,0 +1,3324 @@
+{
+ "code": 200,
+ "data": {
+  "callable": true,
+  "displayName": "GPT Image 2.5 Sunburst \u00b7 Text to Image",
+  "inputSchema": {
+   "additionalProperties": false,
+   "properties": {
+    "aspect_ratio": {
+     "default": "1:1",
+     "description": "Output aspect ratio.",
+     "enum": [
+      "1:1",
+      "1:2",
+      "1:3",
+      "2:1",
+      "2:3",
+      "3:1",
+      "3:2",
+      "3:4",
+      "4:3",
+      "4:5",
+      "5:4",
+      "9:16",
+      "9:21",
+      "16:9",
+      "21:9"
+     ],
+     "type": "string",
+     "x-ui": {
+      "affects_price": true,
+      "order": 80,
+      "widget": "select"
+     }
+    },
+    "num_outputs": {
+     "default": 1,
+     "description": "How many images to return, each billed separately.",
+     "maximum": 10,
+     "minimum": 1,
+     "type": "integer",
+     "x-ui": {
+      "affects_price": true,
+      "order": 60,
+      "step": 1,
+      "widget": "slider"
+     }
+    },
+    "official_fallback": {
+     "default": true,
+     "description": "If the economy route cannot complete the request, retry it on the official route and bill it at the official price.",
+     "type": "boolean",
+     "x-ui": {
+      "order": 10,
+      "widget": "switch"
+     }
+    },
+    "output_format": {
+     "default": "png",
+     "description": "File format of the returned images.",
+     "enum": [
+      "png",
+      "jpeg",
+      "webp"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 20,
+      "widget": "select"
+     }
+    },
+    "output_quality": {
+     "description": "Compression quality for JPEG and WebP, from 0 to 100.",
+     "maximum": 100,
+     "minimum": 0,
+     "type": "integer",
+     "x-ui": {
+      "order": 15,
+      "step": 1,
+      "widget": "slider"
+     }
+    },
+    "prompt": {
+     "description": "Describe the image you want.",
+     "maxLength": 5000,
+     "minLength": 1,
+     "type": "string",
+     "x-ui": {
+      "order": 100,
+      "widget": "textarea"
+     }
+    },
+    "quality": {
+     "default": "high",
+     "description": "Rendering quality. Higher tiers add detail, time and cost.",
+     "enum": [
+      "low",
+      "medium",
+      "high",
+      "xhigh",
+      "max"
+     ],
+     "type": "string",
+     "x-ui": {
+      "affects_price": true,
+      "order": 76,
+      "widget": "select"
+     }
+    },
+    "resolution": {
+     "default": "1k",
+     "description": "Output size tier.",
+     "enum": [
+      "1k",
+      "2k",
+      "4k"
+     ],
+     "type": "string",
+     "x-ui": {
+      "affects_price": true,
+      "order": 78,
+      "widget": "radio"
+     }
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "type": "object",
+   "x-pricing": {
+    "billingMode": "formula",
+    "variantFields": [
+     "quality",
+     "resolution",
+     "aspect_ratio"
+    ]
+   }
+  },
+  "modality": "image",
+  "model": "openai/gpt-image-2.5-sunburst/text-to-image",
+  "pageSlug": "gpt-image-2-5-sunburst-text-to-image",
+  "price": {
+   "amount": "0.001816",
+   "listPrice": {
+    "amount": "0.00227",
+    "anchor": "publisher",
+    "belowPercent": 20,
+    "checkedOn": "2026-09-29",
+    "publisher": "OpenAI",
+    "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+    "unit": "per_image"
+   },
+   "tiers": 225,
+   "unit": "per_image",
+   "variant": "aspect_ratio=1%3A3;quality=low;resolution=1k",
+   "variants": [
+    {
+     "amount": "0.001816",
+     "listPrice": {
+      "amount": "0.00227",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.001816",
+     "listPrice": {
+      "amount": "0.00227",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.00244",
+     "listPrice": {
+      "amount": "0.00305",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.00244",
+     "listPrice": {
+      "amount": "0.00305",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.002752",
+     "listPrice": {
+      "amount": "0.00344",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.002752",
+     "listPrice": {
+      "amount": "0.00344",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.002872",
+     "listPrice": {
+      "amount": "0.00359",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.002872",
+     "listPrice": {
+      "amount": "0.00359",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.00304",
+     "listPrice": {
+      "amount": "0.0038",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.00304",
+     "listPrice": {
+      "amount": "0.0038",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.003568",
+     "listPrice": {
+      "amount": "0.00446",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.003568",
+     "listPrice": {
+      "amount": "0.00446",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.003736",
+     "listPrice": {
+      "amount": "0.00467",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.003736",
+     "listPrice": {
+      "amount": "0.00467",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.003808",
+     "listPrice": {
+      "amount": "0.00476",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.003808",
+     "listPrice": {
+      "amount": "0.00476",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.003856",
+     "listPrice": {
+      "amount": "0.00482",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.003856",
+     "listPrice": {
+      "amount": "0.00482",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.004192",
+     "listPrice": {
+      "amount": "0.00524",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.004192",
+     "listPrice": {
+      "amount": "0.00524",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.004456",
+     "listPrice": {
+      "amount": "0.00557",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.004456",
+     "listPrice": {
+      "amount": "0.00557",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.004744",
+     "listPrice": {
+      "amount": "0.00593",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.004744",
+     "listPrice": {
+      "amount": "0.00593",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.005104",
+     "listPrice": {
+      "amount": "0.00638",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=low;resolution=1k"
+    },
+    {
+     "amount": "0.005152",
+     "listPrice": {
+      "amount": "0.00644",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.005152",
+     "listPrice": {
+      "amount": "0.00644",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.00568",
+     "listPrice": {
+      "amount": "0.0071",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.00568",
+     "listPrice": {
+      "amount": "0.0071",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.005704",
+     "listPrice": {
+      "amount": "0.00713",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.005704",
+     "listPrice": {
+      "amount": "0.00713",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.006016",
+     "listPrice": {
+      "amount": "0.00752",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.006016",
+     "listPrice": {
+      "amount": "0.00752",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.006328",
+     "listPrice": {
+      "amount": "0.00791",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.006328",
+     "listPrice": {
+      "amount": "0.00791",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.00652",
+     "listPrice": {
+      "amount": "0.00815",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.00652",
+     "listPrice": {
+      "amount": "0.00815",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.006712",
+     "listPrice": {
+      "amount": "0.00839",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.006712",
+     "listPrice": {
+      "amount": "0.00839",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.007312",
+     "listPrice": {
+      "amount": "0.00914",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.007312",
+     "listPrice": {
+      "amount": "0.00914",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.007312",
+     "listPrice": {
+      "amount": "0.00914",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.007312",
+     "listPrice": {
+      "amount": "0.00914",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.0076",
+     "listPrice": {
+      "amount": "0.0095",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.0076",
+     "listPrice": {
+      "amount": "0.0095",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.008128",
+     "listPrice": {
+      "amount": "0.01016",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.008128",
+     "listPrice": {
+      "amount": "0.01016",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.008176",
+     "listPrice": {
+      "amount": "0.01022",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.008176",
+     "listPrice": {
+      "amount": "0.01022",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.008368",
+     "listPrice": {
+      "amount": "0.01046",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.008368",
+     "listPrice": {
+      "amount": "0.01046",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.008728",
+     "listPrice": {
+      "amount": "0.01091",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.008728",
+     "listPrice": {
+      "amount": "0.01091",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.009088",
+     "listPrice": {
+      "amount": "0.01136",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.009088",
+     "listPrice": {
+      "amount": "0.01136",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.009304",
+     "listPrice": {
+      "amount": "0.01163",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.009304",
+     "listPrice": {
+      "amount": "0.01163",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.009928",
+     "listPrice": {
+      "amount": "0.01241",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=low;resolution=2k"
+    },
+    {
+     "amount": "0.010936",
+     "listPrice": {
+      "amount": "0.01367",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=medium;resolution=1k"
+    },
+    {
+     "amount": "0.01108",
+     "listPrice": {
+      "amount": "0.01385",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.01108",
+     "listPrice": {
+      "amount": "0.01385",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.011176",
+     "listPrice": {
+      "amount": "0.01397",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.011176",
+     "listPrice": {
+      "amount": "0.01397",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.01192",
+     "listPrice": {
+      "amount": "0.0149",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.01192",
+     "listPrice": {
+      "amount": "0.0149",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.0124",
+     "listPrice": {
+      "amount": "0.0155",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.0124",
+     "listPrice": {
+      "amount": "0.0155",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.01276",
+     "listPrice": {
+      "amount": "0.01595",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.01276",
+     "listPrice": {
+      "amount": "0.01595",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.01324",
+     "listPrice": {
+      "amount": "0.01655",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.01324",
+     "listPrice": {
+      "amount": "0.01655",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.01396",
+     "listPrice": {
+      "amount": "0.01745",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.01396",
+     "listPrice": {
+      "amount": "0.01745",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.014176",
+     "listPrice": {
+      "amount": "0.01772",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.014176",
+     "listPrice": {
+      "amount": "0.01772",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.015904",
+     "listPrice": {
+      "amount": "0.01988",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.015904",
+     "listPrice": {
+      "amount": "0.01988",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.016216",
+     "listPrice": {
+      "amount": "0.02027",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=low;resolution=4k"
+    },
+    {
+     "amount": "0.0166",
+     "listPrice": {
+      "amount": "0.02075",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.0166",
+     "listPrice": {
+      "amount": "0.02075",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.017296",
+     "listPrice": {
+      "amount": "0.02162",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.017296",
+     "listPrice": {
+      "amount": "0.02162",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.018592",
+     "listPrice": {
+      "amount": "0.02324",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.018592",
+     "listPrice": {
+      "amount": "0.02324",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.020998",
+     "listPrice": {
+      "amount": "0.02999",
+      "anchor": "publisher",
+      "belowPercent": 29,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "officialFallbackAmount": "0.023992",
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.020998",
+     "listPrice": {
+      "amount": "0.02999",
+      "anchor": "publisher",
+      "belowPercent": 29,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "officialFallbackAmount": "0.023992",
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.02116",
+     "listPrice": {
+      "amount": "0.02645",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.02116",
+     "listPrice": {
+      "amount": "0.02645",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.021472",
+     "listPrice": {
+      "amount": "0.02684",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.021472",
+     "listPrice": {
+      "amount": "0.02684",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.021808",
+     "listPrice": {
+      "amount": "0.02726",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=medium;resolution=2k"
+    },
+    {
+     "amount": "0.022",
+     "listPrice": {
+      "amount": "0.035",
+      "anchor": "publisher",
+      "belowPercent": 37,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "officialFallbackAmount": "0.028",
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.022",
+     "listPrice": {
+      "amount": "0.035",
+      "anchor": "publisher",
+      "belowPercent": 37,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "officialFallbackAmount": "0.028",
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.022864",
+     "listPrice": {
+      "amount": "0.03932",
+      "anchor": "publisher",
+      "belowPercent": 41,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "officialFallbackAmount": "0.031456",
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.022864",
+     "listPrice": {
+      "amount": "0.03932",
+      "anchor": "publisher",
+      "belowPercent": 41,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "officialFallbackAmount": "0.031456",
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.023872",
+     "listPrice": {
+      "amount": "0.02984",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.023872",
+     "listPrice": {
+      "amount": "0.02984",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.024112",
+     "listPrice": {
+      "amount": "0.03014",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.024112",
+     "listPrice": {
+      "amount": "0.03014",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.024136",
+     "listPrice": {
+      "amount": "0.03017",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.024136",
+     "listPrice": {
+      "amount": "0.03017",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.025636",
+     "listPrice": {
+      "amount": "0.05318",
+      "anchor": "publisher",
+      "belowPercent": 51,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "officialFallbackAmount": "0.042544",
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.026296",
+     "listPrice": {
+      "amount": "0.03287",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.026296",
+     "listPrice": {
+      "amount": "0.03287",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.028552",
+     "listPrice": {
+      "amount": "0.03569",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.028552",
+     "listPrice": {
+      "amount": "0.03569",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.0316",
+     "listPrice": {
+      "amount": "0.0395",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.0316",
+     "listPrice": {
+      "amount": "0.0395",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.032272",
+     "listPrice": {
+      "amount": "0.04034",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.032272",
+     "listPrice": {
+      "amount": "0.04034",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.034504",
+     "listPrice": {
+      "amount": "0.04313",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.034504",
+     "listPrice": {
+      "amount": "0.04313",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=high;resolution=1k"
+    },
+    {
+     "amount": "0.035992",
+     "listPrice": {
+      "amount": "0.04499",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=medium;resolution=4k"
+    },
+    {
+     "amount": "0.03688",
+     "listPrice": {
+      "amount": "0.0461",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.03688",
+     "listPrice": {
+      "amount": "0.0461",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.037864",
+     "listPrice": {
+      "amount": "0.04733",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.037864",
+     "listPrice": {
+      "amount": "0.04733",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.041896",
+     "listPrice": {
+      "amount": "0.05237",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.041896",
+     "listPrice": {
+      "amount": "0.05237",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.043072",
+     "listPrice": {
+      "amount": "0.05384",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.043072",
+     "listPrice": {
+      "amount": "0.05384",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.043504",
+     "listPrice": {
+      "amount": "0.05438",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.043504",
+     "listPrice": {
+      "amount": "0.05438",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.048064",
+     "listPrice": {
+      "amount": "0.06008",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.048064",
+     "listPrice": {
+      "amount": "0.06008",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.049816",
+     "listPrice": {
+      "amount": "0.06227",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.049816",
+     "listPrice": {
+      "amount": "0.06227",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.050776",
+     "listPrice": {
+      "amount": "0.06347",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.050776",
+     "listPrice": {
+      "amount": "0.06347",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.054616",
+     "listPrice": {
+      "amount": "0.06827",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.054616",
+     "listPrice": {
+      "amount": "0.06827",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.055432",
+     "listPrice": {
+      "amount": "0.06929",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.055432",
+     "listPrice": {
+      "amount": "0.06929",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.055624",
+     "listPrice": {
+      "amount": "0.06953",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.055624",
+     "listPrice": {
+      "amount": "0.06953",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.056176",
+     "listPrice": {
+      "amount": "0.07022",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.056176",
+     "listPrice": {
+      "amount": "0.07022",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.059872",
+     "listPrice": {
+      "amount": "0.07484",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.059872",
+     "listPrice": {
+      "amount": "0.07484",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.062416",
+     "listPrice": {
+      "amount": "0.07802",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.062416",
+     "listPrice": {
+      "amount": "0.07802",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.062944",
+     "listPrice": {
+      "amount": "0.07868",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.062944",
+     "listPrice": {
+      "amount": "0.07868",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.0652",
+     "listPrice": {
+      "amount": "0.0815",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.0652",
+     "listPrice": {
+      "amount": "0.0815",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.067984",
+     "listPrice": {
+      "amount": "0.08498",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.067984",
+     "listPrice": {
+      "amount": "0.08498",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.07144",
+     "listPrice": {
+      "amount": "0.0893",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.07144",
+     "listPrice": {
+      "amount": "0.0893",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.075328",
+     "listPrice": {
+      "amount": "0.09416",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=xhigh;resolution=1k"
+    },
+    {
+     "amount": "0.07624",
+     "listPrice": {
+      "amount": "0.0953",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.07624",
+     "listPrice": {
+      "amount": "0.0953",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.080464",
+     "listPrice": {
+      "amount": "0.10058",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.080464",
+     "listPrice": {
+      "amount": "0.10058",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.082936",
+     "listPrice": {
+      "amount": "0.10367",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.082936",
+     "listPrice": {
+      "amount": "0.10367",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.086032",
+     "listPrice": {
+      "amount": "0.10754",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=high;resolution=2k"
+    },
+    {
+     "amount": "0.086752",
+     "listPrice": {
+      "amount": "0.10844",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.086752",
+     "listPrice": {
+      "amount": "0.10844",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.087496",
+     "listPrice": {
+      "amount": "0.10937",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.087496",
+     "listPrice": {
+      "amount": "0.10937",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.094288",
+     "listPrice": {
+      "amount": "0.11786",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.094288",
+     "listPrice": {
+      "amount": "0.11786",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.095248",
+     "listPrice": {
+      "amount": "0.11906",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.095248",
+     "listPrice": {
+      "amount": "0.11906",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.096472",
+     "listPrice": {
+      "amount": "0.12059",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.096472",
+     "listPrice": {
+      "amount": "0.12059",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.098968",
+     "listPrice": {
+      "amount": "0.12371",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.098968",
+     "listPrice": {
+      "amount": "0.12371",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.103984",
+     "listPrice": {
+      "amount": "0.12998",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.103984",
+     "listPrice": {
+      "amount": "0.12998",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.110656",
+     "listPrice": {
+      "amount": "0.13832",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.110656",
+     "listPrice": {
+      "amount": "0.13832",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.110728",
+     "listPrice": {
+      "amount": "0.13841",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.110728",
+     "listPrice": {
+      "amount": "0.13841",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.11296",
+     "listPrice": {
+      "amount": "0.1412",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.11296",
+     "listPrice": {
+      "amount": "0.1412",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.115576",
+     "listPrice": {
+      "amount": "0.14447",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.115576",
+     "listPrice": {
+      "amount": "0.14447",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.121312",
+     "listPrice": {
+      "amount": "0.15164",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.121312",
+     "listPrice": {
+      "amount": "0.15164",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.124624",
+     "listPrice": {
+      "amount": "0.15578",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.124624",
+     "listPrice": {
+      "amount": "0.15578",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.127864",
+     "listPrice": {
+      "amount": "0.15983",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A3;quality=max;resolution=4k"
+    },
+    {
+     "amount": "0.127864",
+     "listPrice": {
+      "amount": "0.15983",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A1;quality=max;resolution=4k"
+    },
+    {
+     "amount": "0.135064",
+     "listPrice": {
+      "amount": "0.16883",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.135064",
+     "listPrice": {
+      "amount": "0.16883",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.14272",
+     "listPrice": {
+      "amount": "0.1784",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=high;resolution=4k"
+    },
+    {
+     "amount": "0.14272",
+     "listPrice": {
+      "amount": "0.1784",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.14272",
+     "listPrice": {
+      "amount": "0.1784",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.142816",
+     "listPrice": {
+      "amount": "0.17852",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.142816",
+     "listPrice": {
+      "amount": "0.17852",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.152632",
+     "listPrice": {
+      "amount": "0.19079",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=xhigh;resolution=2k"
+    },
+    {
+     "amount": "0.168592",
+     "listPrice": {
+      "amount": "0.21074",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.168592",
+     "listPrice": {
+      "amount": "0.21074",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.168976",
+     "listPrice": {
+      "amount": "0.21122",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=max;resolution=1k"
+    },
+    {
+     "amount": "0.171016",
+     "listPrice": {
+      "amount": "0.21377",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.171016",
+     "listPrice": {
+      "amount": "0.21377",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.184552",
+     "listPrice": {
+      "amount": "0.23069",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.184552",
+     "listPrice": {
+      "amount": "0.23069",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.19456",
+     "listPrice": {
+      "amount": "0.2432",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.19456",
+     "listPrice": {
+      "amount": "0.2432",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.197104",
+     "listPrice": {
+      "amount": "0.24638",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=21%3A9;quality=max;resolution=4k"
+    },
+    {
+     "amount": "0.197104",
+     "listPrice": {
+      "amount": "0.24638",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A21;quality=max;resolution=4k"
+    },
+    {
+     "amount": "0.201832",
+     "listPrice": {
+      "amount": "0.25229",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.201832",
+     "listPrice": {
+      "amount": "0.25229",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.220456",
+     "listPrice": {
+      "amount": "0.27557",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.220456",
+     "listPrice": {
+      "amount": "0.27557",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.248464",
+     "listPrice": {
+      "amount": "0.31058",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.248464",
+     "listPrice": {
+      "amount": "0.31058",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.253408",
+     "listPrice": {
+      "amount": "0.31676",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=xhigh;resolution=4k"
+    },
+    {
+     "amount": "0.259552",
+     "listPrice": {
+      "amount": "0.32444",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A2;quality=max;resolution=4k"
+    },
+    {
+     "amount": "0.259552",
+     "listPrice": {
+      "amount": "0.32444",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A1;quality=max;resolution=4k"
+    },
+    {
+     "amount": "0.274216",
+     "listPrice": {
+      "amount": "0.34277",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.274216",
+     "listPrice": {
+      "amount": "0.34277",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.320608",
+     "listPrice": {
+      "amount": "0.40076",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=16%3A9;quality=max;resolution=4k"
+    },
+    {
+     "amount": "0.320608",
+     "listPrice": {
+      "amount": "0.40076",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=9%3A16;quality=max;resolution=4k"
+    },
+    {
+     "amount": "0.342928",
+     "listPrice": {
+      "amount": "0.42866",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=max;resolution=2k"
+    },
+    {
+     "amount": "0.37588",
+     "listPrice": {
+      "amount": "0.46985",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=2%3A3;quality=max;resolution=4k"
+    },
+    {
+     "amount": "0.37588",
+     "listPrice": {
+      "amount": "0.46985",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A2;quality=max;resolution=4k"
+    },
+    {
+     "amount": "0.414736",
+     "listPrice": {
+      "amount": "0.51842",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=3%3A4;quality=max;resolution=4k"
+    },
+    {
+     "amount": "0.414736",
+     "listPrice": {
+      "amount": "0.51842",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A3;quality=max;resolution=4k"
+    },
+    {
+     "amount": "0.456544",
+     "listPrice": {
+      "amount": "0.57068",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=4%3A5;quality=max;resolution=4k"
+    },
+    {
+     "amount": "0.456544",
+     "listPrice": {
+      "amount": "0.57068",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=5%3A4;quality=max;resolution=4k"
+    },
+    {
+     "amount": "0.569656",
+     "listPrice": {
+      "amount": "0.71207",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-29",
+      "publisher": "OpenAI",
+      "sourceUrl": "https://developers.openai.com/api/docs/pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": "aspect_ratio=1%3A1;quality=max;resolution=4k"
+    }
+   ]
+  },
+  "provider": "OpenAI",
+  "status": "live",
+  "tasks": [
+   "text-to-image"
+  ]
+ },
+ "msg": "success",
+ "request_id": "req_fixture"
+}

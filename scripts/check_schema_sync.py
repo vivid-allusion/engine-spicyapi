@@ -1,29 +1,34 @@
 #!/usr/bin/env python3
-"""Live-schema ↔ TOML drift gate for engine-spicyapi.
+"""Live-schema drift gate: the endpoint TOMLs must mirror the provider's schema.
 
-Gold's gate (engine-replicate) fetches one OpenAPI document per model. The
-Spicy API publishes **one** request schema per *endpoint* (four of them:
-images/generations, images/edits, videos/generations, videos/edits) and each
-endpoint serves several models, so the check runs at two levels:
+SpicyAPI publishes, with no API key required:
 
-1. **Coverage (per endpoint).** The union of everything the catalog declares
-   for a kind must contain every property the endpoint accepts. A server-side
-   property no model declares is a bug — that is the 2026-09-05 p-video
-   incident class (users could not express an input the server took).
-2. **No invention (per TOML).** No TOML may declare a key the endpoint does
-   not accept, except the documented exceptions below.
+* ``https://api.spicyapi.ai/console/v1/catalog/models/<model>?locale=en`` —
+  one model, including its live ``inputSchema`` (JSON Schema 2020-12), its
+  ``paramNotes``, its price tiers and whether it is ``live`` and ``callable``;
+* ``https://docs.spicyapi.ai/openapi.yaml`` — the OpenAPI 3.1 contract.
 
-Which *individual model* accepts which key is a per-model fact the OpenAPI
-document does not carry (that lives in ``GET /v1/models`` behind an API key,
-and in the provider's docs snapshot, `engine-spicyapi.ai-docs`); it is
-asserted by ``tests/test_endpoints.py``.
+This gate re-derives every fact a TOML claims and fails on any disagreement:
 
-Usage:
-    python scripts/check_schema_sync.py                  # fetch the live schema
-    python scripts/check_schema_sync.py --schema FILE     # offline / pinned
-    python scripts/check_schema_sync.py --json            # machine-readable
+1. **Endpoint** — the model exists, is ``live`` and ``callable``, its modality
+   matches the TOML's category, and ``id`` is the provider's own ``pageSlug``.
+2. **Coverage** — every property the model accepts is declared: the prompt by
+   ``[general] prompt``, media by ``image_url_param`` / ``slots``, everything
+   else by a ``[params.*]`` table. Properties whose ``x-ui.widget`` is one the
+   studiolot wizard has no input for (``object-list``, ``json``,
+   ``chat-messages``) are exempt, and *exactly* that set is exempt.
+3. **No invention** — no TOML may declare a key the model does not accept.
+4. **Shape** — each declared param's type, ``options`` (the enum), ``default``,
+   ``min``/``max`` and ``hidden`` match the schema; ``media_lists`` names
+   exactly the media keys the schema declares as arrays.
+5. **Wire** — the two operations the Engine calls exist in the OpenAPI
+   contract, and ``CreateTaskRequest`` still requires ``model`` and ``input``.
 
-Exit code 1 = drift = do not merge.
+```
+python scripts/check_schema_sync.py                      # live — exit 1 = drift
+python scripts/check_schema_sync.py --models-dir saved/  # offline / pinned
+python scripts/check_schema_sync.py --skip-openapi       # model catalog only
+```
 """
 
 from __future__ import annotations
@@ -31,6 +36,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -39,151 +45,299 @@ try:
 except ModuleNotFoundError:  # Python 3.10
     import tomli as tomllib  # type: ignore[no-redef]
 
-SCHEMA_URL = "https://api.spicyapi.com/openapi.json"
-ENDPOINTS_DIR = Path(__file__).resolve().parent.parent / "engine_spicyapi" / "endpoints"
+try:
+    import yaml
+except ModuleNotFoundError:  # pragma: no cover - the gate needs PyYAML
+    yaml = None  # type: ignore[assignment]
 
-#: kind → (OpenAPI path, HTTP method)
-ENDPOINT_BY_KIND = {
-    "image": ("/v1/images/generations", "post"),
-    "image-edit": ("/v1/images/edits", "post"),
-    "video": ("/v1/videos/generations", "post"),
-    "video-edit": ("/v1/videos/edits", "post"),
-}
+ROOT = Path(__file__).resolve().parent.parent
+ENDPOINTS_DIR = ROOT / "engine_spicyapi" / "endpoints"
+MODEL_URL = "https://api.spicyapi.ai/console/v1/catalog/models/{model}?locale=en"
+OPENAPI_URL = "https://docs.spicyapi.ai/openapi.yaml"
 
-#: Set by the Engine, never declared as a TOML param.
-ENGINE_MANAGED = frozenset({"model", "prompt"})
+CATEGORY_MODALITY = {"IMG": "image", "VID": "video", "TXT": "text", "VISION": "video"}
+CATEGORY_DIRS = {"IMG": "IMG-Models", "VID": "VID-Models", "TXT": "TXT-Models", "VISION": "Vision-Models"}
 
-#: Declared on purpose although the provider's request schema omits them,
-#: because the endpoint's own documentation says the server accepts them.
-TOML_ONLY = {
-    "scale": (
-        "spicy-upscale-1: the endpoint prose documents `scale` 2 or 4, but the "
-        "property is missing from the published request schema"
-    ),
-}
+#: x-ui.widget values the studiolot wizard has no input for. A property that
+#: carries one is exempt from coverage; the exemption is itself checked.
+UNRENDERABLE_WIDGETS = {"object-list", "json", "chat-messages"}
+MEDIA_WIDGETS = {"upload", "multi-upload"}
+
+TIMEOUT = 30.0
+USER_AGENT = "engine-spicyapi-check-schema-sync/0.1 (+https://github.com/vivid-allusion/engine-spicyapi)"
 
 
-def fetch_schema(url: str = SCHEMA_URL) -> dict:
-    request = urllib.request.Request(url, headers={"Accept": "application/json"})
-    with urllib.request.urlopen(request, timeout=60) as response:
+def is_media(key: str, prop: dict) -> bool:
+    ui = prop.get("x-ui") or {}
+    if ui.get("widget") in MEDIA_WIDGETS:
+        return True
+    return (
+        prop.get("type") == "array"
+        and key.endswith("_urls")
+        and (prop.get("items") or {}).get("type") == "string"
+    )
+
+
+def expected_type(prop: dict) -> str:
+    ptype = prop.get("type")
+    if ptype == "boolean":
+        return "boolean"
+    if ptype == "integer":
+        return "integer"
+    if ptype == "number":
+        return "number"
+    if ptype == "string" and prop.get("enum"):
+        return "select"
+    return "text"
+
+
+def option_value(value) -> str:
+    return str(value).lower() if isinstance(value, bool) else str(value)
+
+
+def fetch_json(url: str) -> dict:
+    request = urllib.request.Request(
+        url, headers={"Accept": "application/json", "User-Agent": USER_AGENT}
+    )
+    with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
         return json.loads(response.read().decode("utf-8"))
 
 
-def endpoint_properties(schema: dict, path: str, method: str = "post") -> set[str]:
-    """Request-body property names for one endpoint."""
-    operation = schema.get("paths", {}).get(path, {}).get(method, {})
-    content = operation.get("requestBody", {}).get("content", {})
-    body = content.get("application/json", {}).get("schema", {})
-    return set(body.get("properties", {}) or {})
+def fetch_text(url: str) -> str:
+    request = urllib.request.Request(
+        url, headers={"Accept": "text/yaml", "User-Agent": USER_AGENT}
+    )
+    with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
+        return response.read().decode("utf-8")
 
 
-def load_tomls(endpoints_dir: Path = ENDPOINTS_DIR) -> list[tuple[Path, dict]]:
-    """Every endpoint TOML with its parsed content (unparsable files dropped)."""
-    loaded = []
-    for toml_file in sorted(endpoints_dir.glob("*/*.toml")):
-        try:
-            with open(toml_file, "rb") as handle:
-                loaded.append((toml_file, tomllib.load(handle)))
-        except Exception as exc:  # noqa: BLE001 - report, never crash the gate
-            print(f"  ! unreadable: {toml_file.name}: {exc}", file=sys.stderr)
-    return loaded
+def load_model(model: str, models_dir: Path | None) -> dict:
+    if models_dir is not None:
+        path = models_dir / (model.replace("/", "__") + ".json")
+        with open(path) as handle:
+            return json.load(handle)
+    return fetch_json(MODEL_URL.format(model=urllib.parse.quote(model, safe="")))
 
 
-def declared_keys(data: dict) -> set[str]:
-    """Everything one TOML says the model accepts, media keys included."""
-    general = data.get("general") or {}
-    keys = set((data.get("params") or {}).keys())
-    keys.update(str(slot) for slot in general.get("slots") or ())
-    keys.update(str(slot) for slot in general.get("required_slots") or ())
-    for key in ("image_url_param", "single_url_param"):
-        if general.get(key):
-            keys.add(str(general[key]))
-    return keys
-
-
-def kind_of(data: dict) -> str:
-    general = data.get("general") or {}
-    return str(general.get("kind") or "")
-
-
-def diff(declared: set[str], server: set[str], allowed_extra: set[str]) -> tuple[set, set]:
-    """(missing, extra) — pure, offline-testable."""
-    return server - declared - ENGINE_MANAGED, declared - server - ENGINE_MANAGED - allowed_extra
-
-
-def check(schema: dict, tomls: list[tuple[Path, dict]]) -> list[str]:
-    """Return a list of drift findings (empty = clean)."""
-    problems: list[str] = []
-    by_kind: dict[str, set[str]] = {kind: set() for kind in ENDPOINT_BY_KIND}
-    per_kind_files: dict[str, list[str]] = {kind: [] for kind in ENDPOINT_BY_KIND}
-
-    for path, data in tomls:
-        kind = kind_of(data)
-        if kind not in ENDPOINT_BY_KIND:
-            problems.append(f"{path.name}: unknown or missing [general] kind {kind!r}")
+def read_tomls() -> list[tuple[str, Path, dict]]:
+    out: list[tuple[str, Path, dict]] = []
+    for category, dir_name in CATEGORY_DIRS.items():
+        directory = ENDPOINTS_DIR / dir_name
+        if not directory.is_dir():
             continue
-        server = endpoint_properties(schema, *ENDPOINT_BY_KIND[kind])
-        declared = declared_keys(data)
-        by_kind[kind] |= declared
-        per_kind_files[kind].append(path.name)
-        missing, extra = diff(declared, server, set(TOML_ONLY))
-        del missing  # per-TOML omissions are covered by the per-kind union check below
+        for path in sorted(directory.glob("*.toml")):
+            with open(path, "rb") as handle:
+                out.append((category, path, tomllib.load(handle)))
+    return out
+
+
+def check_toml(category: str, path: Path, toml: dict, doc: dict) -> list[str]:
+    errors: list[str] = []
+    where = f"{path.parent.name}/{path.name}"
+
+    def fail(message: str) -> None:
+        errors.append(f"{where}: {message}")
+
+    data = doc.get("data") or {}
+    schema = data.get("inputSchema") or {}
+    props = schema.get("properties") or {}
+    required = set(schema.get("required") or [])
+    media = {key for key, prop in props.items() if is_media(key, prop)}
+    unrenderable = {
+        key for key, prop in props.items() if (prop.get("x-ui") or {}).get("widget") in UNRENDERABLE_WIDGETS
+    }
+    params = toml.get("params") or {}
+    general = toml.get("general") or {}
+
+    model = str(toml.get("endpoint") or "")
+    if not model:
+        fail("no 'endpoint'")
+        return errors
+    if data.get("model") != model:
+        fail(f"endpoint {model!r} is not the model the provider returns ({data.get('model')!r})")
+    if toml.get("id") != data.get("pageSlug"):
+        fail(f"id {toml.get('id')!r} is not the provider's pageSlug ({data.get('pageSlug')!r})")
+    if data.get("status") != "live":
+        fail(f"model status is {data.get('status')!r}, not 'live'")
+    if not data.get("callable"):
+        fail("model is not callable")
+    if data.get("modality") != CATEGORY_MODALITY[category]:
+        fail(f"category {category} implies {CATEGORY_MODALITY[category]}, model says {data.get('modality')!r}")
+    if general.get("kind") != data.get("modality"):
+        fail(f"[general] kind {general.get('kind')!r} != modality {data.get('modality')!r}")
+
+    # prompt
+    if "prompt" in required:
+        want_prompt = "required"
+    elif "prompt" in props:
+        want_prompt = "optional"
+    else:
+        want_prompt = "none"
+    if general.get("prompt") != want_prompt:
+        fail(f"[general] prompt is {general.get('prompt')!r}, schema says {want_prompt!r}")
+
+    # media routing
+    primary = str(general.get("image_url_param") or "")
+    slots = [str(s) for s in general.get("slots") or ()]
+    declared = ({primary} if primary else set()) | set(slots)
+    if len(slots) != len(set(slots)):
+        fail("duplicate keys in [general] slots")
+    if primary and primary not in media:
+        fail(f"image_url_param {primary!r} is not a media input of this model")
+    for slot in slots:
+        if slot not in media:
+            fail(f"slot {slot!r} is not a media input of this model")
+    if primary in slots:
+        fail(f"{primary!r} is both image_url_param and a slot")
+    if declared != media:
+        missing = sorted(media - declared)
+        extra = sorted(declared - media)
+        if missing:
+            fail(f"media inputs not declared: {missing}")
         if extra:
-            problems.append(
-                f"{path.name}: declares {sorted(extra)} — not in {ENDPOINT_BY_KIND[kind][0]}"
-            )
+            fail(f"declared media keys the model does not accept: {extra}")
 
-    for kind, (server_path, _method) in ENDPOINT_BY_KIND.items():
-        if not per_kind_files[kind]:
+    # array shapes
+    arrays = sorted(key for key in media if props[key].get("type") == "array")
+    lists = sorted(str(s) for s in general.get("media_lists") or ())
+    if lists != arrays:
+        fail(f"media_lists {lists} != the schema's array media keys {arrays}")
+
+    required_slots = [str(s) for s in general.get("required_slots") or ()]
+    for slot in required_slots:
+        if slot not in slots:
+            fail(f"required_slots names {slot!r}, which is not a slot")
+        elif slot not in required:
+            fail(f"required_slots names {slot!r}, but the schema does not require it")
+
+    # coverage
+    for key in props:
+        if key == "prompt" or key in media or key in unrenderable:
             continue
-        server = endpoint_properties(schema, *ENDPOINT_BY_KIND[kind])
-        uncovered = server - by_kind[kind] - ENGINE_MANAGED
-        if uncovered:
-            problems.append(
-                f"{server_path}: {sorted(uncovered)} accepted by the server but declared "
-                f"by no {kind} TOML"
-            )
-        print(
-            f"  {kind:<11} {server_path:<26} "
-            f"{len(by_kind[kind])} declared / {len(server)} server props "
-            f"({len(per_kind_files[kind])} TOML)"
+        if key not in params:
+            fail(f"schema property {key!r} is not declared in [params.*]")
+
+    # no invention
+    for key in params:
+        if key not in props:
+            fail(f"[params.{key}] is not a property of this model")
+        elif key in media:
+            fail(f"[params.{key}] duplicates a media input — declare it in [general]")
+
+    # exact unrenderable set
+    declared_unrenderable = {
+        line.split(":", 1)[1].strip().split(" ")[0]
+        for line in path.read_text().splitlines()
+        if line.strip().startswith("# UNRENDERABLE:")
+    }
+    if declared_unrenderable != unrenderable:
+        fail(
+            f"UNRENDERABLE comment set {sorted(declared_unrenderable)} != "
+            f"the schema's unrenderable properties {sorted(unrenderable)}"
         )
-    return problems
+
+    # per-param shape
+    for key, raw in params.items():
+        prop = props.get(key)
+        if not isinstance(prop, dict) or not isinstance(raw, dict):
+            continue
+        want = expected_type(prop)
+        if raw.get("type") != want:
+            fail(f"[params.{key}] type is {raw.get('type')!r}, schema implies {want!r}")
+        enum = prop.get("enum")
+        if enum is not None:
+            want_options = [option_value(value) for value in enum]
+            got_options = [option_value(option.get("value")) for option in raw.get("options") or []]
+            if got_options != want_options:
+                fail(f"[params.{key}] options {got_options} != enum {want_options}")
+        elif raw.get("options"):
+            fail(f"[params.{key}] declares options but the schema has no enum")
+        if "default" in prop:
+            if raw.get("default") != prop["default"]:
+                fail(f"[params.{key}] default is {raw.get('default')!r}, schema says {prop['default']!r}")
+        elif "default" in raw:
+            fail(f"[params.{key}] declares a default but the schema has none")
+        for schema_key, toml_key in (("minimum", "min"), ("maximum", "max")):
+            if schema_key in prop:
+                if raw.get(toml_key) != prop[schema_key]:
+                    fail(
+                        f"[params.{key}] {toml_key} is {raw.get(toml_key)!r}, "
+                        f"schema says {prop[schema_key]!r}"
+                    )
+            elif toml_key in raw:
+                fail(f"[params.{key}] declares {toml_key} but the schema has no {schema_key}")
+        want_hidden = bool((prop.get("x-ui") or {}).get("advanced"))
+        if bool(raw.get("hidden", False)) != want_hidden:
+            fail(f"[params.{key}] hidden is {bool(raw.get('hidden', False))}, schema says {want_hidden}")
+    return errors
+
+
+def check_openapi() -> list[str]:
+    if yaml is None:
+        return ["PyYAML is not installed — cannot read the OpenAPI contract"]
+    document = yaml.safe_load(fetch_text(OPENAPI_URL))
+    errors: list[str] = []
+    paths = document.get("paths") or {}
+    for path, method, operation in (
+        ("/api/v1/jobs/createTask", "post", "createTask"),
+        ("/api/v1/jobs/recordInfo", "get", "recordInfo"),
+        ("/api/v1/jobs/quote", "post", "quoteTask"),
+    ):
+        node = paths.get(path) or {}
+        entry = node.get(method) or {}
+        if not entry:
+            errors.append(f"OpenAPI: {method.upper()} {path} is gone")
+        elif entry.get("operationId") != operation:
+            errors.append(
+                f"OpenAPI: {method.upper()} {path} operationId is {entry.get('operationId')!r}, "
+                f"expected {operation!r}"
+            )
+    request = ((document.get("components") or {}).get("schemas") or {}).get("CreateTaskRequest") or {}
+    required = set(request.get("required") or [])
+    if not {"model", "input"} <= required:
+        errors.append(f"OpenAPI: CreateTaskRequest no longer requires model+input (has {sorted(required)})")
+    return errors
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--schema", type=Path, help="local openapi.json (offline mode)")
-    parser.add_argument("--url", default=SCHEMA_URL, help="schema URL to fetch")
-    parser.add_argument("--json", action="store_true", help="machine-readable output")
-    parser.add_argument("--endpoints-dir", type=Path, default=ENDPOINTS_DIR)
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--models-dir", type=Path, default=None, help="offline per-model JSON directory")
+    parser.add_argument("--skip-openapi", action="store_true", help="check the model catalog only")
     args = parser.parse_args(argv)
 
-    if args.schema:
-        schema = json.loads(Path(args.schema).read_text())
-        source = str(args.schema)
-    else:
-        schema = fetch_schema(args.url)
-        source = args.url
-
-    tomls = load_tomls(args.endpoints_dir)
+    tomls = read_tomls()
     if not tomls:
-        print(f"no endpoint TOMLs under {args.endpoints_dir}", file=sys.stderr)
+        print("No endpoint TOMLs found — nothing to check.", file=sys.stderr)
         return 1
 
-    print(f"schema: {source}   catalog: {len(tomls)} TOML")
-    problems = check(schema, tomls)
+    errors: list[str] = []
+    models = 0
+    for category, path, toml in tomls:
+        model = str(toml.get("endpoint") or "")
+        try:
+            doc = load_model(model, args.models_dir)
+        except Exception as exc:  # noqa: BLE001 - reported as drift
+            errors.append(f"{path.name}: cannot load {model!r}: {exc}")
+            continue
+        models += 1
+        errors.extend(check_toml(category, path, toml, doc))
 
-    if args.json:
-        print(json.dumps({"tomls": len(tomls), "problems": problems}, indent=2))
-    if problems:
-        print(f"\n{len(problems)} drift problem(s) — do not merge:", file=sys.stderr)
-        for problem in problems:
-            print(f"  - {problem}", file=sys.stderr)
+    if not args.skip_openapi:
+        try:
+            errors.extend(check_openapi())
+        except Exception as exc:  # noqa: BLE001 - reported as drift
+            errors.append(f"cannot load the OpenAPI contract: {exc}")
+
+    if errors:
+        print(f"SCHEMA DRIFT — {len(errors)} problem(s):", file=sys.stderr)
+        for error in errors:
+            print(f"  - {error}", file=sys.stderr)
         return 1
-    print(f"OK — {len(tomls)} TOML mirror the live schema, 0 drifted")
+
+    source = str(args.models_dir) if args.models_dir else "the live catalog"
+    print(f"{models} TOML mirror the live schema ({source}), 0 drifted.")
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    sys.exit(main())

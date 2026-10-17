@@ -1,0 +1,14 @@
+# Wan 2.7 Pro · Text to Image — 16:9
+platform: spicyapi
+endpoint: alibaba/wan-2.7-pro/text-to-image
+media_type: image
+parameters:
+  resolution: "2k"
+  aspect_ratio: "16:9"
+pricing:
+  base_cost: 0.075
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

@@ -1,0 +1,52 @@
+id = "z-image-text-to-image"
+label = "Z-Image · Text To Image"
+category = "IMG"
+platform = "spicyapi"
+endpoint = "alibaba/z-image-turbo/text-to-image"
+description = "Z-Image from Alibaba's Tongyi team is a compact 6B text-to-image model that returns a photoreal frame in roughly a second. Prompts run up to 1,000 characters, in five aspect ratios, delivered as lossless PNG."
+
+[pricing]
+base_cost = 0.01
+currency = "USD"
+note = "$0.01/image; 2 tiers"
+
+[general]
+kind = "image"
+prompt = "required"
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+default = "1:1"
+options = [
+  { value = "1:1", label = "1:1" },
+  { value = "4:3", label = "4:3" },
+  { value = "3:4", label = "3:4" },
+  { value = "16:9", label = "16:9" },
+  { value = "9:16", label = "9:16" },
+]
+note = "Output shape — five values, square by default, from 16:9 landscape to 9:16 portrait. Each ratio maps to a fixed size near the native range, so quality stays even; generate at the ratio you will publish at."
+
+[params.enable_prompt_expansion]
+label = "Enable Prompt Expansion"
+type = "boolean"
+default = false
+hidden = true
+affects_price = true
+note = "Off by default, so the prompt is used as written. Switch it on to have the model rewrite a short prompt into a fuller description before generating, for better results. Requests with it on are billed at the prompt-expansion rate, which is higher than the standard rate; the estimate shown before you submit already reflects it."
+
+[params.output_format]
+label = "Output Format"
+type = "select"
+default = "png"
+options = [
+  { value = "png", label = "png" },
+]
+note = "`png` is the only value, and also the default. It is lossless, which makes it the safe handoff into further editing. The field keeps the request explicit; it changes neither the image nor the price."
+
+[params.seed]
+label = "Seed"
+type = "integer"
+min = 0
+max = 2147483647
+note = "Integer from 0 to 2147483647 for the random start; leave it out and every run draws its own. With the same prompt, ratio and seed the result lands very close to the earlier image, so store the seed with any image you keep and change one clause at a time against it. It fixes the starting noise, not the output pixel for pixel. No effect on price."

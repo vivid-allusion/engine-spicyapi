@@ -1,0 +1,29 @@
+id = "video-upscaler-v1-upscale"
+label = "Video Upscaler · Upscale"
+category = "VID"
+platform = "spicyapi"
+endpoint = "spicyapi/video-upscaler-v1/upscale"
+description = "Video Upscaler takes one 3 to 60 second clip and returns it as an MP4 at 720p, 1080p, 2K or 4K (default 1080p). Length, aspect ratio, motion, cuts and the audio track stay as sent, and there is no prompt."
+
+[pricing]
+cost_per_second = 0.006
+currency = "USD"
+note = "$0.006/second; from 1080p; 4 tiers"
+
+[general]
+kind = "video"
+prompt = "none"
+image_url_param = "video_url"
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "1080p"
+options = [
+  { value = "720p", label = "720p" },
+  { value = "1080p", label = "1080p" },
+  { value = "2k", label = "2K" },
+  { value = "4k", label = "4K" },
+]
+affects_price = true
+note = "720p, 1080p (the default), 2k or 4k — a pixel budget with the clip's aspect ratio kept, so an 832×480 clip at 1080p comes back at 1896×1094. A clip already at or above the tier comes back at about the same size and is still charged: a 786×1178 clip sent at 720p returned 784×1176. The tier sets the per-second rate; 2k and 4k take longer."

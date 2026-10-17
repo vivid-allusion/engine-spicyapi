@@ -1,0 +1,338 @@
+{
+ "code": 200,
+ "data": {
+  "callable": true,
+  "displayName": "Wan 3.0 \u00b7 Reference to Video",
+  "inputSchema": {
+   "additionalProperties": false,
+   "anyOf": [
+    {
+     "required": [
+      "reference_image_urls"
+     ]
+    },
+    {
+     "required": [
+      "reference_video_urls"
+     ]
+    },
+    {
+     "required": [
+      "reference_audio_urls"
+     ]
+    },
+    {
+     "required": [
+      "reference_file_url"
+     ]
+    },
+    {
+     "required": [
+      "reference_link_url"
+     ]
+    }
+   ],
+   "properties": {
+    "aspect_ratio": {
+     "default": "16:9",
+     "description": "Output aspect ratio; adaptive follows the input media and the intent.",
+     "enum": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4",
+      "adaptive"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 70,
+      "widget": "select"
+     }
+    },
+    "duration_seconds": {
+     "default": 5,
+     "description": "Requested output length in seconds. Pass -1 for smart duration: the model picks the length from the prompt and any input media instead of a fixed number. With reference videos, their total length plus the output length must not exceed 30 seconds, and the reference video seconds are billed together with the output seconds.",
+     "enum": [
+      -1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+     ],
+     "type": "integer",
+     "x-ui": {
+      "advanced": false,
+      "affects_price": true,
+      "enum_labels": {
+       "-1": "Smart"
+      },
+      "order": 50,
+      "unit": "s",
+      "widget": "slider"
+     }
+    },
+    "enable_prompt_expansion": {
+     "description": "Allow the service to expand the submitted creative brief before generation.",
+     "type": "boolean",
+     "x-ui": {
+      "order": 30,
+      "widget": "switch"
+     }
+    },
+    "enable_thinking": {
+     "default": false,
+     "description": "Let the model reason about the brief and the reference material before generating. Helps with complex references; slower. Switches on by itself when a reference file or link is given.",
+     "type": "boolean",
+     "x-ui": {
+      "order": 66,
+      "widget": "switch"
+     }
+    },
+    "generate_audio": {
+     "default": true,
+     "description": "Request generated audio with the video.",
+     "type": "boolean",
+     "x-ui": {
+      "order": 40,
+      "widget": "switch"
+     }
+    },
+    "prompt": {
+     "description": "Describe the subject, action, camera, light, pacing, and boundaries for the shot.",
+     "minLength": 1,
+     "type": "string",
+     "x-ui": {
+      "order": 110,
+      "primary": true,
+      "reference_tokens": {
+       "reference_audio_urls": "Audio {index}",
+       "reference_image_urls": "Image {index}",
+       "reference_video_urls": "Video {index}"
+      },
+      "widget": "textarea"
+     }
+    },
+    "reference_audio_urls": {
+     "description": "Reference audio, up to 5 items and 15 seconds in total.",
+     "items": {
+      "contentMediaType": [
+       "audio/mpeg",
+       "audio/wav"
+      ],
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array",
+     "x-ui": {
+      "max_total_duration_seconds": 15,
+      "order": 80,
+      "widget": "multi-upload"
+     }
+    },
+    "reference_file_url": {
+     "contentMediaType": [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/vnd.ms-excel",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "application/vnd.ms-powerpoint",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "application/vnd.apple.keynote",
+      "application/vnd.apple.pages",
+      "application/vnd.apple.numbers",
+      "text/plain",
+      "text/markdown"
+     ],
+     "description": "One reference document (PDF, DOCX, TXT, MD and similar) that the model reads for characters, wardrobe, setting and action.",
+     "format": "uri",
+     "type": "string",
+     "x-ui": {
+      "order": 76,
+      "widget": "upload"
+     }
+    },
+    "reference_image_urls": {
+     "description": "Reference images, up to 10 items.",
+     "items": {
+      "contentMediaType": [
+       "image/jpeg",
+       "image/png",
+       "image/webp",
+       "image/gif"
+      ],
+      "type": "string"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array",
+     "x-ui": {
+      "order": 100,
+      "primary": true,
+      "widget": "multi-upload"
+     }
+    },
+    "reference_link_url": {
+     "description": "One public web page the model reads for reference. It must open without a login.",
+     "format": "uri",
+     "type": "string",
+     "x-ui": {
+      "order": 74,
+      "placeholder": "https://",
+      "widget": "text"
+     }
+    },
+    "reference_video_urls": {
+     "description": "Reference videos, up to 5 items and 15 seconds in total.",
+     "items": {
+      "contentMediaType": [
+       "video/mp4",
+       "video/webm",
+       "video/quicktime"
+      ],
+      "type": "string"
+     },
+     "maxItems": 5,
+     "minItems": 1,
+     "type": "array",
+     "x-ui": {
+      "affects_price": true,
+      "max_duration_seconds": 15,
+      "max_total_duration_seconds": 15,
+      "order": 90,
+      "widget": "multi-upload"
+     }
+    },
+    "resolution": {
+     "default": "720p",
+     "description": "Output resolution.",
+     "enum": [
+      "480p",
+      "720p",
+      "1080p"
+     ],
+     "type": "string",
+     "x-ui": {
+      "advanced": false,
+      "affects_price": true,
+      "order": 60,
+      "widget": "radio"
+     }
+    },
+    "seed": {
+     "description": "Random seed. Keep it fixed only for controlled comparisons, not as a frame-identical guarantee.",
+     "maximum": 2147483647,
+     "minimum": 0,
+     "type": "integer",
+     "x-ui": {
+      "order": 10,
+      "widget": "number"
+     }
+    }
+   },
+   "type": "object",
+   "x-pricing": {
+    "billingMode": "duration_capped",
+    "variantFields": [
+     "resolution"
+    ]
+   }
+  },
+  "modality": "video",
+  "model": "alibaba/wan-3.0/reference-to-video",
+  "pageSlug": "wan-3-0-reference-to-video",
+  "price": {
+   "amount": "0.045",
+   "listPrice": {
+    "amount": "0.05",
+    "anchor": "publisher",
+    "belowPercent": 10,
+    "checkedOn": "2026-09-15",
+    "publisher": "Alibaba",
+    "sourceUrl": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+    "unit": "per_second"
+   },
+   "tiers": 3,
+   "unit": "per_second",
+   "variant": "480p",
+   "variants": [
+    {
+     "amount": "0.045",
+     "listPrice": {
+      "amount": "0.05",
+      "anchor": "publisher",
+      "belowPercent": 10,
+      "checkedOn": "2026-09-15",
+      "publisher": "Alibaba",
+      "sourceUrl": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "unit": "per_second"
+     },
+     "unit": "per_second",
+     "variant": "480p"
+    },
+    {
+     "amount": "0.09",
+     "listPrice": {
+      "amount": "0.1",
+      "anchor": "publisher",
+      "belowPercent": 10,
+      "checkedOn": "2026-09-15",
+      "publisher": "Alibaba",
+      "sourceUrl": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "unit": "per_second"
+     },
+     "unit": "per_second",
+     "variant": "720p"
+    },
+    {
+     "amount": "0.18",
+     "listPrice": {
+      "amount": "0.2",
+      "anchor": "publisher",
+      "belowPercent": 10,
+      "checkedOn": "2026-09-15",
+      "publisher": "Alibaba",
+      "sourceUrl": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "unit": "per_second"
+     },
+     "unit": "per_second",
+     "variant": "1080p"
+    }
+   ]
+  },
+  "provider": "Alibaba",
+  "status": "live",
+  "tasks": [
+   "reference-to-video"
+  ]
+ },
+ "msg": "success",
+ "request_id": "req_fixture"
+}

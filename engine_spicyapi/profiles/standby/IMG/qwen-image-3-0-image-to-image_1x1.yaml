@@ -1,0 +1,18 @@
+# Qwen Image 3.0 · Image Editing — 1:1
+platform: spicyapi
+endpoint: alibaba/qwen-image-3.0/edit
+media_type: image
+image_url_param: image_urls
+media_lists: ["image_urls"]
+parameters:
+  aspect_ratio: "1:1"
+  enable_prompt_expansion: true
+  num_outputs: 1
+  resolution: "2k"
+pricing:
+  base_cost: 0.03
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

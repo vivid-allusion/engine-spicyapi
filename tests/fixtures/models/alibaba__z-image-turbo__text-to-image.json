@@ -1,0 +1,132 @@
+{
+ "code": 200,
+ "data": {
+  "callable": true,
+  "displayName": "Z-Image \u00b7 Text to Image",
+  "inputSchema": {
+   "additionalProperties": false,
+   "properties": {
+    "aspect_ratio": {
+     "default": "1:1",
+     "description": "Aspect ratio of the generated image.",
+     "enum": [
+      "1:1",
+      "4:3",
+      "3:4",
+      "16:9",
+      "9:16"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 80,
+      "widget": "select"
+     }
+    },
+    "enable_prompt_expansion": {
+     "default": false,
+     "description": "Expand the prompt into a fuller description before generating. Requests with it on are billed at the prompt-expansion rate.",
+     "type": "boolean",
+     "x-ui": {
+      "advanced": true,
+      "affects_price": true,
+      "order": 50,
+      "widget": "switch"
+     }
+    },
+    "output_format": {
+     "default": "png",
+     "description": "File format of the returned image.",
+     "enum": [
+      "png"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 30,
+      "widget": "radio"
+     }
+    },
+    "prompt": {
+     "description": "Describe the image to generate: subject, composition, style, and lighting.",
+     "maxLength": 1000,
+     "minLength": 1,
+     "type": "string",
+     "x-ui": {
+      "order": 100,
+      "primary": true,
+      "rows": 4,
+      "widget": "textarea"
+     }
+    },
+    "seed": {
+     "description": "Random seed for controlled comparisons. Omit it to let each run pick its own.",
+     "maximum": 2147483647,
+     "minimum": 0,
+     "type": "integer",
+     "x-ui": {
+      "affects_price": false,
+      "order": 10,
+      "widget": "number"
+     }
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "type": "object",
+   "x-pricing": {
+    "billingMode": "per_unit",
+    "variantFields": [
+     "enable_prompt_expansion"
+    ],
+    "variantKeyOmitDefaults": [
+     "enable_prompt_expansion"
+    ]
+   }
+  },
+  "modality": "image",
+  "model": "alibaba/z-image-turbo/text-to-image",
+  "pageSlug": "z-image-text-to-image",
+  "price": {
+   "amount": "0.01",
+   "listPrice": {
+    "amount": "0.015",
+    "anchor": "publisher",
+    "belowPercent": 33,
+    "checkedOn": "2026-09-17",
+    "publisher": "Alibaba",
+    "sourceUrl": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+    "unit": "per_image"
+   },
+   "tiers": 2,
+   "unit": "per_image",
+   "variants": [
+    {
+     "amount": "0.01",
+     "listPrice": {
+      "amount": "0.015",
+      "anchor": "publisher",
+      "belowPercent": 33,
+      "checkedOn": "2026-09-17",
+      "publisher": "Alibaba",
+      "sourceUrl": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "unit": "per_image"
+     },
+     "unit": "per_image",
+     "variant": ""
+    },
+    {
+     "amount": "0.016",
+     "unit": "per_image",
+     "variant": "enable_prompt_expansion=true"
+    }
+   ]
+  },
+  "provider": "Alibaba",
+  "status": "live",
+  "tasks": [
+   "text-to-image"
+  ]
+ },
+ "msg": "success",
+ "request_id": "req_fixture"
+}

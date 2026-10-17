@@ -1,0 +1,49 @@
+id = "wan-2-7-pro-text-to-image"
+label = "Wan 2.7 Pro · Text To Image"
+category = "IMG"
+platform = "spicyapi"
+endpoint = "alibaba/wan-2.7-pro/text-to-image"
+description = "Wan 2.7 Pro is Alibaba's large-canvas text-to-image model, returning one image per request at 2k (about 4 megapixels) or 4k (about 16 megapixels). It supports seven aspect ratios from 1:1 to 16:9 and 9:16, plus a seed and colour palette."
+
+[pricing]
+base_cost = 0.075
+currency = "USD"
+note = "$0.075/image"
+
+[general]
+kind = "image"
+prompt = "required"
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+default = "1:1"
+options = [
+  { value = "1:1", label = "1:1" },
+  { value = "4:3", label = "4:3" },
+  { value = "3:4", label = "3:4" },
+  { value = "16:9", label = "16:9" },
+  { value = "9:16", label = "9:16" },
+  { value = "3:2", label = "3:2" },
+  { value = "2:3", label = "2:3" },
+]
+note = "1:1, 4:3, 3:4, 16:9, 9:16, 3:2 or 2:3. Defaults to 1:1. Every ratio gets the same pixel budget, so choose it for the delivery crop rather than for size."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "2k"
+options = [
+  { value = "2k", label = "2k" },
+  { value = "4k", label = "4k" },
+]
+note = "2k or 4k; 2k by default. 2k is about 4 megapixels and 4k carries four times that, about 16 megapixels. The shape still follows aspect_ratio."
+
+# UNRENDERABLE: color_palette — x-ui.widget = object-list; the wizard has no input for it.
+
+[params.seed]
+label = "Seed"
+type = "integer"
+min = 0
+max = 2147483647
+note = "0 to 2147483647. An identical seed with an identical prompt holds the draw steady, which is what makes single-clause iteration meaningful. A fixed seed helps control variation; identical results are not guaranteed."

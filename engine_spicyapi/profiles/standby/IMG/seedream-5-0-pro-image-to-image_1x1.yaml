@@ -1,0 +1,19 @@
+# Seedream 5.0 Pro · Image Editing — 1:1
+platform: spicyapi
+endpoint: bytedance/seedream-5.0-pro/edit
+media_type: image
+image_url_param: image_urls
+media_lists: ["image_urls"]
+parameters:
+  aspect_ratio: "1:1"
+  background: "opaque"
+  enable_thinking: true
+  output_format: "jpeg"
+  resolution: "2k"
+pricing:
+  base_cost: 0.036
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

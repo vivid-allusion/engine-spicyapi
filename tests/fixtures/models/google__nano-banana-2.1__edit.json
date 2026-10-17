@@ -1,0 +1,219 @@
+{
+ "code": 200,
+ "data": {
+  "callable": true,
+  "displayName": "Nano Banana 2.1 \u00b7 Image Editing",
+  "inputSchema": {
+   "additionalProperties": false,
+   "properties": {
+    "aspect_ratio": {
+     "default": "auto",
+     "description": "Output aspect ratio; auto keeps the shape of the source image.",
+     "enum": [
+      "auto",
+      "1:1",
+      "3:2",
+      "2:3",
+      "3:4",
+      "4:3",
+      "4:5",
+      "5:4",
+      "9:16",
+      "16:9",
+      "21:9",
+      "1:4",
+      "4:1",
+      "1:8",
+      "8:1"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 80,
+      "widget": "select"
+     }
+    },
+    "enable_image_search": {
+     "default": false,
+     "description": "Look up reference pictures on the web before drawing.",
+     "type": "boolean",
+     "x-ui": {
+      "affects_price": true,
+      "order": 38,
+      "widget": "switch"
+     }
+    },
+    "enable_web_search": {
+     "default": false,
+     "description": "Look up current facts on the web before drawing.",
+     "type": "boolean",
+     "x-ui": {
+      "affects_price": true,
+      "order": 40,
+      "widget": "switch"
+     }
+    },
+    "image_urls": {
+     "description": "One to 14 source images, in the order your prompt refers to them.",
+     "items": {
+      "contentMediaType": [
+       "image/jpeg",
+       "image/png",
+       "image/webp",
+       "image/gif"
+      ],
+      "format": "uri",
+      "minLength": 1,
+      "type": "string"
+     },
+     "maxItems": 14,
+     "minItems": 1,
+     "type": "array",
+     "x-ui": {
+      "affects_price": true,
+      "max_size_mb": 10,
+      "order": 90,
+      "widget": "multi-upload"
+     }
+    },
+    "official_fallback": {
+     "default": true,
+     "description": "If the economy route cannot complete the request, retry it on the official route and bill it at the official price.",
+     "type": "boolean",
+     "x-ui": {
+      "order": 20,
+      "widget": "switch"
+     }
+    },
+    "output_format": {
+     "default": "png",
+     "description": "File format of the result.",
+     "enum": [
+      "png",
+      "jpeg"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 30,
+      "widget": "select"
+     }
+    },
+    "prompt": {
+     "description": "Say what to change and what must stay the same.",
+     "maxLength": 5000,
+     "minLength": 1,
+     "type": "string",
+     "x-ui": {
+      "order": 100,
+      "reference_tokens": {
+       "image_urls": "image {index}"
+      },
+      "widget": "textarea"
+     }
+    },
+    "resolution": {
+     "default": "1k",
+     "description": "Output size tier.",
+     "enum": [
+      "1k",
+      "2k",
+      "4k"
+     ],
+     "type": "string",
+     "x-ui": {
+      "affects_price": true,
+      "order": 78,
+      "widget": "radio"
+     }
+    }
+   },
+   "required": [
+    "prompt",
+    "image_urls"
+   ],
+   "type": "object",
+   "x-pricing": {
+    "billingMode": "formula",
+    "variantFields": [
+     "resolution"
+    ]
+   }
+  },
+  "modality": "image",
+  "model": "google/nano-banana-2.1/edit",
+  "pageSlug": "nano-banana-2-1-image-to-image",
+  "price": {
+   "amount": "0.0217",
+   "listPrice": {
+    "amount": "0.0336",
+    "anchor": "publisher",
+    "belowPercent": 35,
+    "checkedOn": "2026-10-07",
+    "publisher": "Google",
+    "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+    "unit": "per_image"
+   },
+   "officialFallback": {
+    "amount": "0.048",
+    "unit": "per_image",
+    "variant": "1k"
+   },
+   "tiers": 3,
+   "unit": "per_image",
+   "variant": "1k",
+   "variants": [
+    {
+     "amount": "0.0217",
+     "listPrice": {
+      "amount": "0.0336",
+      "anchor": "publisher",
+      "belowPercent": 35,
+      "checkedOn": "2026-10-07",
+      "publisher": "Google",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "unit": "per_image"
+     },
+     "officialFallbackAmount": "0.048",
+     "unit": "per_image",
+     "variant": "1k"
+    },
+    {
+     "amount": "0.0351",
+     "listPrice": {
+      "amount": "0.0504",
+      "anchor": "publisher",
+      "belowPercent": 30,
+      "checkedOn": "2026-10-07",
+      "publisher": "Google",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "unit": "per_image"
+     },
+     "officialFallbackAmount": "0.072",
+     "unit": "per_image",
+     "variant": "2k"
+    },
+    {
+     "amount": "0.0626",
+     "listPrice": {
+      "amount": "0.113",
+      "anchor": "publisher",
+      "belowPercent": 44,
+      "checkedOn": "2026-10-07",
+      "publisher": "Google",
+      "sourceUrl": "https://ai.google.dev/gemini-api/docs/pricing",
+      "unit": "per_image"
+     },
+     "officialFallbackAmount": "0.162",
+     "unit": "per_image",
+     "variant": "4k"
+    }
+   ]
+  },
+  "provider": "Google",
+  "status": "live",
+  "tasks": [
+   "image-to-image"
+  ]
+ },
+ "msg": "success",
+ "request_id": "req_fixture"
+}

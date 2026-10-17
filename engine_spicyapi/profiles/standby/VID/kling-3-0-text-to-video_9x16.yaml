@@ -1,0 +1,19 @@
+# Kling 3.0 · Text to Video — 9:16
+platform: spicyapi
+endpoint: kling/3.0/text-to-video
+media_type: video
+duration_param_name: duration_seconds
+parameters:
+  shot_type: "single"
+  resolution: "720p"
+  aspect_ratio: "9:16"
+  generate_audio: false
+  guidance_scale: 0.5
+  duration_seconds: 5
+pricing:
+  cost_per_second: 0.0672
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

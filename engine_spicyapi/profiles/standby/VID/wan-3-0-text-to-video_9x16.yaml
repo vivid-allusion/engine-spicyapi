@@ -1,0 +1,19 @@
+# Wan 3.0 · Text to Video — 9:16
+platform: spicyapi
+endpoint: alibaba/wan-3.0/text-to-video
+media_type: video
+duration_param_name: duration_seconds
+parameters:
+  resolution: "720p"
+  aspect_ratio: "9:16"
+  generate_audio: true
+  enable_thinking: false
+  duration_seconds: 5
+  enable_prompt_expansion: false
+pricing:
+  cost_per_second: 0.045
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

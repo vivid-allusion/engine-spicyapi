@@ -1,0 +1,148 @@
+{
+ "code": 200,
+ "data": {
+  "callable": true,
+  "displayName": "Qwen Image 3.0 \u00b7 Text to Image",
+  "inputSchema": {
+   "additionalProperties": false,
+   "properties": {
+    "aspect_ratio": {
+     "default": "1:1",
+     "description": "Output aspect ratio.",
+     "enum": [
+      "1:1",
+      "16:9",
+      "9:16",
+      "4:3",
+      "3:4",
+      "3:2",
+      "2:3",
+      "21:9"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 80,
+      "widget": "select"
+     }
+    },
+    "enable_prompt_expansion": {
+     "default": true,
+     "description": "Let the service rewrite and expand the prompt before generation.",
+     "type": "boolean",
+     "x-ui": {
+      "order": 31,
+      "widget": "switch"
+     }
+    },
+    "negative_prompt": {
+     "description": "Describe elements to exclude from the image.",
+     "maxLength": 2000,
+     "type": "string",
+     "x-ui": {
+      "order": 30,
+      "widget": "textarea"
+     }
+    },
+    "num_outputs": {
+     "default": 1,
+     "description": "Number of output images.",
+     "maximum": 1,
+     "minimum": 1,
+     "type": "integer",
+     "x-ui": {
+      "affects_price": true,
+      "order": 60,
+      "widget": "number"
+     }
+    },
+    "prompt": {
+     "description": "Describe the subject, composition, lighting, and any text to render.",
+     "maxLength": 5000,
+     "minLength": 1,
+     "type": "string",
+     "x-ui": {
+      "order": 100,
+      "widget": "textarea"
+     }
+    },
+    "prompt_optimization_mode": {
+     "default": "direct",
+     "description": "How prompt expansion rewrites the brief: single pass, or a multi-step agent rewrite.",
+     "enum": [
+      "direct",
+      "agent"
+     ],
+     "type": "string",
+     "x-ui": {
+      "advanced": true,
+      "affects_price": false,
+      "order": 29,
+      "widget": "radio"
+     }
+    },
+    "resolution": {
+     "default": "2k",
+     "description": "Output image resolution tier.",
+     "enum": [
+      "1k",
+      "2k"
+     ],
+     "type": "string",
+     "x-ui": {
+      "affects_price": true,
+      "order": 70,
+      "widget": "radio"
+     }
+    },
+    "seed": {
+     "description": "Random seed for controlled comparisons.",
+     "maximum": 2147483647,
+     "minimum": 0,
+     "type": "integer",
+     "x-ui": {
+      "order": 10,
+      "widget": "number"
+     }
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "type": "object",
+   "x-pricing": {
+    "billingMode": "formula",
+    "variantFields": [
+     "resolution"
+    ]
+   }
+  },
+  "modality": "image",
+  "model": "alibaba/qwen-image-3.0/text-to-image",
+  "pageSlug": "qwen-image-3-0-text-to-image",
+  "price": {
+   "amount": "0.03",
+   "tiers": 2,
+   "unit": "per_image",
+   "variant": "1k",
+   "variants": [
+    {
+     "amount": "0.03",
+     "unit": "per_image",
+     "variant": "1k"
+    },
+    {
+     "amount": "0.03",
+     "unit": "per_image",
+     "variant": "2k"
+    }
+   ]
+  },
+  "provider": "Alibaba",
+  "status": "live",
+  "tasks": [
+   "text-to-image"
+  ]
+ },
+ "msg": "success",
+ "request_id": "req_fixture"
+}

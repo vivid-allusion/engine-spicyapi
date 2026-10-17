@@ -1,0 +1,80 @@
+id = "qwen-image-3-0-text-to-image"
+label = "Qwen Image 3.0 · Text To Image"
+category = "IMG"
+platform = "spicyapi"
+endpoint = "alibaba/qwen-image-3.0/text-to-image"
+description = "Qwen Image 3.0 text-to-image is Alibaba's text-rendering model: quoted signage and headlines come back as readable type at the 2k tier. It takes 5,000-character prompts and a separate negative prompt, in eight aspect ratios at 1k or 2k."
+
+[pricing]
+base_cost = 0.03
+currency = "USD"
+note = "$0.03/image; from 1k; 2 tiers"
+
+[general]
+kind = "image"
+prompt = "required"
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+default = "1:1"
+options = [
+  { value = "1:1", label = "1:1" },
+  { value = "16:9", label = "16:9" },
+  { value = "9:16", label = "9:16" },
+  { value = "4:3", label = "4:3" },
+  { value = "3:4", label = "3:4" },
+  { value = "3:2", label = "3:2" },
+  { value = "2:3", label = "2:3" },
+  { value = "21:9", label = "21:9" },
+]
+note = "Composes the frame before generation rather than cropping afterwards, so choose the shape the image will be published at. All eight ratios cost the same per image."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "2k"
+options = [
+  { value = "1k", label = "1k" },
+  { value = "2k", label = "2k" },
+]
+affects_price = true
+note = "1k or 2k, default 2k, and the only price variant here. Generate anything with readable text at 2k; 1k is for fast layout roughs where nothing has to be legible."
+
+[params.num_outputs]
+label = "Num Outputs"
+type = "integer"
+default = 1
+min = 1
+max = 1
+affects_price = true
+note = "Fixed at 1: each request returns one image. For a contact sheet from one brief, send parallel requests without a seed; each is quoted and settled on its own."
+
+[params.enable_prompt_expansion]
+label = "Enable Prompt Expansion"
+type = "boolean"
+default = true
+note = "On by default on this family. It fills out thin briefs and rewrites detailed ones, so turn it off once your prompt is a precise shot description."
+
+[params.negative_prompt]
+label = "Negative Prompt"
+type = "text"
+note = "Up to 2,000 characters of exclusions, kept out of the main prompt. Worth spending on watermarks, duplicated limbs and garbled lettering when a frame carries type."
+
+[params.prompt_optimization_mode]
+label = "Prompt Optimization Mode"
+type = "select"
+default = "direct"
+options = [
+  { value = "direct", label = "direct" },
+  { value = "agent", label = "agent" },
+]
+hidden = true
+note = "How prompt expansion rewrites your brief while `enable_prompt_expansion` is on: `direct` (default) rewrites it in a single pass; `agent` runs a multi-step rewrite that plans the image more thoroughly and takes longer. Only matters while expansion is on. No effect on price."
+
+[params.seed]
+label = "Seed"
+type = "integer"
+min = 0
+max = 2147483647
+note = "Omit it while exploring and every call draws its own. Fix it once a frame works, then change one other field at a time to see what each change did."

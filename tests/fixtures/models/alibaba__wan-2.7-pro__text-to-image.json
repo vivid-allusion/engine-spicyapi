@@ -1,0 +1,136 @@
+{
+ "code": 200,
+ "data": {
+  "callable": true,
+  "displayName": "Wan 2.7 Pro \u00b7 Text to Image",
+  "inputSchema": {
+   "additionalProperties": false,
+   "properties": {
+    "aspect_ratio": {
+     "default": "1:1",
+     "description": "Aspect ratio of the generated image.",
+     "enum": [
+      "1:1",
+      "4:3",
+      "3:4",
+      "16:9",
+      "9:16",
+      "3:2",
+      "2:3"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 80,
+      "widget": "select"
+     }
+    },
+    "color_palette": {
+     "description": "Custom colour theme: 3 to 10 colours, each with an optional share of the image in percent. Leave the shares empty to split them evenly.",
+     "items": {
+      "additionalProperties": false,
+      "properties": {
+       "hex": {
+        "description": "The colour as a six-digit hex code, for example #C2D1E6.",
+        "pattern": "^#[0-9A-Fa-f]{6}$",
+        "type": "string",
+        "x-ui": {
+         "order": 20,
+         "placeholder": "#C2D1E6",
+         "widget": "text"
+        }
+       },
+       "ratio": {
+        "description": "How much of the image this colour should cover, in percent. Leave it empty to share the remainder evenly with the other empty rows.",
+        "maximum": 100,
+        "minimum": 0.01,
+        "type": "number",
+        "x-ui": {
+         "order": 10,
+         "step": 0.01,
+         "unit": "%",
+         "widget": "slider"
+        }
+       }
+      },
+      "required": [
+       "hex"
+      ],
+      "type": "object"
+     },
+     "maxItems": 10,
+     "minItems": 3,
+     "type": "array",
+     "x-ui": {
+      "order": 50,
+      "widget": "object-list"
+     }
+    },
+    "prompt": {
+     "description": "Describe the image to generate: subject, composition, style, and lighting.",
+     "maxLength": 5000,
+     "minLength": 1,
+     "type": "string",
+     "x-ui": {
+      "order": 100,
+      "primary": true,
+      "rows": 4,
+      "widget": "textarea"
+     }
+    },
+    "resolution": {
+     "default": "2k",
+     "description": "Output resolution tier.",
+     "enum": [
+      "2k",
+      "4k"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 65,
+      "widget": "radio"
+     }
+    },
+    "seed": {
+     "description": "Random seed. Omit to let the model pick one.",
+     "maximum": 2147483647,
+     "minimum": 0,
+     "type": "integer",
+     "x-ui": {
+      "order": 10,
+      "widget": "number"
+     }
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "type": "object",
+   "x-pricing": {
+    "billingMode": "per_unit",
+    "variantFields": []
+   }
+  },
+  "modality": "image",
+  "model": "alibaba/wan-2.7-pro/text-to-image",
+  "pageSlug": "wan-2-7-pro-text-to-image",
+  "price": {
+   "amount": "0.075",
+   "tiers": 1,
+   "unit": "per_image",
+   "variants": [
+    {
+     "amount": "0.075",
+     "unit": "per_image",
+     "variant": ""
+    }
+   ]
+  },
+  "provider": "Alibaba",
+  "status": "live",
+  "tasks": [
+   "text-to-image"
+  ]
+ },
+ "msg": "success",
+ "request_id": "req_fixture"
+}

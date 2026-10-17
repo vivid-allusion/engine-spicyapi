@@ -1,5 +1,5 @@
 PROVIDER_NAME = "SpicyAPI"
-PROVIDER_HOMEPAGE = "https://www.spicyapi.com"
+PROVIDER_HOMEPAGE = "https://spicyapi.ai"
 PLATFORM = "spicyapi"
-API_KEY_ENV_VAR = "SPICYAPI_API_KEY"
+API_KEY_ENV_VAR = "SPICY_API_KEY"
 API_KEY_PATTERN = r"^sk-spicy-"

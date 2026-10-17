@@ -1,0 +1,82 @@
+id = "kling-3-0-text-to-video"
+label = "Kling 3.0 · Text To Video"
+category = "VID"
+platform = "spicyapi"
+endpoint = "kling/3.0/text-to-video"
+description = "Kling 3.0 text-to-video turns a written brief into a clip of 3 to 15 seconds at 720p, 1080p or 4K. Turn native audio on or off, choose 16:9, 9:16 or 1:1, and render a single continuous shot or a multi-shot cut."
+
+[pricing]
+cost_per_second = 0.0672
+currency = "USD"
+note = "$0.0672/second; 6 tiers"
+
+[general]
+kind = "video"
+prompt = "required"
+duration_param_name = "duration_seconds"
+
+[params.negative_prompt]
+label = "Negative Prompt"
+type = "text"
+note = "Things to keep out of the clip - objects, looks or motion you do not want - up to 2,500 characters. Optional; it does not change the price."
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+default = "16:9"
+options = [
+  { value = "16:9", label = "16:9" },
+  { value = "9:16", label = "9:16" },
+  { value = "1:1", label = "1:1" },
+]
+note = "16:9, 9:16 or 1:1. Fixed for the whole clip - there is no source frame to follow instead."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "720p"
+options = [
+  { value = "720p", label = "720p" },
+  { value = "1080p", label = "1080p" },
+  { value = "4k", label = "4k" },
+]
+affects_price = true
+note = "720p, 1080p or 4K. Higher tiers cost more per second."
+
+[params.generate_audio]
+label = "Generate Audio"
+type = "boolean"
+default = false
+affects_price = true
+note = "Adds a generated soundtrack - dialogue in quotes, effects, ambience - to the same clip. At 720p and 1080p it costs more per second than a silent run; at 4K the price is the same either way."
+
+[params.duration_seconds]
+label = "Duration Seconds"
+type = "integer"
+default = 5
+min = 3
+max = 15
+affects_price = true
+note = "Whole seconds, 3 to 15. Drives the price."
+
+[params.shot_type]
+label = "Shot Type"
+type = "select"
+default = "single"
+options = [
+  { value = "single", label = "single" },
+  { value = "multi", label = "multi" },
+  { value = "customize", label = "customize" },
+]
+note = "single keeps one setup for most of the run but can still cut on its own; multi lets Kling cut its own multi-shot edit. Add \"one continuous shot, no cuts\" in the prompt if a take must not cut at all. customize follows the shot list you give in multi_prompt."
+
+# UNRENDERABLE: multi_prompt — x-ui.widget = object-list; the wizard has no input for it.
+
+[params.guidance_scale]
+label = "Guidance Scale"
+type = "number"
+default = 0.5
+min = 0
+max = 1
+hidden = true
+note = "How closely the clip follows the prompt, from 0 to 1 (default 0.5). Higher sticks to the wording more; lower leaves the model more freedom. It does not change the price."

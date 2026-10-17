@@ -1,0 +1,94 @@
+id = "wan-3-0-video-extend"
+label = "Wan 3.0 · Video Extend"
+category = "VID"
+platform = "spicyapi"
+endpoint = "alibaba/wan-3.0/video-extend"
+description = "Continue a clip with Wan 3.0: the last frame of your video opens a new 2 to 30 second segment, and you get back one file with the original and the continuation joined, at 480p, 720p or 1080p."
+
+[pricing]
+cost_per_second = 0.045
+currency = "USD"
+note = "$0.045/second; from 480p; 3 tiers"
+
+[general]
+kind = "video"
+prompt = "optional"
+image_url_param = "video_url"
+slots = ["last_image_url"]
+duration_param_name = "duration_seconds"
+
+[params.enable_thinking]
+label = "Enable Thinking"
+type = "boolean"
+default = false
+note = "Has the model think through the brief and any reference material before generating. It helps with dense documents, web pages and complex reference images, and makes the run slower. Off by default; it switches on automatically when you pass a reference file or link. It does not change the price."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "720p"
+options = [
+  { value = "480p", label = "480p" },
+  { value = "720p", label = "720p" },
+  { value = "1080p", label = "1080p" },
+]
+affects_price = true
+note = "Resolution the new segment is generated at: 480p, 720p or 1080p, default 720p. Match your source’s resolution so the seam shows no step in sharpness. The joined MP4 keeps your clip’s frame rate and its framing, with no black bars. To line the seam up, the picture may be trimmed or adjusted by a few percent at the edges. If the model returns a noticeably different shape, the new segment is scaled to fill your frame and centered, cropping what spills over. It sets the price."
+
+[params.duration_seconds]
+label = "Duration Seconds"
+type = "integer"
+default = 5
+options = [
+  { value = "-1", label = "Smart" },
+  { value = "2", label = "2" },
+  { value = "3", label = "3" },
+  { value = "4", label = "4" },
+  { value = "5", label = "5" },
+  { value = "6", label = "6" },
+  { value = "7", label = "7" },
+  { value = "8", label = "8" },
+  { value = "9", label = "9" },
+  { value = "10", label = "10" },
+  { value = "11", label = "11" },
+  { value = "12", label = "12" },
+  { value = "13", label = "13" },
+  { value = "14", label = "14" },
+  { value = "15", label = "15" },
+  { value = "16", label = "16" },
+  { value = "17", label = "17" },
+  { value = "18", label = "18" },
+  { value = "19", label = "19" },
+  { value = "20", label = "20" },
+  { value = "21", label = "21" },
+  { value = "22", label = "22" },
+  { value = "23", label = "23" },
+  { value = "24", label = "24" },
+  { value = "25", label = "25" },
+  { value = "26", label = "26" },
+  { value = "27", label = "27" },
+  { value = "28", label = "28" },
+  { value = "29", label = "29" },
+  { value = "30", label = "30" },
+]
+affects_price = true
+note = "Length of the new segment: any whole number from 2 to 30, or -1 to let the model choose, in which case 30 seconds are held up front and the charge settles on the length delivered. Defaults to 5. Your source is added on top and is not billed."
+
+[params.generate_audio]
+label = "Generate Audio"
+type = "boolean"
+default = true
+note = "On by default, so the new segment comes with generated sound. Your source keeps its own sound either way; when one side is silent, the joined file is padded with silence."
+
+[params.enable_prompt_expansion]
+label = "Enable Prompt Expansion"
+type = "boolean"
+default = false
+note = "Off by default. When on, the prompt is rewritten before generation, which helps thin briefs and fights you on detailed ones."
+
+[params.seed]
+label = "Seed"
+type = "integer"
+min = 0
+max = 2147483647
+note = "0 to 2147483647. Hold it steady to compare one changed field at a time; drop it for variety."

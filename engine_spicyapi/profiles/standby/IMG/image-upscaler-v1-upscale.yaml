@@ -1,0 +1,15 @@
+# Image Upscaler · Upscale — upscale
+platform: spicyapi
+endpoint: spicyapi/image-upscaler-v1/upscale
+media_type: image
+image_url_param: image_url
+parameters:
+  output_format: "jpeg"
+  resolution: "4k"
+pricing:
+  base_cost: 0.012
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

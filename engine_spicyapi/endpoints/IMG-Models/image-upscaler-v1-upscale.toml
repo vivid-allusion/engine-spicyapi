@@ -1,0 +1,38 @@
+id = "image-upscaler-v1-upscale"
+label = "Image Upscaler · Upscale"
+category = "IMG"
+platform = "spicyapi"
+endpoint = "spicyapi/image-upscaler-v1/upscale"
+description = "Image Upscaler by SpicyAPI enlarges one image to 2K, 4K or 8K, about 4, 17 or 67 megapixels, in a single call. Composition and aspect ratio stay as sent, there is no prompt, and the result comes back as JPEG, PNG or WebP."
+
+[pricing]
+base_cost = 0.012
+currency = "USD"
+note = "$0.012/image"
+
+[general]
+kind = "image"
+prompt = "none"
+image_url_param = "image_url"
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "4k"
+options = [
+  { value = "2k", label = "2K" },
+  { value = "4k", label = "4K" },
+  { value = "8k", label = "8K" },
+]
+note = "2k (about 4 MP), 4k (about 17 MP, the default) or 8k (about 67 MP), with the aspect ratio kept. Pick a tier above the source's pixel count — a smaller tier scales the image down. All three cost the same."
+
+[params.output_format]
+label = "Output Format"
+type = "select"
+default = "jpeg"
+options = [
+  { value = "jpeg", label = "JPEG" },
+  { value = "png", label = "PNG" },
+  { value = "webp", label = "WebP" },
+]
+note = "jpeg (default) keeps files manageable — about 8 MB even at the largest tier in our test. png is lossless but several times larger; webp sits in between."

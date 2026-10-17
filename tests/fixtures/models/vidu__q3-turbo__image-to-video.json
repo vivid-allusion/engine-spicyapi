@@ -1,0 +1,150 @@
+{
+ "code": 200,
+ "data": {
+  "callable": true,
+  "displayName": "Vidu Q3 Turbo \u00b7 Image to Video",
+  "inputSchema": {
+   "additionalProperties": false,
+   "properties": {
+    "bgm": {
+     "default": true,
+     "description": "Add a background music bed that fits the scene.",
+     "type": "boolean",
+     "x-ui": {
+      "affects_price": false,
+      "order": 55,
+      "widget": "switch"
+     }
+    },
+    "duration_seconds": {
+     "default": 5,
+     "description": "Requested output length in seconds.",
+     "maximum": 16,
+     "minimum": 1,
+     "type": "integer",
+     "x-ui": {
+      "advanced": false,
+      "affects_price": true,
+      "order": 80,
+      "unit": "s",
+      "widget": "slider"
+     }
+    },
+    "generate_audio": {
+     "default": true,
+     "description": "Request synchronised output audio.",
+     "type": "boolean",
+     "x-ui": {
+      "order": 60,
+      "widget": "switch"
+     }
+    },
+    "image_url": {
+     "contentMediaType": [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/gif"
+     ],
+     "description": "Opening frame. The clip starts from this image.",
+     "format": "uri",
+     "type": "string",
+     "x-ui": {
+      "order": 100,
+      "widget": "upload"
+     }
+    },
+    "movement_amplitude": {
+     "default": "auto",
+     "description": "How much things in the frame move.",
+     "enum": [
+      "auto",
+      "small",
+      "medium",
+      "large"
+     ],
+     "type": "string",
+     "x-ui": {
+      "affects_price": false,
+      "order": 85,
+      "widget": "radio"
+     }
+    },
+    "prompt": {
+     "description": "Describe what happens after the opening frame: the action, the camera, and the mood.",
+     "minLength": 1,
+     "type": "string",
+     "x-ui": {
+      "order": 90,
+      "primary": true,
+      "widget": "textarea"
+     }
+    },
+    "resolution": {
+     "default": "720p",
+     "description": "Output resolution.",
+     "enum": [
+      "540p",
+      "720p"
+     ],
+     "type": "string",
+     "x-ui": {
+      "advanced": false,
+      "affects_price": true,
+      "order": 70,
+      "widget": "radio"
+     }
+    },
+    "seed": {
+     "description": "Random seed. Keep it fixed only for controlled comparisons, not as a frame-identical guarantee.",
+     "maximum": 2147483647,
+     "minimum": 0,
+     "type": "integer",
+     "x-ui": {
+      "order": 10,
+      "widget": "number"
+     }
+    }
+   },
+   "required": [
+    "prompt",
+    "image_url"
+   ],
+   "type": "object",
+   "x-pricing": {
+    "billingMode": "variant_matrix",
+    "variantFields": [
+     "resolution"
+    ]
+   }
+  },
+  "modality": "video",
+  "model": "vidu/q3-turbo/image-to-video",
+  "pageSlug": "vidu-q3-turbo-image-to-video",
+  "price": {
+   "amount": "0.042",
+   "tiers": 2,
+   "unit": "per_second",
+   "variant": "540p",
+   "variants": [
+    {
+     "amount": "0.042",
+     "unit": "per_second",
+     "variant": "540p"
+    },
+    {
+     "amount": "0.066",
+     "unit": "per_second",
+     "variant": "720p"
+    }
+   ]
+  },
+  "provider": "Vidu",
+  "status": "live",
+  "tasks": [
+   "image-to-video"
+  ]
+ },
+ "msg": "success",
+ "request_id": "req_fixture"
+}

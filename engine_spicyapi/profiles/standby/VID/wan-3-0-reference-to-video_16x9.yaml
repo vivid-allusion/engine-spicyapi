@@ -1,0 +1,21 @@
+# Wan 3.0 · Reference to Video — 16:9
+platform: spicyapi
+endpoint: alibaba/wan-3.0/reference-to-video
+media_type: video
+image_url_param: reference_image_urls
+slots: ["reference_video_urls", "reference_audio_urls", "reference_file_url"]
+media_lists: ["reference_audio_urls", "reference_image_urls", "reference_video_urls"]
+duration_param_name: duration_seconds
+parameters:
+  aspect_ratio: "16:9"
+  duration_seconds: 5
+  enable_thinking: false
+  generate_audio: true
+  resolution: "720p"
+pricing:
+  cost_per_second: 0.045
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

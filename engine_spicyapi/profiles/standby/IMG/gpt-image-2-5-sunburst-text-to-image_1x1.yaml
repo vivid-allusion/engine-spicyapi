@@ -1,0 +1,18 @@
+# GPT Image 2.5 Sunburst · Text to Image — 1:1
+platform: spicyapi
+endpoint: openai/gpt-image-2.5-sunburst/text-to-image
+media_type: image
+parameters:
+  quality: "high"
+  resolution: "1k"
+  num_outputs: 1
+  aspect_ratio: "1:1"
+  output_format: "png"
+  official_fallback: true
+pricing:
+  base_cost: 0.001816
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

@@ -1,0 +1,68 @@
+id = "vidu-q3-turbo-image-to-video"
+label = "Vidu Q3 Turbo · Image To Video"
+category = "VID"
+platform = "spicyapi"
+endpoint = "vidu/q3-turbo/image-to-video"
+description = "Vidu Q3 Turbo is the fast tier of Vidu's Q3 line, turning an opening frame and a required prompt into 1 to 16 seconds of video. It outputs 540p or 720p with audio generated in the same pass, in the frame's shape."
+
+[pricing]
+cost_per_second = 0.042
+currency = "USD"
+note = "$0.042/second; from 540p; 2 tiers"
+
+[general]
+kind = "video"
+prompt = "required"
+image_url_param = "image_url"
+duration_param_name = "duration_seconds"
+
+[params.movement_amplitude]
+label = "Movement Amplitude"
+type = "select"
+default = "auto"
+options = [
+  { value = "auto", label = "auto" },
+  { value = "small", label = "small" },
+  { value = "medium", label = "medium" },
+  { value = "large", label = "large" },
+]
+note = "How much things in the frame move: `auto` (default) lets the model judge from the prompt; `small` keeps motion restrained, `medium` and `large` push it further. Pair `small` with portraits and products, `large` with action; the prompt still decides what moves and how. No effect on price."
+
+[params.duration_seconds]
+label = "Duration Seconds"
+type = "integer"
+default = 5
+min = 1
+max = 16
+affects_price = true
+note = "Whole seconds, 1 to 16. One to four is the practical range for variant passes."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "720p"
+options = [
+  { value = "540p", label = "540p" },
+  { value = "720p", label = "720p" },
+]
+affects_price = true
+note = "540p or 720p. Draft at 540p while the motion is still moving, then raise it once for the take you intend to deliver."
+
+[params.generate_audio]
+label = "Generate Audio"
+type = "boolean"
+default = true
+note = "On by default. Set it false when the cut goes under an existing mix."
+
+[params.bgm]
+label = "Bgm"
+type = "boolean"
+default = true
+note = "Adds a background music bed that fits the scene’s mood. On by default; switch it off when the clip goes under your own music or should carry only the scene’s own sound. It is separate from `generate_audio`, which renders the sound of the scene itself (steps, room tone, voices). No effect on price."
+
+[params.seed]
+label = "Seed"
+type = "integer"
+min = 0
+max = 2147483647
+note = "Makes two runs comparable when you change one variable. Not a frame-identical guarantee."

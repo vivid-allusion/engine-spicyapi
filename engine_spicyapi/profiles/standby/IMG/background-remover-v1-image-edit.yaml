@@ -1,0 +1,13 @@
+# Background Remover · Remove Background — image edit
+platform: spicyapi
+endpoint: spicyapi/background-remover-v1/edit
+media_type: image
+image_url_param: image_url
+parameters: {}
+pricing:
+  base_cost: 0.0048
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

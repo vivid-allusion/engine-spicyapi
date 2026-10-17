@@ -1,0 +1,259 @@
+{
+ "code": 200,
+ "data": {
+  "callable": true,
+  "displayName": "Wan 3.0 \u00b7 Image to Video",
+  "inputSchema": {
+   "additionalProperties": false,
+   "allOf": [
+    {
+     "if": {
+      "required": [
+       "last_image_url"
+      ]
+     },
+     "then": {
+      "required": [
+       "image_url"
+      ]
+     }
+    }
+   ],
+   "properties": {
+    "aspect_ratio": {
+     "description": "Output aspect ratio. Omit it to let the task adapt to the opening image; adaptive follows the input media and the intent.",
+     "enum": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4",
+      "adaptive"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 70,
+      "widget": "select"
+     }
+    },
+    "duration_seconds": {
+     "default": 5,
+     "description": "Requested output length in seconds. Pass -1 for smart duration: the model picks the length from the prompt and any input media instead of a fixed number.",
+     "enum": [
+      -1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+     ],
+     "type": "integer",
+     "x-ui": {
+      "advanced": false,
+      "affects_price": true,
+      "enum_labels": {
+       "-1": "Smart"
+      },
+      "order": 50,
+      "unit": "s",
+      "widget": "slider"
+     }
+    },
+    "enable_prompt_expansion": {
+     "default": false,
+     "description": "Allow the service to expand the submitted creative brief before generation.",
+     "type": "boolean",
+     "x-ui": {
+      "order": 30,
+      "widget": "switch"
+     }
+    },
+    "enable_thinking": {
+     "default": false,
+     "description": "Let the model reason about the brief and the reference material before generating. Helps with complex references; slower. Switches on by itself when a reference file or link is given.",
+     "type": "boolean",
+     "x-ui": {
+      "order": 66,
+      "widget": "switch"
+     }
+    },
+    "generate_audio": {
+     "default": true,
+     "description": "Request generated audio with the video.",
+     "type": "boolean",
+     "x-ui": {
+      "order": 40,
+      "widget": "switch"
+     }
+    },
+    "image_url": {
+     "contentMediaType": [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/gif"
+     ],
+     "description": "Opening-frame image.",
+     "type": "string",
+     "x-ui": {
+      "order": 90,
+      "widget": "upload"
+     }
+    },
+    "last_image_url": {
+     "contentMediaType": [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/gif"
+     ],
+     "description": "Optional last frame: the clip ends exactly on this image. Requires image_url.",
+     "type": "string",
+     "x-ui": {
+      "order": 80,
+      "widget": "upload"
+     }
+    },
+    "prompt": {
+     "description": "Describe the subject, action, camera, light, pacing, and boundaries for the shot.",
+     "minLength": 1,
+     "type": "string",
+     "x-ui": {
+      "order": 100,
+      "primary": true,
+      "widget": "textarea"
+     }
+    },
+    "resolution": {
+     "default": "720p",
+     "description": "Output resolution.",
+     "enum": [
+      "480p",
+      "720p",
+      "1080p"
+     ],
+     "type": "string",
+     "x-ui": {
+      "advanced": false,
+      "affects_price": true,
+      "order": 60,
+      "widget": "radio"
+     }
+    },
+    "seed": {
+     "description": "Random seed. Keep it fixed only for controlled comparisons, not as a frame-identical guarantee.",
+     "maximum": 2147483647,
+     "minimum": 0,
+     "type": "integer",
+     "x-ui": {
+      "order": 10,
+      "widget": "number"
+     }
+    }
+   },
+   "required": [
+    "image_url"
+   ],
+   "type": "object",
+   "x-pricing": {
+    "billingMode": "duration_capped",
+    "variantFields": [
+     "resolution"
+    ]
+   }
+  },
+  "modality": "video",
+  "model": "alibaba/wan-3.0/image-to-video",
+  "pageSlug": "wan-3-0-image-to-video",
+  "price": {
+   "amount": "0.045",
+   "listPrice": {
+    "amount": "0.05",
+    "anchor": "publisher",
+    "belowPercent": 10,
+    "checkedOn": "2026-09-15",
+    "publisher": "Alibaba",
+    "sourceUrl": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+    "unit": "per_second"
+   },
+   "tiers": 3,
+   "unit": "per_second",
+   "variant": "480p",
+   "variants": [
+    {
+     "amount": "0.045",
+     "listPrice": {
+      "amount": "0.05",
+      "anchor": "publisher",
+      "belowPercent": 10,
+      "checkedOn": "2026-09-15",
+      "publisher": "Alibaba",
+      "sourceUrl": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "unit": "per_second"
+     },
+     "unit": "per_second",
+     "variant": "480p"
+    },
+    {
+     "amount": "0.09",
+     "listPrice": {
+      "amount": "0.1",
+      "anchor": "publisher",
+      "belowPercent": 10,
+      "checkedOn": "2026-09-15",
+      "publisher": "Alibaba",
+      "sourceUrl": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "unit": "per_second"
+     },
+     "unit": "per_second",
+     "variant": "720p"
+    },
+    {
+     "amount": "0.18",
+     "listPrice": {
+      "amount": "0.2",
+      "anchor": "publisher",
+      "belowPercent": 10,
+      "checkedOn": "2026-09-15",
+      "publisher": "Alibaba",
+      "sourceUrl": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+      "unit": "per_second"
+     },
+     "unit": "per_second",
+     "variant": "1080p"
+    }
+   ]
+  },
+  "provider": "Alibaba",
+  "status": "live",
+  "tasks": [
+   "image-to-video"
+  ]
+ },
+ "msg": "success",
+ "request_id": "req_fixture"
+}

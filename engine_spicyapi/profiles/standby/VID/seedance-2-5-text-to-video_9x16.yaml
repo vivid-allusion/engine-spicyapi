@@ -1,0 +1,21 @@
+# Seedance 2.5 · Text to Video — 9:16
+platform: spicyapi
+endpoint: bytedance/seedance-2.5/text-to-video
+media_type: video
+duration_param_name: duration_seconds
+parameters:
+  watermark: false
+  resolution: "720p"
+  aspect_ratio: "9:16"
+  output_format: "mp4"
+  generate_audio: true
+  duration_seconds: 5
+  enable_web_search: false
+  return_last_frame: false
+pricing:
+  cost_per_second: 0.1234
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

@@ -1,0 +1,82 @@
+id = "nano-banana-2-1-image-to-image"
+label = "Nano Banana 2.1 · Image To Image"
+category = "IMG"
+platform = "spicyapi"
+endpoint = "google/nano-banana-2.1/edit"
+description = "Nano Banana 2.1 image editing takes one to fourteen source images and a description of the change, at 1k, 2k or 4k. It keeps faces and product details across edits and can print new text into the picture."
+
+[pricing]
+base_cost = 0.0217
+currency = "USD"
+note = "$0.0217/image; from 1k; 3 tiers"
+
+[general]
+kind = "image"
+prompt = "required"
+image_url_param = "image_urls"
+media_lists = ["image_urls"]
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+default = "auto"
+options = [
+  { value = "auto", label = "auto" },
+  { value = "1:1", label = "1:1" },
+  { value = "3:2", label = "3:2" },
+  { value = "2:3", label = "2:3" },
+  { value = "3:4", label = "3:4" },
+  { value = "4:3", label = "4:3" },
+  { value = "4:5", label = "4:5" },
+  { value = "5:4", label = "5:4" },
+  { value = "9:16", label = "9:16" },
+  { value = "16:9", label = "16:9" },
+  { value = "21:9", label = "21:9" },
+  { value = "1:4", label = "1:4" },
+  { value = "4:1", label = "4:1" },
+  { value = "1:8", label = "1:8" },
+  { value = "8:1", label = "8:1" },
+]
+note = "auto (default) keeps the shape of the source image; with several sources, choose a shape explicitly. Fourteen shapes are available, including 4:1, 1:4, 8:1 and 1:8. The shape does not change the price. Extending a photo to 4:1 looked natural in our runs, while 8:1 left visible seams in the newly added sides."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "1k"
+options = [
+  { value = "1k", label = "1k" },
+  { value = "2k", label = "2k" },
+  { value = "4k", label = "4k" },
+]
+affects_price = true
+note = "1k (default), 2k or 4k. A square frame is 1024, 2048 or 4096 pixels across; each tier has its own price."
+
+[params.enable_web_search]
+label = "Enable Web Search"
+type = "boolean"
+default = false
+affects_price = true
+note = "Off by default. When on, the model looks up current facts before drawing. Adds a search charge to the request, shown in the quote. In that case the edit runs on the official route at the official price, so keep Official fallback on."
+
+[params.enable_image_search]
+label = "Enable Image Search"
+type = "boolean"
+default = false
+affects_price = true
+note = "Off by default. When on, the model looks up reference pictures on the web, useful when the edit adds a real place or product you did not upload. Adds a search charge to the request, shown in the quote. In that case the edit runs on the official route at the official price, so keep Official fallback on."
+
+[params.output_format]
+label = "Output Format"
+type = "select"
+default = "png"
+options = [
+  { value = "png", label = "png" },
+  { value = "jpeg", label = "jpeg" },
+]
+note = "png (default) or jpeg. JPEG files are several times smaller; the price is the same."
+
+[params.official_fallback]
+label = "Official Fallback"
+type = "boolean"
+default = true
+note = "On by default. Each edit runs on the economy route first. If that route cannot complete it, for example because it refuses a suggestive edit, the edit runs again on the official route and is billed at the official price instead of the economy price. Turn it off to pay only the economy price; the edit may then be refused or fail, and edits with more than 10 source images, web search and image search are not available."

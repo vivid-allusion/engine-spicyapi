@@ -1,0 +1,107 @@
+id = "wan-3-0-image-to-video"
+label = "Wan 3.0 · Image To Video"
+category = "VID"
+platform = "spicyapi"
+endpoint = "alibaba/wan-3.0/image-to-video"
+description = "Alibaba's Wan 3.0 image-to-video starts from an opening frame and directs 2 to 30 seconds of motion with generated audio. An optional closing frame pins where the shot lands, at 480p, 720p or 1080p."
+
+[pricing]
+cost_per_second = 0.045
+currency = "USD"
+note = "$0.045/second; from 480p; 3 tiers"
+
+[general]
+kind = "video"
+prompt = "optional"
+image_url_param = "image_url"
+slots = ["last_image_url"]
+duration_param_name = "duration_seconds"
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+options = [
+  { value = "16:9", label = "16:9" },
+  { value = "9:16", label = "9:16" },
+  { value = "1:1", label = "1:1" },
+  { value = "4:3", label = "4:3" },
+  { value = "3:4", label = "3:4" },
+  { value = "adaptive", label = "adaptive" },
+]
+note = "16:9, 9:16, 1:1, 4:3, 3:4 or adaptive, which lets the model choose. Leave it out and the clip inherits the opening frame's shape; a conflicting value crops."
+
+[params.enable_thinking]
+label = "Enable Thinking"
+type = "boolean"
+default = false
+note = "Has the model think through the brief and any reference material before generating. It helps with dense documents, web pages and complex reference images, and makes the run slower. Off by default; it switches on automatically when you pass a reference file or link. It does not change the price."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "720p"
+options = [
+  { value = "480p", label = "480p" },
+  { value = "720p", label = "720p" },
+  { value = "1080p", label = "1080p" },
+]
+affects_price = true
+note = "480p, 720p or 1080p. Defaults to 720p. Resolution changes both the price and how long the task takes to come back."
+
+[params.duration_seconds]
+label = "Duration Seconds"
+type = "integer"
+default = 5
+options = [
+  { value = "-1", label = "Smart" },
+  { value = "2", label = "2" },
+  { value = "3", label = "3" },
+  { value = "4", label = "4" },
+  { value = "5", label = "5" },
+  { value = "6", label = "6" },
+  { value = "7", label = "7" },
+  { value = "8", label = "8" },
+  { value = "9", label = "9" },
+  { value = "10", label = "10" },
+  { value = "11", label = "11" },
+  { value = "12", label = "12" },
+  { value = "13", label = "13" },
+  { value = "14", label = "14" },
+  { value = "15", label = "15" },
+  { value = "16", label = "16" },
+  { value = "17", label = "17" },
+  { value = "18", label = "18" },
+  { value = "19", label = "19" },
+  { value = "20", label = "20" },
+  { value = "21", label = "21" },
+  { value = "22", label = "22" },
+  { value = "23", label = "23" },
+  { value = "24", label = "24" },
+  { value = "25", label = "25" },
+  { value = "26", label = "26" },
+  { value = "27", label = "27" },
+  { value = "28", label = "28" },
+  { value = "29", label = "29" },
+  { value = "30", label = "30" },
+]
+affects_price = true
+note = "Any whole number from 2 to 30, or -1 for smart duration, where the model picks the length: the 30-second maximum is held up front and the charge settles on the length actually delivered. Defaults to 5. Longer clips drift more, so settle the look at 5 seconds before extending."
+
+[params.generate_audio]
+label = "Generate Audio"
+type = "boolean"
+default = true
+note = "On by default. The clip comes back with sound already locked to the picture. Set false when you are scoring the shot yourself."
+
+[params.enable_prompt_expansion]
+label = "Enable Prompt Expansion"
+type = "boolean"
+default = false
+note = "Off by default. When on, the prompt is rewritten before generation, which helps thin briefs and fights you on detailed ones."
+
+[params.seed]
+label = "Seed"
+type = "integer"
+min = 0
+max = 2147483647
+note = "0 to 2147483647. Hold it steady to compare one changed field at a time; drop it for variety."

@@ -1,24 +1,29 @@
-"""Engine implementation for the Spicy API (spicyapi.com).
+"""Engine implementation for SpicyAPI (spicyapi.ai).
 
 Gold interface: ``Engine(profile, output_dir, api_key, on_progress)`` with
-``Engine.run(inputs) -> list[OutputFile]``. All Spicy API-specific logic
-lives here and in the sibling modules (:mod:`transport`, :mod:`catalog`,
-:mod:`payloads`); Generators stay provider-agnostic.
+``Engine.run(inputs) -> list[OutputFile]``. All SpicyAPI-specific logic lives
+here and in the sibling modules (:mod:`transport`, :mod:`catalog`,
+:mod:`payloads`, :mod:`tasks`); Generators stay provider-agnostic.
 
-Wire shape, per the provider's own OpenAPI document:
+Wire shape, per the provider's own OpenAPI document
+(https://docs.spicyapi.ai/openapi.yaml):
 
-* image and image-edit — synchronous ``POST /v1/images/generations`` and
-  ``POST /v1/images/edits``; the response's ``data[].url`` are durable CDN
-  URLs.
-* video and video-edit — ``POST /v1/videos/generations`` (or
-  ``/v1/videos/edits``) returns a task; poll ``GET /v1/videos/tasks/{id}``
-  until ``succeeded`` and take ``output.video_url``.
+* every generation is asynchronous — ``POST /jobs/createTask`` with
+  ``{"model", "input"}`` returns a task in ``queued`` state, then
+  ``GET /jobs/recordInfo?taskId=…`` is polled until the state leaves
+  ``{queued, running}`` and ``output.assets[]`` carries short-lived signed URLs;
+* images and videos differ only in how long that takes, not in the shape of
+  the call, so one code path serves both;
+* an ``Idempotency-Key`` makes a retried submission return the original task
+  instead of holding funds twice, which is what lets the batch loop retry
+  safely.
 """
 
 from __future__ import annotations
 
 import os
 import time
+import uuid
 from collections.abc import Callable
 from datetime import datetime
 from pathlib import Path
@@ -27,26 +32,21 @@ from typing import Any
 from . import outputs, tasks, transport
 from .catalog import Catalog, EndpointSpec, load_catalog
 from .datatypes import EngineError, InputFile, OutputFile, ProgressEvent
-from .payloads import build_payload, compose_prompt
+from .payloads import build_input, compose_prompt
 
-DEFAULT_POLL_INTERVAL = 10.0
+DEFAULT_POLL_INTERVAL = 5.0
 DEFAULT_TASK_TIMEOUT = 3600.0
 
-_PATH_BY_KIND = {
-    "image": "v1/images/generations",
-    "image-edit": "v1/images/edits",
-    "video": "v1/videos/generations",
-    "video-edit": "v1/videos/edits",
-}
+CREATE_TASK_PATH = "jobs/createTask"
 
 
 class Engine:
     PLATFORM: str = "spicyapi"
     PROVIDER_NAME: str = "SpicyAPI"
-    PROVIDER_HOMEPAGE: str = "https://www.spicyapi.com"
-    API_KEY_ENV_VAR: str = "SPICYAPI_API_KEY"
+    PROVIDER_HOMEPAGE: str = "https://spicyapi.ai"
+    API_KEY_ENV_VAR: str = "SPICY_API_KEY"
     API_KEY_PATTERN: str = r"^sk-spicy-"
-    BASE_URL: str = "https://api.spicyapi.com"
+    BASE_URL: str = transport.DEFAULT_BASE_URL
 
     def __init__(
         self,
@@ -62,7 +62,7 @@ class Engine:
         self._prefix = profile.get("prompt_prefix", "")
         self._suffix = profile.get("prompt_suffix", "")
         self._base_url = str(profile.get("base_url") or profile.get("api_base_url") or self.BASE_URL)
-        self._poll_interval = _positive_float(profile.get("poll_interval"), DEFAULT_POLL_INTERVAL)
+        self._poll_interval = _non_negative_float(profile.get("poll_interval"), DEFAULT_POLL_INTERVAL)
         self._task_timeout = _positive_float(profile.get("timeout_seconds"), DEFAULT_TASK_TIMEOUT)
         self._catalog: Catalog = load_catalog()
 
@@ -78,7 +78,7 @@ class Engine:
         client = self._make_client()
         results: list[OutputFile] = []
         total = len(inputs)
-        consecutive_conflicts = 0
+        consecutive_retryable = 0
         circuit_max = int(self._profile.get("circuit_breaker_max", 3))
 
         for idx, item in enumerate(inputs):
@@ -114,13 +114,12 @@ class Engine:
 
             api_payload: dict | None = None
             try:
-                api_payload, warnings = build_payload(
-                    self._profile, spec, params, prompt, item
-                )
+                api_input, warnings = build_input(self._profile, spec, params, prompt, item)
                 for warning in warnings:
                     self._emit(f"{prefix} ⚠️  {warning}", level="warning")
-                urls = self._dispatch(client, spec, api_payload, prefix)
-                self._emit(f"{prefix} ✅ Response received")
+                api_payload = {"model": spec.model, "input": api_input}
+                record = self._dispatch(client, spec, api_payload, prefix)
+                urls = tasks.asset_urls(record)
                 self._emit(f"{prefix} 📦 Payload: {api_payload}")
                 saved = self._save_results(
                     client, urls, media_type, stem, idx, prefix, current, total, rel_dir
@@ -135,19 +134,19 @@ class Engine:
                             expected_path=expected,
                         )
                     )
-                else:
-                    consecutive_conflicts = 0
-                    for saved_path in saved:
-                        results.append(
-                            OutputFile(
-                                source_path=item.path,
-                                path=saved_path,
-                                status="ok",
-                                media_type=media_type,
-                                metadata={"api_payload": api_payload},
-                            )
-                        )
                     continue
+                consecutive_retryable = 0
+                for saved_path in saved:
+                    results.append(
+                        OutputFile(
+                            source_path=item.path,
+                            path=saved_path,
+                            status="ok",
+                            media_type=media_type,
+                            metadata={"api_payload": api_payload},
+                        )
+                    )
+                continue
 
             except EngineError as exc:
                 self._emit(
@@ -176,8 +175,11 @@ class Engine:
                     total=total,
                     api_payload=api_payload,
                 )
-                if transport.is_moderation_decline(exc):
-                    self._emit(f"{prefix} 🚫 {self._decline_note(exc)}", level="error")
+                if transport.is_content_rejected(exc):
+                    self._emit(
+                        f"{prefix} 🚫 Declined by the model's own policy — nothing was charged.",
+                        level="error",
+                    )
                 output = OutputFile(
                     source_path=item.path,
                     status="error",
@@ -188,24 +190,24 @@ class Engine:
                 if transport.is_batch_fatal(exc):
                     self._emit(
                         f"{prefix} 🛑 Fatal provider error — aborting batch. "
-                        f"Check balance, key, or account status. ({exc})",
+                        f"Check the key, balance or spend cap. ({exc})",
                         level="error",
                     )
                     results.append(output)
                     break
-                if transport.classify_error(exc) == "retryable":
-                    consecutive_conflicts += 1
-                    if consecutive_conflicts >= circuit_max:
+                if transport.is_retryable(exc):
+                    consecutive_retryable += 1
+                    if consecutive_retryable >= circuit_max:
                         self._emit(
                             f"{prefix} 🛑 Circuit breaker tripped after "
-                            f"{consecutive_conflicts} consecutive rate-limited "
+                            f"{consecutive_retryable} consecutive retryable "
                             f"failures — aborting batch.",
                             level="error",
                         )
                         results.append(output)
                         break
                 else:
-                    consecutive_conflicts = 0
+                    consecutive_retryable = 0
 
             results.append(output)
 
@@ -215,52 +217,53 @@ class Engine:
 
     def _dispatch(
         self, client: transport.Client, spec: EndpointSpec, payload: dict, prefix: str
-    ) -> list[str]:
-        """POST the payload and return the generated artifact URLs."""
-        path = _PATH_BY_KIND.get(spec.kind, _PATH_BY_KIND["image"])
-        response = self._request_with_retry(client, "POST", path, payload, prefix)
-
-        if response.get("object") == "dry_run":
-            self._emit(
-                f"{prefix} 🧪 Dry run: cost {response.get('cost_usd')} USD, "
-                f"moderation {response.get('moderation')}"
-            )
-            raise EngineError("dry_run profile — nothing generated")
-
-        if spec.kind in ("video", "video-edit"):
-            return tasks.await_task(
-                lambda method, path, body: self._request_with_retry(
-                    client, method, path, body, prefix
-                ),
-                response,
-                poll_interval=self._poll_interval,
-                timeout=self._task_timeout,
-                emit=self._emit,
-                prefix=prefix,
-            )
-        return _image_urls(response)
-
-    def _request_with_retry(
-        self,
-        client: transport.Client,
-        method: str,
-        path: str,
-        payload: dict | None,
-        prefix: str,
     ) -> dict:
+        """Create the task, wait for it, and return its terminal record."""
+        request = self._make_request(client, prefix)
+        task = tasks.create_task(
+            request,
+            payload,
+            headers={"Idempotency-Key": uuid.uuid4().hex},
+            emit=self._emit,
+            prefix=prefix,
+        )
+        return tasks.await_task(
+            request,
+            task,
+            poll_interval=self._poll_interval,
+            timeout=self._task_timeout,
+            emit=self._emit,
+            prefix=prefix,
+        )
+
+    def _make_request(self, client: transport.Client, prefix: str) -> Callable[..., dict]:
+        """A retrying request function bound to this batch's retry policy."""
+
         def note(attempt: int, total: int, sleep: float, long_backoff: bool) -> None:
-            label = "model at capacity" if long_backoff else "rate limit"
+            label = "model unavailable" if long_backoff else "rate limit"
             self._emit(f"{prefix} ⏳ {label}, retry {attempt}/{total} in {sleep:.1f}s")
 
-        return transport.request_with_retry(
-            client,
-            method,
-            path,
-            payload,
-            retries=int(self._profile.get("retry_on_429", 4)),
-            base_delay=float(self._profile.get("retry_base_delay", 2.0)),
-            on_retry=note,
-        )
+        def request(
+            method: str,
+            path: str,
+            payload: dict | None = None,
+            *,
+            headers: dict[str, str] | None = None,
+            params: dict[str, str] | None = None,
+        ) -> dict:
+            return transport.request_with_retry(
+                client,
+                method,
+                path,
+                payload,
+                headers=headers,
+                params=params,
+                retries=int(self._profile.get("retry_on_429", 4)),
+                base_delay=float(self._profile.get("retry_base_delay", 2.0)),
+                on_retry=note,
+            )
+
+        return request
 
     # ── outputs ───────────────────────────────────────────────────────────
 
@@ -320,15 +323,6 @@ class Engine:
             api_key=self._resolve_api_key(), base_url=self._base_url, timeout=timeout
         )
 
-    def _decline_note(self, exc: Exception) -> str:
-        payload = getattr(exc, "payload", {}) or {}
-        error = payload.get("error") if isinstance(payload.get("error"), dict) else {}
-        moderation_id = error.get("moderation_id") or payload.get("moderation_id")
-        note = "Declined by the provider's screen — nothing was charged."
-        if moderation_id:
-            note += f" Appeal it with POST /v1/moderations/appeals (moderation_id {moderation_id})."
-        return note
-
     # ── progress ──────────────────────────────────────────────────────────
 
     def _emit(
@@ -353,20 +347,18 @@ class Engine:
             )
 
 
-def _image_urls(response: dict) -> list[str]:
-    data = response.get("data")
-    if not isinstance(data, list):
-        return []
-    urls = []
-    for entry in data:
-        if isinstance(entry, dict) and entry.get("url"):
-            urls.append(str(entry["url"]))
-    return urls
-
-
 def _positive_float(value: Any, default: float) -> float:
     try:
         parsed = float(value)
     except (TypeError, ValueError):
         return default
     return parsed if parsed > 0 else default
+
+
+def _non_negative_float(value: Any, default: float) -> float:
+    """Like :func:`_positive_float`, but 0 is a real value (poll immediately)."""
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError):
+        return default
+    return parsed if parsed >= 0 else default

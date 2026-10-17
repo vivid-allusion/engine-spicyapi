@@ -1,0 +1,19 @@
+# Vidu Q3 Turbo · Image to Video — image to video
+platform: spicyapi
+endpoint: vidu/q3-turbo/image-to-video
+media_type: video
+image_url_param: image_url
+duration_param_name: duration_seconds
+parameters:
+  bgm: true
+  duration_seconds: 5
+  generate_audio: true
+  movement_amplitude: "auto"
+  resolution: "720p"
+pricing:
+  cost_per_second: 0.042
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''

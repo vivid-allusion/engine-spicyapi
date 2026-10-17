@@ -1,0 +1,100 @@
+{
+ "code": 200,
+ "data": {
+  "callable": true,
+  "displayName": "Video Upscaler \u00b7 Upscale",
+  "inputSchema": {
+   "additionalProperties": false,
+   "properties": {
+    "resolution": {
+     "default": "1080p",
+     "description": "Output tier: a pixel budget with the clip's aspect ratio kept, so an 832x480 clip at 1080p comes back at 1896x1094. Sets the per-second rate.",
+     "enum": [
+      "720p",
+      "1080p",
+      "2k",
+      "4k"
+     ],
+     "type": "string",
+     "x-ui": {
+      "affects_price": true,
+      "enum_labels": {
+       "1080p": "1080p",
+       "2k": "2K",
+       "4k": "4K",
+       "720p": "720p"
+      },
+      "order": 80,
+      "widget": "radio"
+     }
+    },
+    "video_url": {
+     "contentMediaType": [
+      "video/mp4",
+      "video/webm",
+      "video/quicktime"
+     ],
+     "description": "The clip to upscale, 3 to 60 seconds long. Length, motion and the audio track are kept; clips outside that range are rejected before any charge.",
+     "minLength": 1,
+     "type": "string",
+     "x-ui": {
+      "accept": [
+       "video/mp4"
+      ],
+      "order": 100,
+      "primary": true,
+      "widget": "upload"
+     }
+    }
+   },
+   "required": [
+    "video_url"
+   ],
+   "type": "object",
+   "x-pricing": {
+    "billingMode": "duration_capped",
+    "variantFields": [
+     "resolution"
+    ]
+   }
+  },
+  "modality": "video",
+  "model": "spicyapi/video-upscaler-v1/upscale",
+  "pageSlug": "video-upscaler-v1-upscale",
+  "price": {
+   "amount": "0.006",
+   "tiers": 4,
+   "unit": "per_second",
+   "variant": "1080p",
+   "variants": [
+    {
+     "amount": "0.006",
+     "unit": "per_second",
+     "variant": "1080p"
+    },
+    {
+     "amount": "0.006",
+     "unit": "per_second",
+     "variant": "720p"
+    },
+    {
+     "amount": "0.012",
+     "unit": "per_second",
+     "variant": "2k"
+    },
+    {
+     "amount": "0.024",
+     "unit": "per_second",
+     "variant": "4k"
+    }
+   ]
+  },
+  "provider": "SpicyAPI",
+  "status": "live",
+  "tasks": [
+   "upscale"
+  ]
+ },
+ "msg": "success",
+ "request_id": "req_fixture"
+}

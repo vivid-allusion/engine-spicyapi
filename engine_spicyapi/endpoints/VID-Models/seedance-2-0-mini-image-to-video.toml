@@ -1,0 +1,112 @@
+id = "seedance-2-0-mini-image-to-video"
+label = "Seedance 2.0 Mini · Image To Video"
+category = "VID"
+platform = "spicyapi"
+endpoint = "bytedance/seedance-2.0-mini/image-to-video"
+description = "Seedance 2.0 Mini image-to-video from ByteDance starts the clip on a still you supply and animates it, with sound in the same pass. Clips run 4 to 15 seconds at 480p or 720p, and an optional closing still makes the shot arrive on a set frame."
+
+[pricing]
+cost_per_second = 0.0246078
+currency = "USD"
+note = "$0.0246078/second; 8 tiers"
+
+[general]
+kind = "video"
+prompt = "optional"
+image_url_param = "image_url"
+slots = ["last_image_url"]
+duration_param_name = "duration_seconds"
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+default = "adaptive"
+options = [
+  { value = "16:9", label = "16:9" },
+  { value = "9:16", label = "9:16" },
+  { value = "4:3", label = "4:3" },
+  { value = "3:4", label = "3:4" },
+  { value = "1:1", label = "1:1" },
+  { value = "21:9", label = "21:9" },
+  { value = "adaptive", label = "adaptive" },
+]
+note = "Output framing, adaptive by default: the clip keeps the proportions of your opening frame, so nothing is cropped away. Choose one of the six fixed ratios, from 21:9 down to 9:16, only when the delivery needs a different shape — the still is then reframed to fit. No effect on what you are billed."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "720p"
+options = [
+  { value = "480p", label = "480p" },
+  { value = "720p", label = "720p" },
+]
+affects_price = true
+note = "Output resolution: 480p, or 720p by default. It selects a rate tier and governs the delivered format only — it adds no detail the first frame does not already have. Higher tiers mean bigger files and longer renders."
+
+[params.duration_seconds]
+label = "Duration Seconds"
+type = "integer"
+default = 5
+options = [
+  { value = "-1", label = "Smart" },
+  { value = "4", label = "4" },
+  { value = "5", label = "5" },
+  { value = "6", label = "6" },
+  { value = "7", label = "7" },
+  { value = "8", label = "8" },
+  { value = "9", label = "9" },
+  { value = "10", label = "10" },
+  { value = "11", label = "11" },
+  { value = "12", label = "12" },
+  { value = "13", label = "13" },
+  { value = "14", label = "14" },
+  { value = "15", label = "15" },
+]
+affects_price = true
+note = "Length of the finished clip in whole seconds, 4 to 15, default 5, and the billed quantity; -1 lets the model choose, with the estimate assuming 15 seconds. A shot driven by a single frame drifts further the longer it runs, so confirm the motion at 4 or 5 seconds before paying for 15."
+
+[params.generate_audio]
+label = "Generate Audio"
+type = "boolean"
+default = true
+affects_price = true
+note = "Whether a native soundtrack is rendered in sync with the picture. On by default; switching it off does not lower the rate in this tier. Turn it off for silent loops and for material you will score in post."
+
+[params.enable_web_search]
+label = "Enable Web Search"
+type = "boolean"
+default = false
+hidden = true
+affects_price = true
+note = "Off by default. Switched on, the model may search the web for information related to your prompt before it renders. Requests with it on are billed at the web-search rate, which is higher than the standard rate; the estimate shown before you submit already reflects it."
+
+[params.seed]
+label = "Seed"
+type = "integer"
+min = 0
+max = 2147483647
+note = "Integer seed; omit it and each run draws its own. Fix it with everything else held constant to judge what a prompt edit actually changed. It is a comparison tool, not a promise of frame-identical repeats."
+
+[params.return_last_frame]
+label = "Return Last Frame"
+type = "boolean"
+default = false
+note = "Also returns the clip’s final frame as a separate image next to the video. Send it to image-to-video as the next opening frame to chain shots without exporting a still yourself. Off by default; no effect on price."
+
+[params.bitrate_mode]
+label = "Bitrate Mode"
+type = "select"
+default = "standard"
+options = [
+  { value = "standard", label = "standard" },
+  { value = "high", label = "high" },
+]
+hidden = true
+note = "Encoding bitrate of the delivered file: `standard` (default) or `high`. High keeps fine texture and fast motion crisper at the same resolution and makes the file much larger; resolution, frame rate and length stay the same. No effect on price."
+
+[params.watermark]
+label = "Watermark"
+type = "boolean"
+default = false
+hidden = true
+note = "Adds the model’s own visible \"AI generated\" watermark to the video. Off by default; switch it on when the place you publish requires AI-made footage to be labelled. No effect on price."

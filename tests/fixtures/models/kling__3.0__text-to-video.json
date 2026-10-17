@@ -1,0 +1,285 @@
+{
+ "code": 200,
+ "data": {
+  "callable": true,
+  "displayName": "Kling 3.0 \u00b7 Text to Video",
+  "inputSchema": {
+   "additionalProperties": false,
+   "allOf": [
+    {
+     "if": {
+      "properties": {
+       "shot_type": {
+        "const": "customize"
+       }
+      },
+      "required": [
+       "shot_type"
+      ]
+     },
+     "then": {
+      "required": [
+       "multi_prompt"
+      ]
+     }
+    }
+   ],
+   "properties": {
+    "aspect_ratio": {
+     "default": "16:9",
+     "description": "Output aspect ratio.",
+     "enum": [
+      "16:9",
+      "9:16",
+      "1:1"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 80,
+      "widget": "radio"
+     }
+    },
+    "duration_seconds": {
+     "default": 5,
+     "description": "Output length in whole seconds, from 3 to 15. Billed per second.",
+     "maximum": 15,
+     "minimum": 3,
+     "type": "integer",
+     "x-ui": {
+      "affects_price": true,
+      "order": 60,
+      "step": 1,
+      "unit": "s",
+      "widget": "slider"
+     }
+    },
+    "generate_audio": {
+     "default": false,
+     "description": "Generate a native soundtrack (voices, effects, ambience) with the picture. Audio costs more per second.",
+     "type": "boolean",
+     "x-ui": {
+      "affects_price": true,
+      "order": 65,
+      "widget": "switch"
+     }
+    },
+    "guidance_scale": {
+     "default": 0.5,
+     "description": "How closely the clip follows the prompt, from 0 to 1. Higher sticks to the prompt more; lower gives the model more freedom.",
+     "maximum": 1,
+     "minimum": 0,
+     "type": "number",
+     "x-ui": {
+      "advanced": true,
+      "order": 20,
+      "step": 0.01,
+      "widget": "slider"
+     }
+    },
+    "multi_prompt": {
+     "description": "Shot list for shot_type customize: one entry per shot, in order, each with its own prompt and length in seconds. The lengths must add up to duration_seconds.",
+     "items": {
+      "additionalProperties": false,
+      "properties": {
+       "duration_seconds": {
+        "description": "Length of this shot in whole seconds, 1 to 15.",
+        "maximum": 15,
+        "minimum": 1,
+        "type": "integer"
+       },
+       "prompt": {
+        "description": "What happens in this shot, up to 512 characters.",
+        "maxLength": 512,
+        "minLength": 1,
+        "type": "string"
+       }
+      },
+      "required": [
+       "prompt",
+       "duration_seconds"
+      ],
+      "type": "object"
+     },
+     "maxItems": 6,
+     "minItems": 1,
+     "type": "array",
+     "x-ui": {
+      "order": 54,
+      "widget": "object-list"
+     }
+    },
+    "negative_prompt": {
+     "description": "What to keep out of the clip: objects, looks or motion you do not want.",
+     "maxLength": 2500,
+     "type": "string",
+     "x-ui": {
+      "order": 95,
+      "widget": "textarea"
+     }
+    },
+    "prompt": {
+     "description": "Describe the scene, the action and the camera. With sound on, add dialogue in quotes and the sounds you want.",
+     "maxLength": 2500,
+     "minLength": 1,
+     "type": "string",
+     "x-ui": {
+      "order": 100,
+      "primary": true,
+      "widget": "textarea"
+     }
+    },
+    "resolution": {
+     "default": "720p",
+     "description": "Output resolution. Higher tiers cost more per second.",
+     "enum": [
+      "720p",
+      "1080p",
+      "4k"
+     ],
+     "type": "string",
+     "x-ui": {
+      "affects_price": true,
+      "order": 70,
+      "widget": "radio"
+     }
+    },
+    "shot_type": {
+     "default": "single",
+     "description": "single keeps one continuous shot; multi lets the model cut the prompt into several shots on its own; customize follows the shot list you give in multi_prompt.",
+     "enum": [
+      "single",
+      "multi",
+      "customize"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 55,
+      "widget": "radio"
+     }
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "type": "object",
+   "x-pricing": {
+    "billingMode": "variant_matrix",
+    "variantFields": [
+     "resolution",
+     "generate_audio"
+    ]
+   }
+  },
+  "modality": "video",
+  "model": "kling/3.0/text-to-video",
+  "pageSlug": "kling-3-0-text-to-video",
+  "price": {
+   "amount": "0.0672",
+   "listPrice": {
+    "amount": "0.084",
+    "anchor": "publisher",
+    "belowPercent": 20,
+    "checkedOn": "2026-09-28",
+    "publisher": "Kling",
+    "sourceUrl": "https://kling.ai/document-api/pricing/base/video",
+    "unit": "per_second"
+   },
+   "tiers": 6,
+   "unit": "per_second",
+   "variant": "generate_audio=false;resolution=720p",
+   "variants": [
+    {
+     "amount": "0.0672",
+     "listPrice": {
+      "amount": "0.084",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-28",
+      "publisher": "Kling",
+      "sourceUrl": "https://kling.ai/document-api/pricing/base/video",
+      "unit": "per_second"
+     },
+     "unit": "per_second",
+     "variant": "generate_audio=false;resolution=720p"
+    },
+    {
+     "amount": "0.0896",
+     "listPrice": {
+      "amount": "0.112",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-28",
+      "publisher": "Kling",
+      "sourceUrl": "https://kling.ai/document-api/pricing/base/video",
+      "unit": "per_second"
+     },
+     "unit": "per_second",
+     "variant": "generate_audio=false;resolution=1080p"
+    },
+    {
+     "amount": "0.1008",
+     "listPrice": {
+      "amount": "0.126",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-28",
+      "publisher": "Kling",
+      "sourceUrl": "https://kling.ai/document-api/pricing/base/video",
+      "unit": "per_second"
+     },
+     "unit": "per_second",
+     "variant": "generate_audio=true;resolution=720p"
+    },
+    {
+     "amount": "0.1344",
+     "listPrice": {
+      "amount": "0.168",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-28",
+      "publisher": "Kling",
+      "sourceUrl": "https://kling.ai/document-api/pricing/base/video",
+      "unit": "per_second"
+     },
+     "unit": "per_second",
+     "variant": "generate_audio=true;resolution=1080p"
+    },
+    {
+     "amount": "0.336",
+     "listPrice": {
+      "amount": "0.42",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-28",
+      "publisher": "Kling",
+      "sourceUrl": "https://kling.ai/document-api/pricing/base/video",
+      "unit": "per_second"
+     },
+     "unit": "per_second",
+     "variant": "generate_audio=false;resolution=4k"
+    },
+    {
+     "amount": "0.336",
+     "listPrice": {
+      "amount": "0.42",
+      "anchor": "publisher",
+      "belowPercent": 20,
+      "checkedOn": "2026-09-28",
+      "publisher": "Kling",
+      "sourceUrl": "https://kling.ai/document-api/pricing/base/video",
+      "unit": "per_second"
+     },
+     "unit": "per_second",
+     "variant": "generate_audio=true;resolution=4k"
+    }
+   ]
+  },
+  "provider": "Kling",
+  "status": "live",
+  "tasks": [
+   "text-to-video"
+  ]
+ },
+ "msg": "success",
+ "request_id": "req_fixture"
+}

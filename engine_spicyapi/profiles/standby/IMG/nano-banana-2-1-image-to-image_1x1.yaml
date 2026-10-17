@@ -1,0 +1,20 @@
+# Nano Banana 2.1 · Image Editing — 1:1
+platform: spicyapi
+endpoint: google/nano-banana-2.1/edit
+media_type: image
+image_url_param: image_urls
+media_lists: ["image_urls"]
+parameters:
+  aspect_ratio: "1:1"
+  enable_image_search: false
+  enable_web_search: false
+  official_fallback: true
+  output_format: "png"
+  resolution: "1k"
+pricing:
+  base_cost: 0.0217
+  currency: USD
+
+# Prompt modifications (uncomment to use)
+#prompt_prefix: ''
+#prompt_suffix: ''
