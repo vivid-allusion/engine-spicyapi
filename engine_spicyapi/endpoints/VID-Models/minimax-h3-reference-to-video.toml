@@ -1,0 +1,47 @@
+id = "minimax-h3-reference-to-video"
+label = "MiniMax H3 · Reference to video"
+category = "VID"
+platform = "spicyapi"
+endpoint = "minimax/h3/reference-to-video"
+description = "Guide a MiniMax H3 shot with a reference video, still images, or both."
+
+[pricing]
+base_cost = 0.025
+currency = "USD"
+note = "$0.025/image; 3 price tier(s), up to $0.058"
+
+[general]
+kind = "video"
+prompt = "required"
+slots = ["reference_audio_urls", "reference_image_urls", "reference_video_urls"]
+media_lists = ["reference_audio_urls", "reference_image_urls", "reference_video_urls"]
+duration_param_name = "duration_seconds"
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+default = "16:9"
+options = [{ value = "16:9", label = "16:9" }, { value = "9:16", label = "9:16" }, { value = "1:1", label = "1:1" }, { value = "4:3", label = "4:3" }, { value = "3:4", label = "3:4" }, { value = "21:9", label = "21:9" }]
+note = "Output aspect ratio."
+
+[params.duration_seconds]
+label = "Duration Seconds"
+type = "integer"
+default = 5
+min = 4
+max = 15
+note = "Requested output length in seconds."
+
+[params.enable_prompt_expansion]
+label = "Enable Prompt Expansion"
+type = "boolean"
+default = false
+options = [{ value = "false", label = "false" }]
+note = "Accepted for compatibility only. This endpoint does not expand prompts, so the only allowed value is false."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "768p"
+options = [{ value = "480p", label = "480p" }, { value = "768p", label = "768p" }, { value = "2k", label = "2k" }]
+note = "Output resolution."

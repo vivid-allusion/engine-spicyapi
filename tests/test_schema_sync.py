@@ -174,5 +174,5 @@ def test_openapi_contract_check_catches_a_changed_request_schema(monkeypatch):
 
 def test_read_tomls_finds_every_shipped_toml():
     tomls = gate.read_tomls()
-    assert len(tomls) == 24
+    assert len(tomls) == 25
     assert {category for category, _, _ in tomls} == {"IMG", "VID"}

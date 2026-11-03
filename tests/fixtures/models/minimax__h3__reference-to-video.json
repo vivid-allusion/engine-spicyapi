@@ -1,0 +1,918 @@
+{
+ "code": 200,
+ "msg": "success",
+ "data": {
+  "slug": "minimax/h3/reference-to-video",
+  "model": "minimax/h3/reference-to-video",
+  "family": "minimax/h3",
+  "familyPageSlug": "minimax-h3",
+  "familyDisplayName": "MiniMax H3",
+  "displayName": "MiniMax H3 \u00b7 Reference to Video",
+  "provider": "MiniMax",
+  "modality": "video",
+  "tasks": [
+   "reference-to-video"
+  ],
+  "mature": false,
+  "policyTier": "unrestricted",
+  "async": true,
+  "status": "live",
+  "callable": true,
+  "sortWeight": 202607316,
+  "releaseDate": "2026-07-31",
+  "pageSlug": "minimax-h3-reference-to-video",
+  "redirectFrom": [
+   "minimax-h3-flexible-reference-to-video",
+   "minimax-h3-flexible-reference-to-video-lora",
+   "minimax-h3-high-resolution-reference-to-video"
+  ],
+  "version": "v1",
+  "availability": "available",
+  "badges": [
+   "high_resolution",
+   "audio_output",
+   "reference_input",
+   "policy_unrestricted"
+  ],
+  "assets": [
+   {
+    "id": "cover-main",
+    "kind": "cover",
+    "mediaKey": "models/covers/minimax-h3/1d22cfe85a7da221.webp",
+    "url": "https://cdn.spicyapi.ai/models/covers/minimax-h3/1d22cfe85a7da221.webp",
+    "mimeType": "image/webp",
+    "width": 2048,
+    "height": 1152,
+    "sortWeight": 0,
+    "alt": "MiniMax H3 video model family"
+   }
+  ],
+  "summary": "Guide a MiniMax H3 shot with a reference video, still images, or both. H3 returns 4\u201315 seconds at 480p, 768p or 2K with generated sound.",
+  "seoTitle": "MiniMax H3 NSFW Reference to Video API: Nine Stills",
+  "seoDescription": "Cast up to nine reference images into one 4 to 15 second shot at 480p, 768p or 2k, each addressed by number in the prompt. No filter, no approval.",
+  "price": {
+   "amount": "0.025",
+   "unit": "per_second",
+   "variant": "480p",
+   "tiers": 3,
+   "variants": [
+    {
+     "variant": "480p",
+     "amount": "0.025",
+     "unit": "per_second"
+    },
+    {
+     "variant": "768p",
+     "amount": "0.037",
+     "unit": "per_second",
+     "listPrice": {
+      "anchor": "publisher",
+      "publisher": "MiniMax",
+      "amount": "0.08",
+      "unit": "per_second",
+      "sourceUrl": "https://platform.minimax.io/docs/guides/pricing-paygo",
+      "checkedOn": "2026-09-15",
+      "belowPercent": 53
+     }
+    },
+    {
+     "variant": "2k",
+     "amount": "0.058",
+     "unit": "per_second"
+    }
+   ]
+  },
+  "requestedLocale": "en",
+  "contentLocale": "en",
+  "isFallback": false,
+  "updatedAt": "2026-11-02T15:15:55.748338Z",
+  "publishedAt": "2026-09-01T04:14:30.019434Z",
+  "familyContent": {
+   "family": "minimax/h3",
+   "summary": "MiniMax H3 turns a sentence, a still image or a few reference photos into a 4-to-30-second video with sound, up to 2K. We tested it level by level with our uncensored content ladder, and every level came back as written.",
+   "introductionHtml": "",
+   "seoTitle": "MiniMax H3 API: Uncensored NSFW Video with Sound, 30s, 2K",
+   "seoDescription": "MiniMax H3 NSFW video API with synchronized sound, text, frame and reference inputs. Up to 30s on SpicyAPI; pay per generated second.",
+   "faq": [
+    {
+     "question": "Is MiniMax H3 uncensored for NSFW video?",
+     "answer": "Yes. On text-to-video it rendered every level we asked for on 2026-09-22, up to the strongest, and we add no filter of our own. The thing to plan for is consistency: for the same person across clips, start from an image."
+    },
+    {
+     "question": "How long can a MiniMax H3 video be?",
+     "answer": "Up to 30 seconds per clip in text-to-video, image-to-video and video-extend, and up to 15 seconds in reference-to-video or at 2K. For a longer scene, save the last frame of a clip you like and use it as the opening frame of the next one - outfit, set and light carry over."
+    },
+    {
+     "question": "Does MiniMax H3 make sound?",
+     "answer": "Yes. Ambience, footsteps, music and spoken lines come out in the same file as the picture. Describe the sound you want in the prompt, the same way you describe the shot."
+    },
+    {
+     "question": "How do I keep the same character in every clip?",
+     "answer": "Use reference-to-video. Give it up to nine photos, one job each - face, outfit, room - and call them Picture 1, Picture 2 in the prompt. Three or four clear photos hold a face better than nine overlapping ones."
+    },
+    {
+     "question": "MiniMax H3 vs H3 Spicy vs H3 Max - which one should I use?",
+     "answer": "Start with H3 if you want all three ways in, 480p, 768p or 2K, and the full uncensored range from our tests. If you already have your opening frame and want a LoRA-tuned uncensored edition, look at H3 Spicy; if your work stays at the Mild level, H3 Max is the other option. The comparison table on this page lines up their modes, prices and content levels."
+    },
+    {
+     "question": "How much does MiniMax H3 cost?",
+     "answer": "You pay per second of video, and the rate depends on the resolution you pick. A clip longer than 15 seconds is billed at twice the per-second rate for the whole clip. The playground shows the exact price for your settings before you run, and there is no subscription."
+    },
+    {
+     "question": "Am I charged when a generation fails?",
+     "answer": "No. If a generation fails, the amount held for it goes straight back to your balance."
+    }
+   ],
+   "howTo": [
+    {
+     "title": "Try it in the playground",
+     "body": "Review the H3 estimate after choosing duration, resolution and references, before starting generation."
+    },
+    {
+     "title": "Get an API key",
+     "body": "Create a console key and fund your balance before sending your first H3 shot from an application. H3 usage is charged by generated video seconds without a recurring plan."
+    },
+    {
+     "title": "Send the same request from your code",
+     "body": "Export the tested H3 request from the API tab; keep its task ID to retrieve the completed clip or configure your webhook for completion."
+    }
+   ],
+   "specs": [
+    {
+     "field": "Publisher",
+     "value": "MiniMax"
+    },
+    {
+     "field": "Endpoints",
+     "value": "text-to-video, image-to-video, reference-to-video, video-extend"
+    },
+    {
+     "field": "Duration",
+     "value": "4-30 seconds, 5-30 on text-to-video, 4-15 on reference-to-video"
+    },
+    {
+     "field": "Resolution",
+     "value": "480p, 768p, 2k"
+    },
+    {
+     "field": "Aspect ratios",
+     "value": "16:9, 9:16, 1:1, 4:3, 3:4, 21:9 (text and reference)"
+    },
+    {
+     "field": "References",
+     "value": "Up to 9 images"
+    },
+    {
+     "field": "Audio",
+     "value": "Generated with the picture on every endpoint"
+    },
+    {
+     "field": "Execution",
+     "value": "Asynchronous task, billed per second of output"
+    }
+   ],
+   "coverMediaKey": "models/covers/minimax-h3/1d22cfe85a7da221.webp",
+   "coverUrl": "https://cdn.spicyapi.ai/models/covers/minimax-h3/1d22cfe85a7da221.webp",
+   "coverAlt": "MiniMax H3 video model family",
+   "eyebrow": "UNCENSORED VIDEO WITH SOUND",
+   "tagline": "Write the scene, start from your own frame, or cast it from photos - and it plays out as written.",
+   "highlights": [
+    {
+     "value": "4/4",
+     "label": "Tested rungs passed",
+     "note": "From Mild to the strongest level, each checked frame by frame."
+    },
+    {
+     "value": "30S",
+     "label": "Longest clip",
+     "note": "Long enough for a full beat, not just a loop."
+    },
+    {
+     "value": "2K",
+     "label": "Top resolution",
+     "note": "Try ideas at 480p, render the keeper in 2K."
+    },
+    {
+     "value": "AUDIO",
+     "label": "Sound included",
+     "note": "Ambience, footsteps, music and spoken lines arrive with the picture."
+    },
+    {
+     "value": "9",
+     "label": "Reference photos",
+     "note": "Hold a face, an outfit and a room steady across shots."
+    },
+    {
+     "value": "9:16",
+     "label": "Vertical ready",
+     "note": "Six frame shapes, from 21:9 widescreen to 9:16 for Reels and TikTok."
+    }
+   ],
+   "features": [
+    {
+     "eyebrow": "From text",
+     "title": "A finished shot from one paragraph",
+     "body": "Say who is in frame, what happens, where the camera goes and what you hear. H3 returns the lighting, the grain, the movement and a matching soundtrack in one clip. This noir window scene is four sentences and nothing else.",
+     "assetId": "showcase-3",
+     "variant": "split"
+    },
+    {
+     "eyebrow": "From an image",
+     "title": "Your frame, set in motion",
+     "body": "Start from a still and describe only what happens next. Here the opening frame was a coffee cup on a counter; the hand, the tilt up to the shirt and the man waking up behind her all came from the prompt.",
+     "assetId": "example-cup-then-two-in-one-shirt",
+     "variant": "split"
+    },
+    {
+     "eyebrow": "From references",
+     "title": "Same woman, same outfit, a new scene",
+     "body": "Hand it a face, an outfit and a room as separate photos and it puts them together in a shot you never filmed. It is how a character keeps looking like herself from one clip to the next.",
+     "assetId": "example-character-continuity",
+     "variant": "split"
+    },
+    {
+     "eyebrow": "With sound",
+     "title": "The soundtrack comes out with the picture",
+     "body": "Dialogue, room tone and music are generated in the same pass. The singer's line, the club reverb and the murmur from the crowd in this clip were all written into the prompt - no separate audio step.",
+     "assetId": "example-voice-and-room",
+     "variant": "stacked"
+    }
+   ],
+   "useCases": [
+    {
+     "title": "Uncensored scenes other video APIs refuse",
+     "body": "Scenes that other APIs block go through on the first try instead of bouncing off a prompt filter. Write the scene for text-to-video, or generate the exact person first and animate that frame when the look has to be precise."
+    },
+    {
+     "title": "Vertical clips with sound for social feeds",
+     "body": "9:16 clips that already have their audio: a ten-second teaser, a mood loop, a reaction beat. Draft at 480p until the timing works, then re-run the keeper in 2K."
+    },
+    {
+     "title": "A recurring character across a series",
+     "body": "Keep one face, one outfit and one room steady from episode to episode with reference photos, and write only what changes in each new shot."
+    },
+    {
+     "title": "Longer scenes, one shot at a time",
+     "body": "Chain 30-second clips into a full scene: the last frame of each approved clip becomes the first frame of the next, so wardrobe, set and light carry across the cut."
+    }
+   ],
+   "limits": [
+    {
+     "scope": "text-to-video",
+     "body": "Every level we asked for came back on screen, the strongest included. What words alone cannot pin down is the person: face, body and wardrobe are decided fresh on every run. When you need the same character twice, make the first frame and switch to image-to-video."
+    },
+    {
+     "scope": "image-to-video",
+     "body": "The opening frame is followed closely: the scene in the frame is kept as it is through the clip. Adding a closing frame pins the ending, but on long clips the middle can wander - keep the two frames close in light and framing."
+    },
+    {
+     "scope": "reference-to-video",
+     "body": "A reference carries through as sent: what our reference showed came back unchanged in the clip. Identity holds best with three or four clear photos, one job each. Load all nine with overlapping shots and it starts blending them into someone new."
+    },
+    {
+     "scope": "all",
+     "body": "Every image we have tested as a frame or reference was AI-generated. Photos of real people are the one input we have not run yet."
+    }
+   ],
+   "closing": "MiniMax H3 is MiniMax's video model with sound, available on SpicyAPI in these modes: text-to-video, image-to-video, reference-to-video and video-extend. Clips run up to 30 seconds at 480p, 768p or 2K (up to 15 seconds at 2K and in reference mode), in frame shapes from 21:9 widescreen to 9:16 vertical. In our 2026-09-22 tests every level of our content ladder came back as requested, with no softening. SpicyAPI adds no content filter of its own and bills per second of output in US dollars, with no subscription. For H3 reference work, check permissions and consent for every source before uploading, and take responsibility for the resulting footage. The 30-second options describe SpicyAPI\u2019s H3 endpoints; MiniMax\u2019s official H3 specification describes 4\u201315-second output.",
+   "assetNotes": {
+    "example-character-continuity": {
+     "alt": "In a warm lamp-lit hotel room at night, a dark-haired woman dressed in black walks to an armchair, sits on its arm, crosses her legs and looks up at the camera",
+     "caption": "Reference-to-video, 6 seconds at 768p: face, outfit and room each came from a separate reference photo."
+    },
+    "example-cup-then-two-in-one-shirt": {
+     "alt": "A woman in an oversized white shirt holds a coffee cup at a kitchen counter while a shirtless man stands in the dim room behind her",
+     "caption": "Image-to-video, 6 seconds: the camera move and the second person come from the prompt, not the frame."
+    },
+    "example-red-dress-theatre-three-angles": {
+     "alt": "A woman in a long-sleeved red dress with a high slit and a low back walks through an ornate empty theatre onto the stage, followed from behind",
+     "caption": ""
+    },
+    "example-robe-to-doorway": {
+     "alt": "In a lamp-lit bedroom, a woman in a dark silk robe rises from the edge of the bed, crosses the wooden floor and stops in the doorway looking back",
+     "caption": ""
+    },
+    "example-thunder-wheat-field": {
+     "alt": "A man in a soaked white shirt stands in a wheat field under a green-black storm sky, head tipped back, lit white for an instant by lightning",
+     "caption": ""
+    },
+    "example-voice-and-room": {
+     "alt": "A singer in a green velvet dress at a vintage microphone on a dim club stage",
+     "caption": "Reference-to-video with sound: the sung line, the club reverb and the crowd murmur were all written in the prompt."
+    },
+    "example-windowsill-turn": {
+     "alt": "In a dark room, a woman sitting by a rain-streaked window exhales red-lit cigarette smoke, then slowly turns her head toward the camera",
+     "caption": ""
+    },
+    "showcase-1": {
+     "alt": "A woman in a black lace bodysuit seen from behind, her front reflected in a tall antique mirror in a lamp-lit bedroom",
+     "caption": "Text-to-video, 5 seconds at 768p: two views of one person in a single frame, held through a slow camera arc."
+    },
+    "showcase-3": {
+     "alt": "Anamorphic night interior: a woman on an apartment windowsill exhaling smoke against rain-streaked glass under a red neon sign",
+     "caption": "Text-to-video, 5 seconds at 768p in 21:9. The blind shadows, the neon pulse and the slow head turn all come from one written brief."
+    }
+   },
+   "layout": "editorial",
+   "assets": [
+    {
+     "id": "example-boudoir-i2v",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/bb9dbe61a62db68b.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/bb9dbe61a62db68b.mp4",
+     "mimeType": "video/mp4",
+     "width": 480,
+     "height": 640,
+     "posterMediaKey": "models/examples/minimax-h3/ed455819a8adae40.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/ed455819a8adae40.webp",
+     "sortWeight": 120
+    },
+    {
+     "id": "example-boudoir-r2v",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/48b97421c9194f92.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/48b97421c9194f92.mp4",
+     "mimeType": "video/mp4",
+     "width": 480,
+     "height": 640,
+     "posterMediaKey": "models/examples/minimax-h3/8c40dd131c3c337b.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/8c40dd131c3c337b.webp",
+     "sortWeight": 120
+    },
+    {
+     "id": "example-boudoir-t2v",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/f7d025885c5bdfa2.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/f7d025885c5bdfa2.mp4",
+     "mimeType": "video/mp4",
+     "width": 480,
+     "height": 640,
+     "posterMediaKey": "models/examples/minimax-h3/8c22043955144ec5.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/8c22043955144ec5.webp",
+     "sortWeight": 120
+    },
+    {
+     "id": "showcase-1",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/87fe33e580069fff.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/87fe33e580069fff.mp4",
+     "mimeType": "video/mp4",
+     "width": 1344,
+     "height": 768,
+     "posterMediaKey": "models/examples/minimax-h3/ef58fb7d0e4a95d1.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/ef58fb7d0e4a95d1.webp",
+     "sortWeight": 100,
+     "durationMs": 5000,
+     "alt": "A woman in a black lace bodysuit seen from behind, her front reflected in a tall antique mirror in a lamp-lit bedroom",
+     "caption": "Text-to-video, 5 seconds at 768p: two views of one person in a single frame, held through a slow camera arc."
+    },
+    {
+     "id": "showcase-2",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/88f28f72c542ab87.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/88f28f72c542ab87.mp4",
+     "mimeType": "video/mp4",
+     "width": 1536,
+     "height": 672,
+     "posterMediaKey": "models/examples/minimax-h3/517ee13c69d306b7.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/517ee13c69d306b7.webp",
+     "sortWeight": 99,
+     "durationMs": 5000
+    },
+    {
+     "id": "showcase-3",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/0ade898b1f3876e0.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/0ade898b1f3876e0.mp4",
+     "mimeType": "video/mp4",
+     "width": 1280,
+     "height": 560,
+     "posterMediaKey": "models/examples/minimax-h3/a599e6063dda105f.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/a599e6063dda105f.webp",
+     "sortWeight": 98,
+     "durationMs": 5184,
+     "alt": "Anamorphic night interior: a woman on an apartment windowsill exhaling smoke against rain-streaked glass under a red neon sign",
+     "caption": "Text-to-video, 5 seconds at 768p in 21:9. The blind shadows, the neon pulse and the slow head turn all come from one written brief."
+    },
+    {
+     "id": "showcase-5",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/5a8b7e8cef4052f0.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/5a8b7e8cef4052f0.mp4",
+     "mimeType": "video/mp4",
+     "width": 1280,
+     "height": 732,
+     "posterMediaKey": "models/examples/minimax-h3/f3510360d625ea85.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/f3510360d625ea85.webp",
+     "sortWeight": 96,
+     "durationMs": 5184
+    },
+    {
+     "id": "showcase-6",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/9b6bf08668db4fcc.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/9b6bf08668db4fcc.mp4",
+     "mimeType": "video/mp4",
+     "width": 1280,
+     "height": 732,
+     "posterMediaKey": "models/examples/minimax-h3/3e252d2bc3d8e918.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/3e252d2bc3d8e918.webp",
+     "sortWeight": 95,
+     "durationMs": 5184
+    },
+    {
+     "id": "showcase-7",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/08bca3a406b03aa7.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/08bca3a406b03aa7.mp4",
+     "mimeType": "video/mp4",
+     "width": 1280,
+     "height": 560,
+     "posterMediaKey": "models/examples/minimax-h3/4c8ac6040fddd992.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/4c8ac6040fddd992.webp",
+     "sortWeight": 94,
+     "durationMs": 5184
+    },
+    {
+     "id": "example-character-continuity-named-refs",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/d058ca545aa7acc5.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/d058ca545aa7acc5.mp4",
+     "mimeType": "video/mp4",
+     "width": 1344,
+     "height": 768,
+     "posterMediaKey": "models/examples/minimax-h3/5f998aece5be6e92.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/5f998aece5be6e92.webp",
+     "sortWeight": 50,
+     "durationMs": 5000
+    },
+    {
+     "id": "example-cup-then-two-in-one-shirt",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/e7e1d9d42f04a009.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/e7e1d9d42f04a009.mp4",
+     "mimeType": "video/mp4",
+     "width": 704,
+     "height": 480,
+     "posterMediaKey": "models/examples/minimax-h3/80ae0a7821e8c814.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/80ae0a7821e8c814.webp",
+     "sortWeight": 50,
+     "durationMs": 6575,
+     "alt": "A woman in an oversized white shirt holds a coffee cup at a kitchen counter while a shirtless man stands in the dim room behind her",
+     "caption": "Image-to-video, 6 seconds: the camera move and the second person come from the prompt, not the frame."
+    },
+    {
+     "id": "example-red-dress-theatre-three-angles",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/7efb827ad33aabfc.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/7efb827ad33aabfc.mp4",
+     "mimeType": "video/mp4",
+     "width": 480,
+     "height": 640,
+     "posterMediaKey": "models/examples/minimax-h3/08155fd224fbbde9.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/08155fd224fbbde9.webp",
+     "sortWeight": 50,
+     "durationMs": 5167,
+     "alt": "A woman in a long-sleeved red dress with a high slit and a low back walks through an ornate empty theatre onto the stage, followed from behind"
+    },
+    {
+     "id": "example-thunder-wheat-field",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/ce3fd9882607402b.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/ce3fd9882607402b.mp4",
+     "mimeType": "video/mp4",
+     "width": 1344,
+     "height": 768,
+     "posterMediaKey": "models/examples/minimax-h3/c6c8c93d6f847e08.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/c6c8c93d6f847e08.webp",
+     "sortWeight": 50,
+     "durationMs": 6575,
+     "alt": "A man in a soaked white shirt stands in a wheat field under a green-black storm sky, head tipped back, lit white for an instant by lightning"
+    },
+    {
+     "id": "example-character-continuity",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/7262b38db42101af.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/7262b38db42101af.mp4",
+     "mimeType": "video/mp4",
+     "width": 1280,
+     "height": 732,
+     "posterMediaKey": "models/examples/minimax-h3/03d26b1ac78ece12.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/03d26b1ac78ece12.webp",
+     "sortWeight": 40,
+     "durationMs": 6592,
+     "alt": "In a warm lamp-lit hotel room at night, a dark-haired woman dressed in black walks to an armchair, sits on its arm, crosses her legs and looks up at the camera",
+     "caption": "Reference-to-video, 6 seconds at 768p: face, outfit and room each came from a separate reference photo."
+    },
+    {
+     "id": "example-robe-to-doorway",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/2fcb63c1897676c8.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/2fcb63c1897676c8.mp4",
+     "mimeType": "video/mp4",
+     "width": 1152,
+     "height": 768,
+     "posterMediaKey": "models/examples/minimax-h3/6b15f4e11655a973.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/6b15f4e11655a973.webp",
+     "sortWeight": 40,
+     "durationMs": 8000,
+     "alt": "In a lamp-lit bedroom, a woman in a dark silk robe rises from the edge of the bed, crosses the wooden floor and stops in the doorway looking back"
+    },
+    {
+     "id": "example-voice-and-room",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/2dea2708c1000bff.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/2dea2708c1000bff.mp4",
+     "mimeType": "video/mp4",
+     "width": 1280,
+     "height": 732,
+     "posterMediaKey": "models/examples/minimax-h3/b039a906c9036a05.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/b039a906c9036a05.webp",
+     "sortWeight": 40,
+     "durationMs": 5167,
+     "alt": "A singer in a green velvet dress at a vintage microphone on a dim club stage",
+     "caption": "Reference-to-video with sound: the sung line, the club reverb and the crowd murmur were all written in the prompt."
+    },
+    {
+     "id": "example-windowsill-turn",
+     "kind": "showcase",
+     "mediaKey": "models/examples/minimax-h3/f76fc4a7d2d077f6.mp4",
+     "url": "https://cdn.spicyapi.ai/models/examples/minimax-h3/f76fc4a7d2d077f6.mp4",
+     "mimeType": "video/mp4",
+     "width": 1152,
+     "height": 768,
+     "posterMediaKey": "models/examples/minimax-h3/089cbbeac797741c.webp",
+     "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/089cbbeac797741c.webp",
+     "sortWeight": 40,
+     "durationMs": 5167,
+     "alt": "In a dark room, a woman sitting by a rain-streaked window exhales red-lit cigarette smoke, then slowly turns her head toward the camera"
+    },
+    {
+     "id": "cover-main",
+     "kind": "cover",
+     "mediaKey": "models/covers/minimax-h3/1d22cfe85a7da221.webp",
+     "url": "https://cdn.spicyapi.ai/models/covers/minimax-h3/1d22cfe85a7da221.webp",
+     "mimeType": "image/webp",
+     "width": 2048,
+     "height": 1152,
+     "sortWeight": 0
+    }
+   ],
+   "promptExamples": [
+    {
+     "task": "text-to-video",
+     "title": "Film-noir window, written as a shot list",
+     "prompt": "Film noir. An adult woman in a black satin nightgown sits on a wide apartment windowsill at night, one knee drawn up, exhaling cigarette smoke against the rain-streaked glass as a neon sign pulses red across her face. She turns her head slowly toward camera. Venetian blind shadows, deep blacks, 1970s grain, rain and distant traffic.",
+     "why": "It reads like a shot list - who, what happens, the light, then the sound - so nothing is left to guess, and the rain and traffic come back on the soundtrack.",
+     "exampleId": "noir-window"
+    },
+    {
+     "task": "text-to-video",
+     "title": "Name the shot, not the mood",
+     "prompt": "A woman in a silk slip dress sits on the edge of a hotel bed at dusk, looking out of the window, warm backlight, soft haze, slow push-in, cinematic",
+     "why": "Naming the dress, the dusk backlight and the camera move gives the model a shot to film; the short version leaves pose, light and camera to chance.",
+     "weaker": "woman in a hotel room"
+    },
+    {
+     "task": "image-to-video",
+     "title": "Let the frame set the scene, let the words move it",
+     "prompt": "The cup is lifted out of frame by a hand, then the camera tilts up: she is wearing an oversized men's shirt, and further back in the dim room a man is just getting up. Slow tilt and rack focus. Cinematic, shallow depth of field, heavy film grain, morning grey-gold.",
+     "why": "The prompt only describes what happens after the first frame - the hand, the tilt, the second person - and leaves the look to the image.",
+     "exampleId": "cup-then-two-in-one-shirt"
+    },
+    {
+     "task": "reference-to-video",
+     "title": "Same woman, same outfit, new shot",
+     "prompt": "Keep the woman from Picture 1 and the black lace slip from Picture 2, in the hotel room from Picture 3. She sits on the arm of the chair, crosses her legs and looks up at camera. Slow handheld drift, warm lamp, quiet room tone.",
+     "why": "Each photo gets one job and is called by its number, so face, outfit and room carry over instead of blending together.",
+     "exampleId": "character-continuity"
+    }
+   ],
+   "comparisons": [
+    {
+     "family": "minimax/h3",
+     "pickIf": "You want one model for a sentence, a first frame or reference photos, with sound, from cheap drafts up to 2K."
+    },
+    {
+     "family": "minimax/h3-spicy",
+     "pickIf": "You start from your own opening frame and want a LoRA-tuned uncensored edition."
+    },
+    {
+     "family": "minimax/h3-max",
+     "pickIf": "Your scenes stay at the Mild level and you want the fast Max variant, which tops out at 768p."
+    },
+    {
+     "family": "seedance/2.5",
+     "pickIf": "You need a reference-guided clip longer than 15 seconds, or more than nine reference images in one shot."
+    }
+   ],
+   "requestedLocale": "en",
+   "contentLocale": "en",
+   "isFallback": false,
+   "publishedAt": "2026-09-01T14:39:28.119891Z",
+   "updatedAt": "2026-10-30T19:55:46.304378Z"
+  },
+  "description": "Guide a MiniMax H3 shot with a reference video, still images, or both.",
+  "faq": [
+   {
+    "question": "Which reference types can I send?",
+    "answer": "Send a prompt with at least one image or video. A video can be the only reference. Up to nine images, three videos and three audio clips. Video and audio each have a separate 15-second total limit."
+   }
+  ],
+  "howTo": [
+   {
+    "title": "Assign reference roles",
+    "body": "Do not make every image carry identity, wardrobe and setting at once."
+   }
+  ],
+  "specs": [],
+  "paramNotes": {
+   "aspect_ratio": "16:9, 9:16, 1:1, 4:3, 3:4 or 21:9. 21:9 gives the anamorphic letterbox.",
+   "duration_seconds": "Whole seconds, 4 to 15.",
+   "prompt": "For motion alone, name the clip as <Video 1> and describe the movement to follow. Name each reference by number - <Picture 1>, <Picture 2> - say what job it does, then write the movement and the sound.",
+   "reference_audio_urls": "Up to three reference audio clips, WAV or MP3, 2 to 15 seconds each and 15 seconds in total, for a voice or a sound the clip should follow. Reference audio is free.",
+   "reference_image_urls": "Send a prompt with at least one image or video. A video can be the only reference. One to nine images. The first five are included in the price and each one after that adds a charge. Three or four with distinct jobs beats nine overlapping ones.",
+   "reference_video_urls": "Up to three reference videos, 2 to 15 seconds each and 15 seconds in total, for movement, camera or a character in motion. Refer to them in the prompt as <Video 1>, <Video 2> and <Video 3>, in upload order. Their seconds have their own per-second rate, lower than output seconds, so trim before uploading.",
+   "resolution": "480p, 768p or 2k. 480p is a lower-cost draft tier for trying ideas; render the keeper at 768p or 2k."
+  },
+  "inputSchema": {
+   "additionalProperties": false,
+   "anyOf": [
+    {
+     "required": [
+      "reference_image_urls"
+     ]
+    },
+    {
+     "required": [
+      "reference_video_urls"
+     ]
+    }
+   ],
+   "properties": {
+    "aspect_ratio": {
+     "default": "16:9",
+     "description": "Output aspect ratio.",
+     "enum": [
+      "16:9",
+      "9:16",
+      "1:1",
+      "4:3",
+      "3:4",
+      "21:9"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 70,
+      "widget": "select"
+     }
+    },
+    "duration_seconds": {
+     "default": 5,
+     "description": "Requested output length in seconds.",
+     "maximum": 15,
+     "minimum": 4,
+     "type": "integer",
+     "x-ui": {
+      "advanced": false,
+      "affects_price": true,
+      "order": 50,
+      "unit": "s",
+      "widget": "slider"
+     }
+    },
+    "enable_prompt_expansion": {
+     "default": false,
+     "description": "Accepted for compatibility only. This endpoint does not expand prompts, so the only allowed value is false.",
+     "enum": [
+      false
+     ],
+     "type": "boolean",
+     "x-ui": {
+      "order": 40,
+      "widget": "hidden"
+     }
+    },
+    "prompt": {
+     "description": "Refer to the references by number and describe the shot they should produce.",
+     "maxLength": 7000,
+     "minLength": 1,
+     "type": "string",
+     "x-ui": {
+      "order": 100,
+      "primary": true,
+      "reference_tokens": {
+       "reference_image_urls": "<Picture {index}>",
+       "reference_video_urls": "<Video {index}>"
+      },
+      "widget": "textarea"
+     }
+    },
+    "reference_audio_urls": {
+     "description": "Up to three reference audio clips (WAV or MP3), 2 to 15 seconds each and 15 seconds in total, for a voice or a sound.",
+     "items": {
+      "contentMediaType": [
+       "audio/mpeg",
+       "audio/wav"
+      ],
+      "format": "uri",
+      "type": "string"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array",
+     "x-ui": {
+      "affects_price": false,
+      "max_size_mb": 15,
+      "max_total_duration_seconds": 15,
+      "order": 86,
+      "widget": "multi-upload"
+     }
+    },
+    "reference_image_urls": {
+     "description": "Authorised image references, up to nine.",
+     "items": {
+      "contentMediaType": [
+       "image/jpeg",
+       "image/png",
+       "image/webp",
+       "image/gif"
+      ],
+      "format": "uri",
+      "type": "string"
+     },
+     "maxItems": 9,
+     "minItems": 1,
+     "type": "array",
+     "x-ui": {
+      "advanced": false,
+      "affects_price": true,
+      "order": 90,
+      "widget": "multi-upload"
+     }
+    },
+    "reference_video_urls": {
+     "description": "Up to three reference videos, 2 to 15 seconds each and 15 seconds in total. Refer to them in the prompt as <Video 1> and so on. Their seconds have their own per-second rate, lower than output seconds.",
+     "items": {
+      "contentMediaType": [
+       "video/mp4",
+       "video/webm",
+       "video/quicktime"
+      ],
+      "format": "uri",
+      "type": "string"
+     },
+     "maxItems": 3,
+     "minItems": 1,
+     "type": "array",
+     "x-ui": {
+      "affects_price": true,
+      "max_size_mb": 50,
+      "max_total_duration_seconds": 15,
+      "order": 88,
+      "widget": "multi-upload"
+     }
+    },
+    "resolution": {
+     "default": "768p",
+     "description": "Output resolution.",
+     "enum": [
+      "480p",
+      "768p",
+      "2k"
+     ],
+     "type": "string",
+     "x-ui": {
+      "advanced": false,
+      "affects_price": true,
+      "order": 60,
+      "widget": "radio"
+     }
+    }
+   },
+   "required": [
+    "prompt"
+   ],
+   "type": "object",
+   "x-pricing": {
+    "billingMode": "formula",
+    "variantFields": [
+     "resolution"
+    ]
+   }
+  },
+  "priceUnit": "second",
+  "priceUnitPlural": "seconds",
+  "policyNote": "",
+  "pricingNote": "Reference images: the first five are included, each one after that adds a charge. Reference video seconds have their own per-second rate, lower than output seconds; each clip rounds up to whole seconds, 15 seconds in total at most. Reference audio is free.",
+  "licenseNote": "",
+  "readme": "## Introduction\n\n**MiniMax H3 Reference to video**\n\nSend a prompt with at least one image or video. A video can be the only reference. Up to nine images, three videos and three audio clips. Video and audio each have a separate 15-second total limit. H3 returns 4\u201315 seconds at 480p, 768p or 2K with generated sound.\n\n### Choose a MiniMax H3 mode by starting material\n\n| H3 source material | Generation choice |\n| --- | --- |\n| Scene, action and soundtrack described in words | [MiniMax H3 Text to video](/models/minimax-h3/text-to-video) |\n| A chosen first frame whose composition H3 should animate | [MiniMax H3 Image to video](/models/minimax-h3/image-to-video) |\n| Images or video clips | [MiniMax H3 Reference to video](/models/minimax-h3/reference-to-video) |\n\n## Key features & Highlights\n\n### Up to nine numbered image slots\n\n`reference_image_urls` takes one to nine images, and the prompt addresses them by position. One image can carry the face, another the wardrobe and a third the room. The character-continuity example does exactly that: it keeps the woman from Picture 1 in the outfit from Picture 2 inside the hotel room from Picture 3.\n\n### A new angle on an existing set-up\n\nReferences keep a production consistent when the camera moves somewhere new. The red-dress-theatre-three-angles example uses three stills to fix the performer, the garment and the stage, then asks for a third camera angle, so the new position does not quietly become a new production. It ran in 3:4 for five seconds.\n\n### Movement and sound come from the prompt\n\nMotion and audio can be written or referenced. The voice-and-room example sends two images, the performer and the stage lighting, and describes the club acoustics in words: warm reverb and a murmur from the crowd. A reference video carries movement and is referred to as <Video 1>; reference audio sets a voice or a sound. The first five reference images are included and each image after the fifth adds a charge; reference video seconds have their own per-second rate, lower than output seconds, and reference audio is free. The live estimate reflects all of it before you submit.\n\n## Use cases\n\n### Keep a recurring character across shots\n\nReuse the same set of reference images for every shot in a sequence and change only the action and setting lines in the prompt. The endpoint takes no seed, so the references are what hold identity steady from one take to the next; text alone would drift.\n\n### Place a performer in a specific space\n\nPair a portrait with a separate image of the space and describe what happens there. In voice-and-room the performer leans into the microphone, delivers one line and smiles, while the second image supplies the stage lighting and the prompt supplies the room sound.\n\n### Hold a garment or prop steady in motion\n\nGive a garment or object its own slot rather than hoping it survives inside a portrait. The red-dress example then writes what the dress does as she moves, the slit opening with every step as she crosses to the proscenium, because its cut and colour are already fixed by a reference.\n\n## Prompt guide & Pro tips\n\n### Map every picture to one job\n\nOpen the prompt with the mapping, as character-continuity does: \"Keep the woman from Picture 1 and the black lace slip from Picture 2, in the hotel room from Picture 3.\" Then write the action. Three or four images with distinct jobs work better than nine overlapping ones; when several images show the same subject, the model averages them rather than choosing one.\n\n### Write only what the references cannot supply\n\nOnce identity, wardrobe and setting are covered by images, spend the prompt on movement, camera and sound: \"She sits on the arm of the chair, crosses her legs and looks up at camera. Slow handheld drift, warm lamp, quiet room tone.\" Describing the face again in words hands the model a second description that may not match the picture.\n\n### Draft small, then deliver\n\nDuration runs 4 to 15 seconds at every resolution. Try ideas at 480p with the reference set you intend to keep, then re-run at 480p, 768p or 2k. If a take drifts, swap one reference or one instruction at a time so you can tell which change made the difference.\n",
+  "examples": [
+   {
+    "id": "red-dress-theatre-three-angles",
+    "note": "A third angle on a set-up that already exists, which is what references are for: `reference_image_urls` takes up to nine stills, and between them they fix the performer, the garment and the stage so a new camera position does not quietly become a new production. The prompt is then written for this angle only \u2014 the walk, the follow spot, what the garment does as she moves \u2014 because the rest has been supplied as pictures.",
+    "input": {
+     "prompt": "The camera stays on her, the slit opening with every step. The same actress in the same high-slit red dress on the same theatre stage, shot from a third angle: she crosses to the proscenium and turns, the slit opening and closing with the walk, follow-spot tracking her. The slit opens over the thigh with every step, the bodice cut low at the back; medium close tracking. Cinematic, shallow depth of field, heavy film grain, crimson and gold.",
+     "resolution": "768p",
+     "aspect_ratio": "3:4",
+     "duration_seconds": 5,
+     "reference_image_urls": [
+      "https://cdn.spicyapi.ai/models/examples/inputs/8b58ee27359698f9.webp",
+      "https://cdn.spicyapi.ai/models/examples/inputs/7aff24a2751f0dc6.webp",
+      "https://cdn.spicyapi.ai/models/examples/krea-2-large/12234e718f81f907.webp"
+     ]
+    },
+    "mediaKey": "models/examples/minimax-h3/7efb827ad33aabfc.mp4",
+    "mediaUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/7efb827ad33aabfc.mp4",
+    "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/08155fd224fbbde9.webp",
+    "mimeType": "video/mp4",
+    "width": 480,
+    "height": 640,
+    "durationMs": 5167,
+    "sortWeight": 140
+   },
+   {
+    "id": "character-continuity",
+    "note": "Three references, three jobs: Picture 1 for her face, Picture 2 the garment, Picture 3 the room \u2014 naming each by number stops them blending into one scene. The `prompt` carries only the action at `duration_seconds` `6` \u2014 sitting, crossing her legs, looking up at camera \u2014 with the drift written as a direction, not pulled from a clip. Face stays constant while the scene moves.",
+    "input": {
+     "prompt": "Keep the woman from Picture 1 and the black lace slip from Picture 2, in the hotel room from Picture 3. She sits on the arm of the chair, crosses her legs and looks up at camera. Slow handheld drift, warm lamp, quiet room tone.",
+     "resolution": "768p",
+     "duration_seconds": 6,
+     "reference_image_urls": [
+      "https://cdn.spicyapi.ai/models/examples/inputs/21de8c392ac051af.jpeg",
+      "https://cdn.spicyapi.ai/models/examples/inputs/55cf2590292adc41.jpeg",
+      "https://cdn.spicyapi.ai/models/examples/inputs/c8f6b5ace5d65050.jpeg"
+     ]
+    },
+    "mediaKey": "models/examples/minimax-h3/7262b38db42101af.mp4",
+    "mediaUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/7262b38db42101af.mp4",
+    "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/03d26b1ac78ece12.webp",
+    "mimeType": "video/mp4",
+    "width": 1280,
+    "height": 732,
+    "durationMs": 6592,
+    "sortWeight": 100
+   },
+   {
+    "id": "voice-and-room",
+    "note": "Two references carry only what a still can show \u2014 her face in Picture 1, the spotlight rig in Picture 2 \u2014 and the `prompt` adds what a photo can't: a small club, warm reverb, a murmur from the crowd. At `duration_seconds` `5` there's time for one line into the mic before she smiles, turning a pose into a delivered line. Swap the room, the references still anchor face and light.",
+    "input": {
+     "prompt": "Picture 1 is the performer, Picture 2 is the stage lighting. She leans into the microphone and delivers one line, then smiles. Small club, warm reverb, a murmur from the crowd.",
+     "resolution": "768p",
+     "duration_seconds": 5,
+     "reference_image_urls": [
+      "https://cdn.spicyapi.ai/models/examples/inputs/616a1d1536981fed.jpeg",
+      "https://cdn.spicyapi.ai/models/examples/inputs/b4db185bed55c5be.jpeg"
+     ]
+    },
+    "mediaKey": "models/examples/minimax-h3/2dea2708c1000bff.mp4",
+    "mediaUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/2dea2708c1000bff.mp4",
+    "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/b039a906c9036a05.webp",
+    "mimeType": "video/mp4",
+    "width": 1280,
+    "height": 732,
+    "durationMs": 5167,
+    "sortWeight": 99
+   },
+   {
+    "id": "character-continuity-named-refs",
+    "note": "Three references, three jobs: <Picture 1> for her face, <Picture 2> the garment, <Picture 3> the room \u2014 naming each by number stops them blending into one scene. The `prompt` carries only the action at `duration_seconds` `5` \u2014 sitting, crossing her legs, looking up at camera \u2014 with the drift written as a direction, not pulled from a clip. Face stays constant while the scene moves.",
+    "input": {
+     "prompt": "Keep the woman from <Picture 1> and the black lace slip from <Picture 2>, in the hotel room from <Picture 3>. She sits on the arm of the chair, crosses her legs and looks up at camera. Slow handheld drift, warm lamp, quiet room tone.",
+     "resolution": "768p",
+     "duration_seconds": 5,
+     "reference_image_urls": [
+      "https://cdn.spicyapi.ai/models/examples/inputs/21de8c392ac051af.jpeg",
+      "https://cdn.spicyapi.ai/models/examples/inputs/55cf2590292adc41.jpeg",
+      "https://cdn.spicyapi.ai/models/examples/inputs/c8f6b5ace5d65050.jpeg"
+     ]
+    },
+    "mediaKey": "models/examples/minimax-h3/d058ca545aa7acc5.mp4",
+    "mediaUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/d058ca545aa7acc5.mp4",
+    "posterUrl": "https://cdn.spicyapi.ai/models/examples/minimax-h3/5f998aece5be6e92.webp",
+    "mimeType": "video/mp4",
+    "width": 1344,
+    "height": 768,
+    "durationMs": 5000,
+    "sortWeight": 150
+   }
+  ],
+  "relatedModels": [
+   "minimax/h3-lite",
+   "minimax/h3-highspeed",
+   "minimax/h3-spicy",
+   "lightricks/ltx-2.5"
+  ],
+  "contentTests": [
+   {
+    "rung": "nude",
+    "verdict": "renders",
+    "testedOn": "2026-09-14"
+   }
+  ],
+  "taskTimeoutSeconds": 7200,
+  "maxOutputDurationSeconds": 15,
+  "typicalDurationSeconds": 96
+ },
+ "request_id": "req_06gt059macwg7x4r96xkcmatvr"
+}
