@@ -1,0 +1,43 @@
+id = "seedream-5-5-text-to-image"
+label = "Seedream 5.5 · Text to image"
+category = "IMG"
+platform = "spicyapi"
+endpoint = "bytedance/seedream-5.5/text-to-image"
+description = "Seedream 5.5 text to image turns a written scene into a picture with optional supplied lettering. ByteDance describes photorealistic images, accurate small multilingual text, and native RGBA PNG output. Our tests reproduced every requested line in the 2k Kaze Ramen menu and confirmed a real alpha channel in a separate 2k PNG. Use this AI image generator with text for menu layouts, magazine covers, and product graphics. Quote each text line, identify its place, and say that no other words should appear when the…"
+
+[pricing]
+base_cost = 0.02
+currency = "USD"
+note = "$0.02/image; 3 price tier(s), up to $0.035"
+
+[general]
+kind = "image"
+prompt = "required"
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+default = "1:1"
+options = [{ value = "1:1", label = "1:1" }, { value = "4:3", label = "4:3" }, { value = "3:4", label = "3:4" }, { value = "16:9", label = "16:9" }, { value = "9:16", label = "9:16" }, { value = "3:2", label = "3:2" }, { value = "2:3", label = "2:3" }, { value = "21:9", label = "21:9" }]
+note = "Output aspect ratio."
+
+[params.background]
+label = "Background"
+type = "select"
+default = "auto"
+options = [{ value = "auto", label = "auto" }, { value = "transparent", label = "transparent" }, { value = "opaque", label = "opaque" }]
+note = "Background treatment. Transparent needs PNG output; a JPEG always stays opaque."
+
+[params.output_format]
+label = "Output Format"
+type = "select"
+default = "png"
+options = [{ value = "png", label = "png" }, { value = "jpeg", label = "jpeg" }]
+note = "File format of the returned image."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "2k"
+options = [{ value = "1k", label = "1k" }, { value = "1.5k", label = "1.5k" }, { value = "2k", label = "2k" }]
+note = "Output resolution tier."
