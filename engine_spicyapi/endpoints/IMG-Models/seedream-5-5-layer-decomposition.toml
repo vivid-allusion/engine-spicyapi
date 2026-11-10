@@ -1,0 +1,38 @@
+id = "seedream-5-5-layer-decomposition"
+label = "Seedream 5.5 · Layer decomposition"
+category = "IMG"
+platform = "spicyapi"
+endpoint = "bytedance/seedream-5.5/layer-decomposition"
+description = "Seedream 5.5 layers separate a finished picture into an opaque base image and transparent PNG pieces. Start with one PNG or JPEG measuring at least 512 x 512 pixels. An optional prompt can identify elements to separate or ask for English layer names. Image layer decomposition returns a name, bounding box, and zIndex for each layer; the base has no box. Set num_outputs from 2 to 100 as a ceiling that includes the base, with 10 as the default. ByteDance describes a base plus up to 99 transparent layers. Our tests…"
+
+[pricing]
+base_cost = 0.02
+currency = "USD"
+note = "$0.02/image; 4 price tier(s), up to $0.035"
+
+[general]
+kind = "image"
+prompt = "optional"
+image_url_param = "image_url"
+
+[params.num_outputs]
+label = "Num Outputs"
+type = "integer"
+default = 10
+min = 2
+max = 100
+note = "Most images to return, counting the base image. You pay only for what comes back."
+
+[params.output_format]
+label = "Output Format"
+type = "select"
+default = "png"
+options = [{ value = "png", label = "png" }, { value = "jpeg", label = "jpeg" }]
+note = "File format of the base image. Layers are always transparent PNG."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "auto"
+options = [{ value = "auto", label = "auto" }, { value = "1k", label = "1k" }, { value = "1.5k", label = "1.5k" }, { value = "2k", label = "2k" }]
+note = "Output resolution tier. auto follows the size of the source image."

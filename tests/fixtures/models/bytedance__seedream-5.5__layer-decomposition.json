@@ -1,0 +1,804 @@
+{
+ "code": 200,
+ "msg": "success",
+ "data": {
+  "slug": "bytedance/seedream-5.5/layer-decomposition",
+  "model": "bytedance/seedream-5.5/layer-decomposition",
+  "aliases": [
+   "seedream/5.5/layer-decomposition"
+  ],
+  "family": "seedream/5.5",
+  "familyPageSlug": "seedream-5-5",
+  "familyDisplayName": "Seedream 5.5",
+  "displayName": "Seedream 5.5 \u00b7 Layer Decomposition",
+  "provider": "ByteDance",
+  "modality": "image",
+  "tasks": [
+   "layer-decomposition"
+  ],
+  "mature": false,
+  "policyTier": "unrestricted",
+  "async": true,
+  "status": "live",
+  "callable": true,
+  "sortWeight": 202611051,
+  "releaseDate": "2026-11-05",
+  "pageSlug": "seedream-5-5-layer-decomposition",
+  "redirectFrom": [],
+  "version": "v1",
+  "availability": "available",
+  "badges": [
+   "high_resolution",
+   "policy_unrestricted"
+  ],
+  "assets": [
+   {
+    "id": "cover-main",
+    "kind": "cover",
+    "mediaKey": "models/covers/seedream-5-5/bedddb28d1f15ba8.webp",
+    "url": "https://cdn.spicyapi.ai/models/covers/seedream-5-5/bedddb28d1f15ba8.webp",
+    "mimeType": "image/webp",
+    "width": 2048,
+    "height": 1152,
+    "sortWeight": 0
+   },
+   {
+    "id": "example-noir-magazine-cover",
+    "kind": "showcase",
+    "mediaKey": "models/examples/seedream-5-5/d5de781513335cad.webp",
+    "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/d5de781513335cad.webp",
+    "mimeType": "image/webp",
+    "width": 1776,
+    "height": 2368,
+    "sortWeight": 130
+   },
+   {
+    "id": "example-rooftop-two-images",
+    "kind": "showcase",
+    "mediaKey": "models/examples/seedream-5-5/25947f01c50de93a.webp",
+    "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/25947f01c50de93a.webp",
+    "mimeType": "image/webp",
+    "width": 2368,
+    "height": 1776,
+    "sortWeight": 130
+   },
+   {
+    "id": "example-noir-cover-layers",
+    "kind": "showcase",
+    "mediaKey": "models/examples/seedream-5-5/2db8c79323493aa2.webp",
+    "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/2db8c79323493aa2.webp",
+    "mimeType": "image/webp",
+    "width": 1476,
+    "height": 1264,
+    "sortWeight": 130
+   },
+   {
+    "id": "example-open-shirt-at-dusk",
+    "kind": "showcase",
+    "mediaKey": "models/examples/seedream-5-5/2b242229052443f7.webp",
+    "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/2b242229052443f7.webp",
+    "mimeType": "image/webp",
+    "width": 1664,
+    "height": 2496,
+    "sortWeight": 125
+   },
+   {
+    "id": "example-jazz-bar-slow-dance",
+    "kind": "showcase",
+    "mediaKey": "models/examples/seedream-5-5/3fc3534ddb658343.webp",
+    "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/3fc3534ddb658343.webp",
+    "mimeType": "image/webp",
+    "width": 2368,
+    "height": 1776,
+    "sortWeight": 120
+   },
+   {
+    "id": "example-red-slip-dress-rain",
+    "kind": "showcase",
+    "mediaKey": "models/examples/seedream-5-5/b75e885ba2265189.webp",
+    "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/b75e885ba2265189.webp",
+    "mimeType": "image/webp",
+    "width": 1776,
+    "height": 2368,
+    "sortWeight": 120
+   },
+   {
+    "id": "example-kaze-menu-layers",
+    "kind": "showcase",
+    "mediaKey": "models/examples/seedream-5-5/e402664aa6d4b506.webp",
+    "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/e402664aa6d4b506.webp",
+    "mimeType": "image/webp",
+    "width": 1896,
+    "height": 984,
+    "sortWeight": 120
+   },
+   {
+    "id": "example-kaze-ramen-menu",
+    "kind": "showcase",
+    "mediaKey": "models/examples/seedream-5-5/c35bf1a7fd15b674.webp",
+    "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/c35bf1a7fd15b674.webp",
+    "mimeType": "image/webp",
+    "width": 2368,
+    "height": 1776,
+    "sortWeight": 110
+   },
+   {
+    "id": "example-fox-mug-cutout",
+    "kind": "showcase",
+    "mediaKey": "models/examples/seedream-5-5/6e5fcdd2f40df3b0.webp",
+    "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/6e5fcdd2f40df3b0.webp",
+    "mimeType": "image/webp",
+    "width": 2048,
+    "height": 2048,
+    "sortWeight": 100
+   }
+  ],
+  "summary": "ByteDance's newest image model takes layer splitting well past Seedream 5.0 Pro: one opaque base image plus up to 99 transparent layers, against 16 before. Each layer comes back with its stacking order, a name and its position, ready to move, swap or restyle.",
+  "seoTitle": "Seedream 5.5 Layer Decomposition API: Up to 99 Layers",
+  "seoDescription": "Split any PNG or JPEG into a base image and up to 99 transparent layers with Seedream 5.5, each with a name, stacking order and position.",
+  "price": {
+   "amount": "0.02",
+   "unit": "per_image",
+   "variant": "1.5k",
+   "tiers": 4,
+   "variants": [
+    {
+     "variant": "1.5k",
+     "amount": "0.02",
+     "unit": "per_image"
+    },
+    {
+     "variant": "1k",
+     "amount": "0.02",
+     "unit": "per_image"
+    },
+    {
+     "variant": "2k",
+     "amount": "0.035",
+     "unit": "per_image"
+    },
+    {
+     "variant": "auto",
+     "amount": "0.035",
+     "unit": "per_image"
+    }
+   ]
+  },
+  "requestedLocale": "en",
+  "contentLocale": "en",
+  "isFallback": false,
+  "updatedAt": "2026-11-10T00:29:23.292184Z",
+  "publishedAt": "2026-11-06T04:34:52.814887Z",
+  "familyContent": {
+   "family": "seedream/5.5",
+   "summary": "Seedream 5.5 is ByteDance's newest image model and the successor to Seedream 5.0 Pro. Generate photorealistic scenes with small multilingual lettering, export transparent PNG cutouts, revise images with up to ten references, or split a finished picture into editable layers, at up to 2k. Generation, editing, and layer decomposition have no content filter, so NSFW images are supported.",
+   "introductionHtml": "",
+   "seoTitle": "Seedream 5.5 API: 2k NSFW Images, Edits, Layers",
+   "seoDescription": "Create NSFW images with small multilingual text and transparent PNG output at 1k to 2k, edit with up to ten references, or split a picture into layers.",
+   "faq": [
+    {
+     "question": "Is Seedream 5.5 uncensored for NSFW images?",
+     "answer": "Yes. Seedream 5.5 has no content filter on image generation, editing, or layer decomposition. Text to image and editing both delivered results across all five tested intensity levels, with no refusals in 18 runs each; two editing results were toned down, one at Strong and one at Very strong. Layer decomposition also succeeded in both runs with a Strong-level source image. Failed requests are not charged. Any people depicted must be consenting adults."
+    },
+    {
+     "question": "What is Seedream 5.5?",
+     "answer": "ByteDance Seedream 5.5 is an image model with text-to-image generation, reference-based editing, and layer decomposition. ByteDance describes photorealistic images, small multilingual lettering, and native RGBA PNG output. Use generation for a written scene, editing for existing pictures, and layers for a finished design. Our tests include a menu, a transparent product cutout, reference edits, and separated cover elements."
+    },
+    {
+     "question": "How do I use the Seedream 5.5 API?",
+     "answer": "Choose the endpoint that matches your starting material. For generation, supply a prompt and select the canvas ratio, resolution, and format. Editing also needs one to ten reference images, named Image 1, Image 2, and onward in your instruction. Layer decomposition takes one PNG or JPEG of at least 512 x 512 pixels. Set its output ceiling with num_outputs and include the base when counting the pieces you need."
+    },
+    {
+     "question": "Can Seedream 5.5 render text in images?",
+     "answer": "Yes. In our tests, the 2k Kaze Ramen menu reproduced an English title, a Japanese subtitle, four item lines, and a footnote letter for letter. For an AI image generator with text, quote each required line and describe its position. Add \"No other words anywhere\" if the supplied copy must be the complete text. Without that restriction, the model added extra lines in one test. Check the finished lettering against your prompt."
+    },
+    {
+     "question": "How do I use Seedream 5.5 as a transparent PNG generator?",
+     "answer": "Select output_format png and background transparent for generation or editing. PNG is the default encoding, but background defaults to auto, so set transparency deliberately. Our tests confirmed a real alpha channel in a 2k PNG. The fox mug example shows a product cutout with these settings. JPEG remains opaque. In layer decomposition, the separated pieces are transparent PNGs regardless of the format chosen for the base."
+    },
+    {
+     "question": "How does Seedream 5.5 image editing use multiple images?",
+     "answer": "Supply one to ten images and assign a role to each by number. For example, ask to place the person from Image 1 with the mug from Image 2, then state that the logo should remain unchanged. Our tests kept the mug logo in that composition and kept both people recognizable in the two-portrait rooftop edit. Choose aspect_ratio yourself, since the editor defaults to 1:1 rather than following the source shape."
+    },
+    {
+     "question": "How do Seedream 5.5 layers work?",
+     "answer": "Image layer decomposition returns an opaque base plus transparent PNG pieces. Each layer has a name, a bounding box, and zIndex; the base has no box. num_outputs caps the total count, including the base. Our menu returned six images with a ceiling of six, while a three-line poster returned four with a ceiling of five. Ask for English layer names in the prompt when you need them. A larger ceiling usually gives finer separation, but it does not promise that many outputs."
+    },
+    {
+     "question": "What resolution and aspect ratios does Seedream 5.5 support?",
+     "answer": "Generation and editing offer 1k, 1.5k, and 2k, with 2k as the default. Their eight ratios are 1:1, 4:3, 3:4, 16:9, 9:16, 3:2, 2:3, and 21:9. At 2k, 16:9 gives 2816 x 1584 pixels and 1:1 gives 2048 x 2048. Set the ratio even for reference edits when the shape matters. Layer resolution is a separate choice: auto, 1k, 1.5k, or 2k, and each output keeps its own shape."
+    },
+    {
+     "question": "How much does the Seedream 5.5 API cost?",
+     "answer": "See the current rates on this page. Generation and editing use the selected tier; 1k and 1.5k share a rate. Editing also bills every input image, including the first. For layers, each delivered image, base included, is priced by its own pixel count. With auto, small layers can use the lower rate even when the base is 2k. The quote reserves the requested output ceiling at the 2k rate for auto, and settlement releases the unused amount."
+    },
+    {
+     "question": "Can I keep revising an image with Seedream 5.5?",
+     "answer": "ByteDance describes keeping unedited areas stable across 100+ editing rounds. Our tests covered clothing and location changes, a person with a product reference, and a two-portrait rooftop scene; they did not measure a 100-round sequence. Tell the editor what to change and what to preserve on each request. Save the prompt and accepted result together, and download generated files within 14 days before their retention period ends."
+    }
+   ],
+   "howTo": [
+    {
+     "title": "Choose what you start with",
+     "body": "Start with the material you already have. Choose Seedream 5.5 text to image for a written scene without a source picture. Choose image editing when a portrait or product picture should guide the result. Choose image layer decomposition when you want separate pieces from a finished design. The layer tool needs one PNG or JPEG of at least 512 x 512 pixels."
+    },
+    {
+     "title": "Write the lettering and its placement",
+     "body": "Give each text block a role and quote its exact wording. For a cover, distinguish the masthead, subtitle, and issue line. For a menu, list the entries and footnote separately. Add \"No other words anywhere\" when the design must contain just your supplied copy. In our tests, a prompt without that restriction produced extra text."
+    },
+    {
+     "title": "Set the canvas and transparency",
+     "body": "Pick aspect_ratio before submitting a generation or edit. Both default to 1:1, and an edit does not inherit the source dimensions. Select a resolution from 1k, 1.5k, or 2k; the default is 2k. For a transparent PNG generator workflow, pair output_format set to png with background set to transparent. JPEG cannot carry that transparency."
+    },
+    {
+     "title": "Decide how many pieces you need",
+     "body": "Name editing references as Image 1, Image 2, and onward, and explain what each supplies. State what should remain unchanged. For layers, set num_outputs as a ceiling that includes the base image. Ask for English layer names in the prompt if you need them. Save the returned images and layer details so you can arrange the pieces in your design tool."
+    }
+   ],
+   "specs": [
+    {
+     "field": "Publisher",
+     "value": "ByteDance"
+    },
+    {
+     "field": "Content policy",
+     "value": "No content filtering for image generation, editing, or layer decomposition; no special flag or declaration required"
+    },
+    {
+     "field": "API names",
+     "value": "bytedance/seedream-5.5/text-to-image; bytedance/seedream-5.5/edit; bytedance/seedream-5.5/layer-decomposition"
+    },
+    {
+     "field": "Generation and edit resolution",
+     "value": "1k, 1.5k, 2k (default)"
+    },
+    {
+     "field": "Canvas ratios",
+     "value": "1:1 (default); 4:3; 3:4; 16:9; 9:16; 3:2; 2:3; 21:9"
+    },
+    {
+     "field": "Generation and edit prompt",
+     "value": "Up to 5,000 characters; ByteDance recommends staying within 600 English words"
+    },
+    {
+     "field": "Editing reference count",
+     "value": "1 to 10 images"
+    },
+    {
+     "field": "Generation and edit output",
+     "value": "PNG (default) or JPEG; background auto (default), transparent, or opaque; transparency requires PNG"
+    },
+    {
+     "field": "Layer source",
+     "value": "One PNG or JPEG, at least 512 x 512 pixels"
+    },
+    {
+     "field": "Layer settings",
+     "value": "Resolution auto (default), 1k, 1.5k, or 2k; output limit 2 to 100, default 10, including the base"
+    },
+    {
+     "field": "Layer result",
+     "value": "Opaque base plus transparent PNG layers; layers have zIndex, a name, and a bounding box; the base has no box"
+    },
+    {
+     "field": "Measured time including queue",
+     "value": "Tests on November 7, 2026, including queue time at 1k: text to image 15\u201338 seconds; editing 14\u201337 seconds; layers 14\u201347 seconds"
+    }
+   ],
+   "coverMediaKey": "models/covers/seedream-5-5/bedddb28d1f15ba8.webp",
+   "coverUrl": "https://cdn.spicyapi.ai/models/covers/seedream-5-5/bedddb28d1f15ba8.webp",
+   "coverAlt": "a woman in a black satin evening gown at a hotel bar at night, glancing backward",
+   "eyebrow": "BYTEDANCE \u00b7 SEEDREAM 5.5",
+   "tagline": "Small multilingual text, transparent PNGs, edits and layers.",
+   "highlights": [
+    {
+     "value": "2k",
+     "label": "Generation and editing",
+     "note": "At 16:9, the 2k setting gives 2816 x 1584 pixels; square output is 2048 x 2048."
+    },
+    {
+     "value": "RGBA",
+     "label": "Native PNG transparency",
+     "note": "ByteDance describes native transparent output. Our 2k PNG test confirmed an alpha channel."
+    },
+    {
+     "value": "100+",
+     "label": "Rounds, per ByteDance",
+     "note": "ByteDance describes stable unedited areas across more than 100 rounds; our tests covered outfit, location, and two-image changes."
+    },
+    {
+     "value": "10",
+     "label": "Images for an edit",
+     "note": "Use one to ten references and name their roles with Image 1, Image 2, and later numbers."
+    },
+    {
+     "value": "99",
+     "label": "Transparent layers",
+     "note": "A layer split can return an opaque base plus up to 99 transparent layers. The requested count is a ceiling."
+    },
+    {
+     "value": "2k",
+     "label": "Small-text test",
+     "note": "Our ramen menu reproduced its English and Japanese copy, prices, and footnote letter for letter."
+    }
+   ],
+   "features": [
+    {
+     "eyebrow": "Small multilingual text",
+     "title": "A menu with its fine print intact",
+     "body": "Seedream 5.5 text to image can place supplied copy inside a visual layout. Our 2k menu test reproduced its English heading, Japanese subtitle, four item lines, and opening-hours footnote letter for letter. Copy the example's separation of title, subtitle, entries, and footnote. Quote the words you need and specify that no additional words should appear. That restriction matters: one of our tests added extra lines when it was absent.",
+     "assetId": "example-kaze-ramen-menu",
+     "variant": "split"
+    },
+    {
+     "eyebrow": "Native alpha channel",
+     "title": "A product graphic with transparency",
+     "body": "Use the transparent PNG generator settings to make a product graphic you can place elsewhere. The fox mug example pairs png encoding with background transparent, and our 2k test confirmed a real alpha channel. Describe the object and its lighting in the prompt, then select transparency in the controls. A request for an isolated cutout does not replace those settings. JPEG output stays opaque.",
+     "assetId": "example-fox-mug-cutout",
+     "variant": "stacked"
+    },
+    {
+     "eyebrow": "Reference-based revision",
+     "title": "Combine two portraits in one rooftop scene",
+     "body": "The rooftop edit uses the woman from Image 1 and the man from Image 2 in a shared night setting. Our tests kept both people recognizable. Copy its numbered reference roles and state what should stay unchanged. The AI image editing API accepts one to ten inputs. ByteDance describes stable unedited areas over 100+ rounds, while our measurements cover the specific edits shown on this page.",
+     "assetId": "example-rooftop-two-images",
+     "variant": "split"
+    },
+    {
+     "eyebrow": "Editable pieces",
+     "title": "One menu becomes six images",
+     "body": "Our menu split returned an opaque base and five transparent layers with a six-image ceiling. The cover example also returned six images at that ceiling. Each separated layer carries a name, a bounding box, and zIndex for its stacking order. Ask for English names when you need them. Seedream 5.5 layers use transparent PNG for the separated pieces, even when the base format is JPEG.",
+     "assetId": "example-kaze-menu-layers",
+     "variant": "stacked"
+    }
+   ],
+   "useCases": [
+    {
+     "title": "Menus with small multilingual copy",
+     "body": "Use an AI image generator with text to draft a noodle shop menu or a magazine cover. Supply the title, smaller copy, and their positions instead of asking for invented wording. Our 2k Kaze Ramen test reproduced the English heading, Japanese subtitle, four item lines, and opening-hours footnote letter for letter. Check each requested line against the result before using the design."
+    },
+    {
+     "title": "Product cutouts for composition",
+     "body": "Make a standalone product graphic for a composition, such as the teal mug with a white fox logo. Describe the product color, material, angle, and lighting. Set PNG encoding and a transparent background together. Our tests confirmed a real alpha channel at 2k. Keep the cutout as a separate asset when placing it into a larger layout."
+    },
+    {
+     "title": "Portrait revisions across settings",
+     "body": "Use Seedream 5.5 image editing to move a portrait into a different setting or bring people from separate references into one scene. The rainy Tokyo example changes the clothing and location. The rooftop example identifies two source portraits by image number. Copy that division of roles and add a clear instruction about what stays unchanged."
+    },
+    {
+     "title": "Separate text from a finished design",
+     "body": "Use Seedream 5.5 layers to work with elements from a finished menu or cover. Our cover split returned six images at a limit of six: a background, a person, a masthead, a Japanese line, an issue line, and a barcode. Returned layer names, positions, and stacking order help you organize these pieces for further design work."
+    }
+   ],
+   "limits": [
+    {
+     "scope": "all",
+     "body": "Results vary between runs. In our November 7, 2026 tests, one edit came back toned down at Strong and another at Very strong, while no text-to-image run was toned down."
+    },
+    {
+     "scope": "image-to-image",
+     "body": "An edit does not inherit its source shape. Set aspect_ratio to match the input; leaving it out selects 1:1. Generation and editing offer 1k, 1.5k, and 2k, with 2k selected by default. For transparent output, choose png and background transparent together. A JPEG remains opaque even when the scene instruction asks for a cutout."
+    },
+    {
+     "scope": "layer-decomposition",
+     "body": "The count you request includes the base and limits the result. A request for five outputs returned four in our poster test. The layer input must be one PNG or JPEG measuring at least 512 x 512 pixels. Layer resolution choices stop at 2k, with auto as the default. Each separated image keeps its own shape; the base has no bounding box."
+    },
+    {
+     "scope": "all",
+     "body": "The 100+ editing-round claim comes from ByteDance. Our tests do not establish that length of editing history. They cover specific changes to clothing, location, and reference composition. Our text result also describes a particular 2k menu, rather than a guarantee for every layout. Quote the intended wording and compare the result with your supplied copy."
+    },
+    {
+     "scope": "all",
+     "body": "Save generated images within 14 days; they are deleted after that retention period. Download the base and the transparent pieces when keeping a layer result. Store the layer names, zIndex values, and bounding boxes with the files so their placement information remains available for later composition."
+    }
+   ],
+   "closing": "Choose a Seedream 5.5 API workflow by what you need to make next. Start with the Kaze Ramen example for small multilingual text, the NOIR cover for a clear hierarchy of quoted copy, or the fox mug for transparent PNG output. Bring existing pictures to image editing and name what each reference contributes. Use image layer decomposition when the picture is finished and you need its elements separately. Set the canvas ratio for every generation or edit, and choose the output format deliberately. Our tests support the menu, transparency, reference-editing, and layer examples shown here; ByteDance's longer editing-history claim remains a separate publisher statement. Keep the prompt, settings, and downloaded results together for the next design step.",
+   "assetNotes": {
+    "example-fox-mug-cutout": {
+     "alt": "a teal mug with a white fox logo on a transparent background",
+     "caption": "1:1, 2k, background transparent, PNG"
+    },
+    "example-jazz-bar-slow-dance": {
+     "alt": "two women slow dancing in a dim jazz bar, one in a navy dress, one in a black suit",
+     "caption": "4:3, 2k"
+    },
+    "example-kaze-menu-layers": {
+     "alt": "the ramen menu photo split into a base image and five separate transparent layers",
+     "caption": "1k, up to 6 outputs"
+    },
+    "example-kaze-ramen-menu": {
+     "alt": "a printed Kaze Ramen menu with exact prices next to a bowl of ramen on a dark counter",
+     "caption": "4:3, 2k"
+    },
+    "example-noir-cover-layers": {
+     "alt": "the NOIR magazine cover split into a base image and separate transparent layers",
+     "caption": "1k, up to 6 outputs"
+    },
+    "example-noir-magazine-cover": {
+     "alt": "a woman with auburn hair in an emerald silk dress on the cover of a magazine called NOIR",
+     "caption": "3:4, 2k"
+    },
+    "example-open-shirt-at-dusk": {
+     "alt": "a man with stubble in an open white linen shirt at the edge of the sea at dusk",
+     "caption": "2:3, 2k"
+    },
+    "example-red-slip-dress-rain": {
+     "alt": "the same woman in a red silk dress on a rainy Tokyo side street at dusk",
+     "caption": "3:4, 2k"
+    },
+    "example-rooftop-two-images": {
+     "alt": "the woman and the man from the two source portraits together on a candlelit rooftop at night",
+     "caption": "4:3, 2k, two input images"
+    }
+   },
+   "layout": "editorial",
+   "assets": [
+    {
+     "id": "example-noir-cover-layers",
+     "kind": "showcase",
+     "mediaKey": "models/examples/seedream-5-5/2db8c79323493aa2.webp",
+     "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/2db8c79323493aa2.webp",
+     "mimeType": "image/webp",
+     "width": 1476,
+     "height": 1264,
+     "sortWeight": 130,
+     "alt": "the NOIR magazine cover split into a base image and separate transparent layers",
+     "caption": "1k, up to 6 outputs"
+    },
+    {
+     "id": "example-noir-magazine-cover",
+     "kind": "showcase",
+     "mediaKey": "models/examples/seedream-5-5/d5de781513335cad.webp",
+     "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/d5de781513335cad.webp",
+     "mimeType": "image/webp",
+     "width": 1776,
+     "height": 2368,
+     "sortWeight": 130,
+     "alt": "a woman with auburn hair in an emerald silk dress on the cover of a magazine called NOIR",
+     "caption": "3:4, 2k"
+    },
+    {
+     "id": "example-rooftop-two-images",
+     "kind": "showcase",
+     "mediaKey": "models/examples/seedream-5-5/25947f01c50de93a.webp",
+     "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/25947f01c50de93a.webp",
+     "mimeType": "image/webp",
+     "width": 2368,
+     "height": 1776,
+     "sortWeight": 130,
+     "alt": "the woman and the man from the two source portraits together on a candlelit rooftop at night",
+     "caption": "4:3, 2k, two input images"
+    },
+    {
+     "id": "example-open-shirt-at-dusk",
+     "kind": "showcase",
+     "mediaKey": "models/examples/seedream-5-5/2b242229052443f7.webp",
+     "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/2b242229052443f7.webp",
+     "mimeType": "image/webp",
+     "width": 1664,
+     "height": 2496,
+     "sortWeight": 125,
+     "alt": "a man with stubble in an open white linen shirt at the edge of the sea at dusk",
+     "caption": "2:3, 2k"
+    },
+    {
+     "id": "example-jazz-bar-slow-dance",
+     "kind": "showcase",
+     "mediaKey": "models/examples/seedream-5-5/3fc3534ddb658343.webp",
+     "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/3fc3534ddb658343.webp",
+     "mimeType": "image/webp",
+     "width": 2368,
+     "height": 1776,
+     "sortWeight": 120,
+     "alt": "two women slow dancing in a dim jazz bar, one in a navy dress, one in a black suit",
+     "caption": "4:3, 2k"
+    },
+    {
+     "id": "example-kaze-menu-layers",
+     "kind": "showcase",
+     "mediaKey": "models/examples/seedream-5-5/e402664aa6d4b506.webp",
+     "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/e402664aa6d4b506.webp",
+     "mimeType": "image/webp",
+     "width": 1896,
+     "height": 984,
+     "sortWeight": 120,
+     "alt": "the ramen menu photo split into a base image and five separate transparent layers",
+     "caption": "1k, up to 6 outputs"
+    },
+    {
+     "id": "example-red-slip-dress-rain",
+     "kind": "showcase",
+     "mediaKey": "models/examples/seedream-5-5/b75e885ba2265189.webp",
+     "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/b75e885ba2265189.webp",
+     "mimeType": "image/webp",
+     "width": 1776,
+     "height": 2368,
+     "sortWeight": 120,
+     "alt": "the same woman in a red silk dress on a rainy Tokyo side street at dusk",
+     "caption": "3:4, 2k"
+    },
+    {
+     "id": "example-kaze-ramen-menu",
+     "kind": "showcase",
+     "mediaKey": "models/examples/seedream-5-5/c35bf1a7fd15b674.webp",
+     "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/c35bf1a7fd15b674.webp",
+     "mimeType": "image/webp",
+     "width": 2368,
+     "height": 1776,
+     "sortWeight": 110,
+     "alt": "a printed Kaze Ramen menu with exact prices next to a bowl of ramen on a dark counter",
+     "caption": "4:3, 2k"
+    },
+    {
+     "id": "example-fox-mug-cutout",
+     "kind": "showcase",
+     "mediaKey": "models/examples/seedream-5-5/6e5fcdd2f40df3b0.webp",
+     "url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/6e5fcdd2f40df3b0.webp",
+     "mimeType": "image/webp",
+     "width": 2048,
+     "height": 2048,
+     "sortWeight": 100,
+     "alt": "a teal mug with a white fox logo on a transparent background",
+     "caption": "1:1, 2k, background transparent, PNG"
+    },
+    {
+     "id": "cover-main",
+     "kind": "cover",
+     "mediaKey": "models/covers/seedream-5-5/bedddb28d1f15ba8.webp",
+     "url": "https://cdn.spicyapi.ai/models/covers/seedream-5-5/bedddb28d1f15ba8.webp",
+     "mimeType": "image/webp",
+     "width": 2048,
+     "height": 1152,
+     "sortWeight": 0
+    }
+   ],
+   "promptExamples": [
+    {
+     "task": "text-to-image",
+     "title": "Autumn magazine cover",
+     "prompt": "Fashion magazine cover photograph. A woman in her early thirties with auburn hair in a low-cut emerald silk dress with thin straps, looking at the camera in soft window light. The only text on the cover: the large serif masthead 'NOIR', one small Japanese line '\u591c\u306e\u7279\u96c6', one small line 'Issue 12 \u00b7 Autumn Nights', and a barcode in the lower corner. No other words anywhere.",
+     "why": "The cover quotes its masthead and smaller lines, then rules out extra words. Copy that text hierarchy and the instruction to use no other wording.",
+     "exampleId": "noir-magazine-cover"
+    },
+    {
+     "task": "text-to-image",
+     "title": "Linen shirt at dusk",
+     "prompt": "Photograph of a man in his mid thirties with stubble and broad shoulders, wet hair, wearing an open white linen shirt, standing at the edge of a quiet sea at dusk and looking off to the side, warm low sun, film grain.",
+     "why": "The seaside portrait combines a linen shirt, dusk light, and film grain. Copy its concrete clothing, setting, and lighting cues to define a photographic mood.",
+     "exampleId": "open-shirt-at-dusk"
+    },
+    {
+     "task": "text-to-image",
+     "title": "Slow dance in a jazz bar",
+     "prompt": "Photograph of a lesbian couple, two women in their thirties, slow dancing in a dim jazz bar, foreheads together and eyes closed, one in a backless navy dress, the other in a tailored black suit, warm amber light, 35mm film look.",
+     "why": "The dance scene names two women, their clothing, the jazz bar, and amber light. Copy that clear cast and setting before adding the photographic treatment.",
+     "exampleId": "jazz-bar-slow-dance"
+    },
+    {
+     "task": "text-to-image",
+     "title": "Small print on a ramen menu",
+     "prompt": "Overhead photo of a printed noodle shop menu on a dark wooden counter. Title 'KAZE RAMEN' in bold brush lettering, small Japanese subtitle '\u98a8\u30e9\u30fc\u30e1\u30f3', and a neat list with exact text: 'Shoyu Ramen 980', 'Miso Ramen 1,050', 'Gyoza (6) 420', 'Oolong Tea 280'. Small footnote: 'Open daily 11:00-22:00'. A steaming bowl sits at the edge of the frame, soft window light.",
+     "why": "The menu assigns exact copy to a title, subtitle, item list, and footnote. Copy that structure; our 2k test reproduced all supplied lines letter for letter.",
+     "exampleId": "kaze-ramen-menu"
+    },
+    {
+     "task": "text-to-image",
+     "title": "A mug with an alpha channel",
+     "prompt": "A glossy ceramic teal coffee mug with a small white fox logo, three-quarter view, soft studio light, isolated product cutout.",
+     "why": "The mug prompt names a color, material, logo, and studio light. Copy those object details and pair PNG output with the transparent background setting.",
+     "exampleId": "fox-mug-cutout"
+    },
+    {
+     "task": "image-to-image",
+     "title": "Two portraits, one rooftop",
+     "prompt": "The woman from Image 1 and the man from Image 2 stand close together on a candlelit rooftop at night, her in a low-cut black satin gown, him in an open-collar white shirt, looking at each other. Keep both faces unchanged.",
+     "why": "The rooftop prompt assigns each person to a numbered source and states what stays unchanged. Copy that reference mapping when combining separate portraits.",
+     "exampleId": "rooftop-two-images"
+    },
+    {
+     "task": "image-to-image",
+     "title": "Red dress in the rain",
+     "prompt": "Dress the woman from Image 1 in a red silk slip dress with thin straps and place her on a rainy Tokyo side street at dusk with glowing shop signs, damp hair. Keep her face the same.",
+     "why": "The edit changes the clothing and moves the portrait to rainy Tokyo at dusk. Copy its separation of requested changes from the instruction to keep identity.",
+     "exampleId": "red-slip-dress-rain"
+    },
+    {
+     "task": "layer-decomposition",
+     "title": "Magazine cover in layers",
+     "prompt": "Decompose this image into layers. Write every layer name and description in English.",
+     "why": "The cover split requests English layer names. Copy that language instruction; our six-image result separated the background, person, and printed elements.",
+     "exampleId": "noir-cover-layers"
+    },
+    {
+     "task": "layer-decomposition",
+     "title": "Take the menu apart into layers",
+     "prompt": "Decompose this image into layers. Write every layer name and description in English.",
+     "why": "The menu split asks for layers with English names. Copy that instruction and count the base in the limit; our six-image run returned a base and five layers.",
+     "exampleId": "kaze-menu-layers"
+    }
+   ],
+   "comparisons": [],
+   "requestedLocale": "en",
+   "contentLocale": "en",
+   "isFallback": false,
+   "publishedAt": "2026-11-06T04:34:52.814887Z",
+   "updatedAt": "2026-11-10T00:29:23.292184Z"
+  },
+  "description": "Seedream 5.5 layers separate a finished picture into an opaque base image and transparent PNG pieces. Start with one PNG or JPEG measuring at least 512 x 512 pixels. An optional prompt can identify elements to separate or ask for English layer names. Image layer decomposition returns a name, bounding box, and zIndex for each layer; the base has no box. Set num_outputs from 2 to 100 as a ceiling that includes the base, with 10 as the default. ByteDance describes a base plus up to 99 transparent layers. Our tests returned six images from the NOIR cover at a ceiling of six, including the background, person, masthead, Japanese line, issue line, and barcode. A menu also returned six images at that ceiling, while a three-line poster returned four with a ceiling of five. Choose auto, 1k, 1.5k, or 2k resolution. Each output keeps its own shape. The format setting applies to the base; separated pieces remain transparent PNGs even if you select JPEG. Use the returned placement and stacking details to organize the elements in a design tool.",
+  "faq": [],
+  "howTo": [],
+  "specs": [],
+  "paramNotes": {
+   "image_url": "Supply one PNG or JPEG, at least 512 x 512 pixels. A source is required; there is no default image. Source selection has no separate charge; billing follows the returned count and resolution tier.",
+   "num_outputs": "Caps the total returned image count, including the base: 2 to 100, default 10. A higher cap usually produces finer layers but does not guarantee that count. The cap sets the maximum charge held by the quote; settlement uses the actual returned count.",
+   "output_format": "Select png (default) or jpeg for the opaque base. Separated layers remain transparent PNGs with either choice. This setting does not alter the per-image rate.",
+   "prompt": "Optional. Name the elements to separate, up to 5,000 characters. Leave it empty and the model picks the main elements itself. Target a region with <bbox>x1 y1 x2 y2</bbox>, using coordinates from 0 to 1000. Write your instruction in English so layer names come back in English. It does not change the price.",
+   "resolution": "Choose auto, 1k, 1.5k, or 2k; auto is the default. Each image keeps its own shape. Each returned image is priced separately at the 2.61 MP boundary; auto reserves at the 2k rate before actual sizes are known."
+  },
+  "inputSchema": {
+   "additionalProperties": false,
+   "properties": {
+    "image_url": {
+     "contentMediaType": [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/gif"
+     ],
+     "description": "The finished PNG or JPEG image to split into layers.",
+     "format": "uri",
+     "minLength": 1,
+     "type": "string",
+     "x-ui": {
+      "accept": [
+       "image/jpeg",
+       "image/png"
+      ],
+      "max_size_mb": 30,
+      "order": 110,
+      "primary": true,
+      "widget": "upload"
+     }
+    },
+    "num_outputs": {
+     "default": 10,
+     "description": "Most images to return, counting the base image. You pay only for what comes back.",
+     "maximum": 100,
+     "minimum": 2,
+     "type": "integer",
+     "x-ui": {
+      "affects_price": true,
+      "order": 70,
+      "step": 1,
+      "widget": "slider"
+     }
+    },
+    "output_format": {
+     "default": "png",
+     "description": "File format of the base image. Layers are always transparent PNG.",
+     "enum": [
+      "png",
+      "jpeg"
+     ],
+     "type": "string",
+     "x-ui": {
+      "order": 60,
+      "widget": "radio"
+     }
+    },
+    "prompt": {
+     "description": "Optional: name the elements to separate. Leave empty to let the model pick the main elements.",
+     "maxLength": 5000,
+     "minLength": 3,
+     "type": "string",
+     "x-ui": {
+      "order": 100,
+      "widget": "textarea"
+     }
+    },
+    "resolution": {
+     "default": "auto",
+     "description": "Output resolution tier. auto follows the size of the source image.",
+     "enum": [
+      "auto",
+      "1k",
+      "1.5k",
+      "2k"
+     ],
+     "type": "string",
+     "x-ui": {
+      "affects_price": true,
+      "order": 65,
+      "widget": "radio"
+     }
+    }
+   },
+   "required": [
+    "image_url"
+   ],
+   "type": "object",
+   "x-pricing": {
+    "billingMode": "formula",
+    "variantFields": [
+     "resolution"
+    ]
+   }
+  },
+  "priceUnit": "image",
+  "priceUnitPlural": "images",
+  "policyNote": "Seedream 5.5 separates source images into layers with no content filtering. You must have the rights to the source image, and any people it depicts must be consenting adults.",
+  "pricingNote": "Every Seedream 5.5 output, including the base, is billed by its own pixel count. The quote reserves the maximum for the requested output limit, using the 2k rate for auto. Settlement releases the unused amount.",
+  "licenseNote": "You are responsible for securing rights to uploaded images and to material you reuse in the result.",
+  "readme": "## Introduction\n\nSeedream 5.5 layers turn a finished PNG or JPEG into an opaque base image and separate transparent pieces. Use image layer decomposition when you already have a design and want to work with its elements individually. This endpoint accepts a single source rather than the reference collection used by editing.\n\nByteDance describes a base image plus up to 99 editable transparent PNG layers. Our tests split a magazine cover, a menu, and a three-line poster. The results demonstrate why the requested output count is a ceiling: some images filled the requested limit, while the poster returned fewer pieces than its limit allowed.\n\n## Key features & Highlights\n\n### A base with transparent pieces\n\nThe base is opaque, and the separated elements use PNG transparency. Choosing jpeg as output_format changes the base encoding; the layers still arrive as transparent PNGs. Keep this distinction in mind when saving files for a composition. The base and the layers serve different roles in the returned set.\n\nEach layer carries a name, a bounding box, and zIndex for its stacking order. The base has no bounding box. Retain this information alongside the image files when arranging the separated elements in a design tool. Each returned image keeps its own shape.\n\n### A ceiling that counts the base\n\nnum_outputs accepts values from 2 to 100 and defaults to 10. Count the base as one output when planning the split. A ceiling of six therefore allows a base and five transparent layers. A larger value usually gives finer separation, but the actual result can contain fewer images.\n\nIn our tests, a menu returned one base and five layers at a limit of six. A three-line poster returned one base and three text layers at a limit of five. The poster demonstrates that setting a larger ceiling does not require the model to fill every available output slot.\n\n### English names on request\n\nThe page examples ask for every layer name and description in English. Our tests returned English names when prompted that way. Include \"Write every layer name and description in English\" if your design workflow needs that language. Keep the naming request separate from the list of elements to split.\n\n### Source and resolution controls\n\nProvide one PNG or JPEG measuring at least 512 x 512 pixels. Resolution choices are auto, 1k, 1.5k, and 2k, with auto as the default.\n\n| Setting | Role in the split |\n| --- | --- |\n| image_url | Supplies the finished source picture |\n| prompt | Optionally names elements or a target region |\n| resolution | Selects auto, 1k, 1.5k, or 2k |\n| num_outputs | Caps all returned images, including the base |\n| output_format | Selects PNG or JPEG for the base image |\n\n## Use cases\n\n### Separate a magazine cover into design elements\n\nOur NOIR cover split used a six-image limit and returned six images. The pieces were a background, a person, a masthead, a Japanese line, an issue line, and a barcode. This gives a concrete example of Seedream 5.5 layers for a cover with both photographic content and lettering.\n\nUse that result as a planning reference when the design contains distinct elements you want separately. Name the parts that matter in the optional instruction. Keep the source image available so you can compare the returned pieces with the original layout.\n\n### Take a menu apart for further composition\n\nThe Kaze Ramen layer example starts with the finished menu image. At a six-image ceiling, our tests returned an opaque base and five transparent layers. Save the full returned set rather than selecting a single piece if you intend to arrange the menu elements together later.\n\n### Isolate text lines from a poster\n\nOur three-line poster test produced one transparent layer for each text line plus the base. The total was four images despite a requested ceiling of five. Count the returned pieces after completion instead of treating the request limit as a list of guaranteed files.\n\n### Organize pieces by their returned metadata\n\nUse each name to identify a layer, its bounding box to understand its position, and zIndex to follow the stacking order. Keep those values connected to the corresponding file. Requesting English names can make that organization easier when the surrounding design workflow uses English labels.\n\n## Prompt guide & Pro tips\n\n### Choose a finished source with known elements\n\nStart by confirming that your file is a PNG or JPEG and meets the 512 x 512 minimum. Decide which elements you want separately before setting the count. For a cover, list the background, person, title, supporting copy, and barcode when those are the pieces you need.\n\n### Name the requested separation\n\nThe prompt is optional, so you can submit a source without an element list. When a particular split matters, write a short instruction such as \"Separate the masthead, subtitle, issue line, and barcode.\" This tells the layer tool what you intend to work with after the split.\n\n### Ask for the label language directly\n\nAdd \"Return layer names in English\" when English labels are required. The cover and menu examples use that kind of instruction. Our language observation concerns the returned layer names; it does not mean that printed text in the source must be translated or replaced.\n\n### Point to a region with a bounding-box tag\n\nTo identify a target area, use the form `<bbox>x1 y1 x2 y2</bbox>` with coordinates between 0 and 1000. For example, `<bbox>0 0 1000 300</bbox>` identifies a region across the top portion of the picture. Follow the tag with a description of the element to separate so the region and its purpose are clear.\n\n### Pick a count for the pieces you need\n\nFor a planned base and five layers, choose a ceiling of six. If you need finer pieces, a larger ceiling usually gives finer layers. The setting remains a limit rather than a promised count. Compare the actual returned set with your intended element list before starting the next design step.\n\n### Keep the base format separate from layer transparency\n\nChoose png or jpeg according to the base file you need. This choice does not turn separated layers into JPEG files. They retain transparent PNG encoding with either base choice. Keep the opaque base when the full composition needs its underlying image.\n\n### Understand the output count at settlement\n\nEvery Seedream 5.5 output, including the base, is billed by its own pixel count. The quote reserves the maximum for the requested output limit, using the 2k rate for auto. Settlement releases the unused amount.\n\n### Save the complete layer result\n\nDownload the base, transparent PNGs, and their placement details together. Record the optional instruction and the output ceiling alongside them. This preserves the relationship between the source design, the separated files, and their names and stacking order for the next composition.",
+  "examples": [
+   {
+    "id": "noir-cover-layers",
+    "note": "The cover split requests English layer names. Copy that language instruction; our six-image result separated the background, person, and printed elements.",
+    "input": {
+     "prompt": "Decompose this image into layers. Write every layer name and description in English.",
+     "image_url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/e494d1b7c8a40737.jpg",
+     "resolution": "1k",
+     "num_outputs": 6,
+     "output_format": "png"
+    },
+    "mediaKey": "models/examples/seedream-5-5/2db8c79323493aa2.webp",
+    "mediaUrl": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/2db8c79323493aa2.webp",
+    "mimeType": "image/webp",
+    "width": 1476,
+    "height": 1264,
+    "sortWeight": 130
+   },
+   {
+    "id": "kaze-menu-layers",
+    "note": "The menu split asks for layers with English names. Copy that instruction and count the base in the limit; our six-image run returned a base and five layers.",
+    "input": {
+     "prompt": "Decompose this image into layers. Write every layer name and description in English.",
+     "image_url": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/d544e537253a4f8c.jpg",
+     "resolution": "1k",
+     "num_outputs": 6,
+     "output_format": "png"
+    },
+    "mediaKey": "models/examples/seedream-5-5/e402664aa6d4b506.webp",
+    "mediaUrl": "https://cdn.spicyapi.ai/models/examples/seedream-5-5/e402664aa6d4b506.webp",
+    "mimeType": "image/webp",
+    "width": 1896,
+    "height": 984,
+    "sortWeight": 120
+   }
+  ],
+  "relatedModels": [
+   "bytedance/seedream-5.0-pro",
+   "bytedance/seedream-5.0-flash",
+   "bytedance/seedream-5.0-lite"
+  ],
+  "contentTests": [
+   {
+    "rung": "suggestive",
+    "verdict": "renders",
+    "testedOn": "2026-11-07"
+   },
+   {
+    "rung": "partial",
+    "verdict": "renders",
+    "testedOn": "2026-11-07"
+   },
+   {
+    "rung": "nude",
+    "verdict": "renders",
+    "testedOn": "2026-11-07"
+   },
+   {
+    "rung": "explicit",
+    "verdict": "renders",
+    "testedOn": "2026-11-07"
+   },
+   {
+    "rung": "extreme",
+    "verdict": "renders",
+    "testedOn": "2026-11-07"
+   }
+  ],
+  "taskTimeoutSeconds": 1800
+ },
+ "request_id": "req_06gwarxfyn5qztmd3qd3qbs2fm"
+}
