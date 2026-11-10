@@ -46,7 +46,7 @@ def profile_paths():
 
 
 def test_the_shipped_catalog_is_not_empty():
-    assert len(CATALOG) == 32
+    assert len(CATALOG) == 33
     assert len(CATALOG.models()) == len(set(CATALOG.models()))
 
 

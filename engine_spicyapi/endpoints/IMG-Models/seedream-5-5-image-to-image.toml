@@ -1,0 +1,45 @@
+id = "seedream-5-5-image-to-image"
+label = "Seedream 5.5 · Image to image"
+category = "IMG"
+platform = "spicyapi"
+endpoint = "bytedance/seedream-5.5/edit"
+description = "Seedream 5.5 image editing revises an existing picture or combines references through a written instruction. Supply one to ten images and refer to them as Image 1, Image 2, and onward. Explain what each source contributes, what should change, and what should remain. Our tests changed clothing and location, kept a mug logo in a person-and-product composition, and kept both people recognizable in a two-portrait rooftop scene. ByteDance describes stable unedited regions across 100+ rounds; our tests cover the…"
+
+[pricing]
+base_cost = 0.02
+currency = "USD"
+note = "$0.02/image; 3 price tier(s), up to $0.035"
+
+[general]
+kind = "image"
+prompt = "required"
+slots = ["image_urls"]
+media_lists = ["image_urls"]
+
+[params.aspect_ratio]
+label = "Aspect Ratio"
+type = "select"
+default = "1:1"
+options = [{ value = "1:1", label = "1:1" }, { value = "4:3", label = "4:3" }, { value = "3:4", label = "3:4" }, { value = "16:9", label = "16:9" }, { value = "9:16", label = "9:16" }, { value = "3:2", label = "3:2" }, { value = "2:3", label = "2:3" }, { value = "21:9", label = "21:9" }]
+note = "Output aspect ratio. It does not follow the input automatically, so pick the one that matches your image."
+
+[params.background]
+label = "Background"
+type = "select"
+default = "auto"
+options = [{ value = "auto", label = "auto" }, { value = "transparent", label = "transparent" }, { value = "opaque", label = "opaque" }]
+note = "Background treatment. Transparent needs PNG output; a JPEG always stays opaque."
+
+[params.output_format]
+label = "Output Format"
+type = "select"
+default = "png"
+options = [{ value = "png", label = "png" }, { value = "jpeg", label = "jpeg" }]
+note = "File format of the returned image."
+
+[params.resolution]
+label = "Resolution"
+type = "select"
+default = "2k"
+options = [{ value = "1k", label = "1k" }, { value = "1.5k", label = "1.5k" }, { value = "2k", label = "2k" }]
+note = "Output resolution tier."
